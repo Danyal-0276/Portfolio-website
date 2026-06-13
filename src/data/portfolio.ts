@@ -38,7 +38,7 @@ export const siteConfig = {
   title: "Danyal Tanveer | Full-Stack Web Developer & AI/ML Researcher",
   description:
     "Computer Science student at UCP specializing in full-stack development, NLP research, and fake news detection. Building production systems with React, Next.js, Django, and PyTorch.",
-  url: "https://portfolio-website-danyal.vercel.app",
+  url: "https://portfolio-website-git-main-danyal-tanveer-s-projects.vercel.app",
   ogImage: "/images/profile-hero.png",
   logoPath: "/images/logo.png",
   faviconPath: "/images/favicon-512.png",

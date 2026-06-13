@@ -4,7 +4,7 @@
 
 **Full-Stack Web Developer & AI/ML Researcher** · Personal portfolio with GSAP animations, project showcase, and contact form.
 
-[![Live Site](https://img.shields.io/badge/Live_Site-portfolio--website--danyal.vercel.app-EDB33C?style=for-the-badge&logo=vercel&logoColor=black)](https://portfolio-website-danyal.vercel.app)
+[![Live Site](https://img.shields.io/badge/Live_Site-Vercel-EDB33C?style=for-the-badge&logo=vercel&logoColor=black)](https://portfolio-website-git-main-danyal-tanveer-s-projects.vercel.app)
 [![GitHub](https://img.shields.io/badge/GitHub-Danyal--0276-181717?style=for-the-badge&logo=github)](https://github.com/Danyal-0276)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/danyal-tanveer-30b887320)
 
@@ -104,7 +104,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | `RESEND_API_KEY` | API key from [Resend](https://resend.com) |
 | `CONTACT_TO_EMAIL` | Email that receives form submissions |
 | `CONTACT_FROM_EMAIL` | Sender address (`onboarding@resend.dev` for testing) |
-| `NEXT_PUBLIC_SITE_URL` | Production URL (e.g. `https://portfolio-website-danyal.vercel.app`) |
+| `NEXT_PUBLIC_SITE_URL` | Production URL (`https://portfolio-website-git-main-danyal-tanveer-s-projects.vercel.app`) |
 
 ---
 
@@ -172,6 +172,6 @@ Add these under **Repository → About → Topics** so the repo surfaces in sear
 
 **Danyal Tanveer**
 
-[Lahore, Pakistan](https://portfolio-website-danyal.vercel.app) · [GitHub](https://github.com/Danyal-0276) · [LinkedIn](https://linkedin.com/in/danyal-tanveer-30b887320) · [Email](mailto:donibutt2112@gmail.com)
+[Lahore, Pakistan](https://portfolio-website-git-main-danyal-tanveer-s-projects.vercel.app) · [GitHub](https://github.com/Danyal-0276) · [LinkedIn](https://linkedin.com/in/danyal-tanveer-30b887320) · [Email](mailto:donibutt2112@gmail.com)
 
 </div>
