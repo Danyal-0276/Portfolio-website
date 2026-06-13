@@ -111,7 +111,7 @@ export function ProjectCollage() {
 
         <div
           ref={boardRef}
-          className="collage-board relative mx-auto aspect-[4/3] w-full max-w-5xl overflow-hidden rounded-3xl border border-cream/10 bg-charcoal-light/20 md:aspect-[16/10]"
+          className="collage-board relative mx-auto aspect-[3/4] min-h-[420px] w-full max-w-5xl overflow-hidden rounded-3xl border border-cream/10 bg-charcoal-light/20 sm:aspect-[4/3] sm:min-h-0 md:aspect-[16/10]"
         >
           <div
             className="absolute inset-0 opacity-20"

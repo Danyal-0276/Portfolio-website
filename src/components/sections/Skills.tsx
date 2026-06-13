@@ -12,7 +12,7 @@ export function Skills() {
           description="Languages, frameworks, CS fundamentals, ML tooling, databases, cloud deployment, and the tools I use daily."
         />
 
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 sm:gap-10 md:grid-cols-2 xl:grid-cols-4">
           {skillGroups.map((group) => (
             <div key={group.label} className="reveal">
               <h3 className="mb-4 font-serif text-xl text-charcoal">{group.label}</h3>

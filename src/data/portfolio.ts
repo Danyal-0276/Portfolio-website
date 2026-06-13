@@ -37,6 +37,8 @@ export const siteConfig = {
     "Computer Science student at UCP specializing in full-stack development, NLP research, and fake news detection. Building production systems with React, Next.js, Django, and PyTorch.",
   url: "https://portfolio-website-danyal.vercel.app",
   ogImage: "/images/profile-hero.png",
+  logoPath: "/images/logo.png",
+  faviconPath: "/images/favicon-512.png",
   email: "donibutt2112@gmail.com",
   phone: "+92 370 7076164",
   location: "Lahore, Punjab, Pakistan",
@@ -133,6 +135,14 @@ export const techMarquee = [
   "Postman",
   "NumPy",
   "pandas",
+  "Matplotlib",
+  "LightGBM",
+  "RoBERTa",
+  "Linux",
+  "Assembly",
+  "GSAP",
+  "Resend",
+  "openpyxl",
   "Git",
 ];
 
@@ -157,6 +167,8 @@ export const about = {
       "Machine Learning",
       "NLP",
       "Software Engineering",
+      "Discrete Mathematics",
+      "Programming Fundamentals",
     ],
   },
   highlights: [
@@ -289,6 +301,7 @@ export const skillGroups: SkillGroup[] = [
       "SQL",
       "HTML/CSS",
       "XML",
+      "Assembly",
     ],
   },
   {
@@ -297,7 +310,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: "Backend",
-    skills: ["Node.js", "Express", "Django", "DRF", "REST APIs", "JWT", "Eel"],
+    skills: ["Node.js", "Express", "Django", "DRF", "REST APIs", "JWT", "Eel", "Resend"],
   },
   {
     label: "CS Fundamentals",
@@ -348,6 +361,7 @@ export const skillGroups: SkillGroup[] = [
       "Netlify",
       "Render",
       "Contabo",
+      "Linux",
     ],
   },
   {
@@ -362,6 +376,8 @@ export const skillGroups: SkillGroup[] = [
       "Postman",
       "Swagger",
       "Playwright",
+      "openpyxl",
+      "GSAP",
       "Agile/Scrum",
     ],
   },

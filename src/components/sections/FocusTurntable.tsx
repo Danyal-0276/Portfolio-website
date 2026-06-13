@@ -174,7 +174,7 @@ export function FocusTurntable() {
           </div>
 
           {/* Detail panel — no "reveal" class; it updates live as the dial turns */}
-          <div className="rounded-2xl border border-charcoal/8 bg-cream p-8 transition-all duration-300">
+          <div className="rounded-2xl border border-charcoal/8 bg-cream p-5 sm:p-6 lg:p-8 transition-all duration-300">
             <span
               className="mb-4 inline-block h-1 w-12 rounded-full transition-colors duration-300"
               style={{ backgroundColor: active.accent }}
@@ -182,7 +182,7 @@ export function FocusTurntable() {
             <p className="mb-1 text-sm font-medium uppercase tracking-widest text-charcoal/50">
               {active.subtitle}
             </p>
-            <h3 className="mb-4 font-serif text-3xl text-charcoal">{active.title}</h3>
+            <h3 className="mb-4 font-serif text-2xl text-charcoal sm:text-3xl">{active.title}</h3>
             <p className="mb-6 leading-relaxed text-charcoal-light">{active.description}</p>
             <ul className="space-y-2">
               {active.services.map((service) => (

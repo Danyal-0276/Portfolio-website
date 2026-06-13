@@ -67,7 +67,7 @@ export function Contact() {
             <div className="space-y-4">
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="flex items-center gap-3 text-charcoal-light transition-colors hover:text-gold-dark"
+                className="flex min-w-0 items-center gap-3 break-all text-charcoal-light transition-colors hover:text-gold-dark sm:break-normal"
               >
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/15 text-gold-dark">
                   @
@@ -96,7 +96,7 @@ export function Contact() {
 
           <form
             onSubmit={handleSubmit}
-            className="reveal space-y-5 rounded-2xl border border-charcoal/8 bg-white p-8 shadow-sm"
+            className="reveal space-y-5 rounded-2xl border border-charcoal/8 bg-white p-5 shadow-sm sm:space-y-5 sm:p-8"
           >
             <div>
               <label htmlFor="name" className="mb-2 block text-sm font-medium text-charcoal">

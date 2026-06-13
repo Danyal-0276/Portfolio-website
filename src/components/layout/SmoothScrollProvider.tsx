@@ -40,7 +40,8 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
 
       const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
       heroTl
-        .from(".hero-greeting", { opacity: 0, y: 24, duration: 0.7 })
+        .from(".hero-orb", { opacity: 0, scale: 0.85, duration: 1.2, stagger: 0.15, ease: "power2.out" })
+        .from(".hero-greeting", { opacity: 0, y: 24, duration: 0.7 }, "-=0.8")
         .from(".hero-title-line", { opacity: 0, y: 50, duration: 0.9, stagger: 0.12 }, "-=0.4")
         .from(".hero-role-outline", { opacity: 0, y: 30, duration: 0.8 }, "-=0.5")
         .from(".hero-image", { opacity: 0, scale: 0.94, duration: 1.1, ease: "power2.out" }, "-=0.7")

@@ -14,7 +14,7 @@ export function About() {
         <div className="grid gap-12 lg:grid-cols-3">
           <div className="reveal space-y-4 lg:col-span-2">
             {about.bio.map((paragraph) => (
-              <p key={paragraph.slice(0, 30)} className="text-lg leading-relaxed text-charcoal-light">
+              <p key={paragraph.slice(0, 30)} className="text-base leading-relaxed text-charcoal-light sm:text-lg">
                 {paragraph}
               </p>
             ))}
