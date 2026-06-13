@@ -265,7 +265,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-charcoal/10 bg-charcoal px-4 py-10 text-cream sm:px-6 md:px-12 lg:px-20">
+    <footer className="border-t border-charcoal/10 bg-charcoal px-4 py-10 text-cream sm:px-6 md:px-12 lg:px-20 pb-[max(2.5rem,env(safe-area-inset-bottom))]">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 md:flex-row md:items-start">
         <div className="text-center md:text-left">
           <p className="font-serif text-xl">

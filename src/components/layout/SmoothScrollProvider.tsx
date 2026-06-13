@@ -34,9 +34,13 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         smoothTouch: 0.05,
       });
 
-      const refreshScroll = () => ScrollTrigger.refresh(true);
+      const refreshScroll = () => {
+        ScrollTrigger.refresh(true);
+        smoother?.refresh();
+      };
       refreshScroll();
       requestAnimationFrame(refreshScroll);
+      setTimeout(refreshScroll, 500);
 
       const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
       heroTl

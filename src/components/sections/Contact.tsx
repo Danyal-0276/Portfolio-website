@@ -47,7 +47,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="section-padding">
+    <section id="contact" className="section-padding bg-cream">
       <div className="section-container">
         <SectionHeading
           label="Contact"
