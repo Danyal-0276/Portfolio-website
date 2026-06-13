@@ -5,16 +5,145 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { navLinks, siteConfig } from "@/data/portfolio";
 import { SocialLinks } from "@/components/ui/SocialLinks";
-import { registerGSAP, scrollToSection } from "@/lib/gsap";
+import { gsap, registerGSAP, scrollToSection } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
+
+function NavLinkItem({
+  label,
+  onClick,
+}: {
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="nav-link-btn relative overflow-hidden px-1.5 py-2"
+    >
+      <span
+        className="nav-link-glow pointer-events-none absolute inset-x-0 top-1/2 h-8 rounded-full"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 100% at 50% 50%, rgba(237,179,60,0.15), transparent 70%)",
+        }}
+        aria-hidden="true"
+      />
+      <span className="nav-link-label relative z-10 block text-sm text-cream/70 2xl:text-[0.9375rem]">
+        {label}
+      </span>
+      <span
+        className="nav-link-underline absolute right-1.5 bottom-1 left-1.5 h-px bg-gradient-to-r from-transparent via-gold to-transparent"
+        aria-hidden="true"
+      />
+    </button>
+  );
+}
+
+function NavActionButton({
+  children,
+  onClick,
+  href,
+  variant = "outline",
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+  href?: string;
+  variant?: "outline" | "primary";
+}) {
+  const isPrimary = variant === "primary";
+  const className = cn(
+    "nav-action-btn relative overflow-hidden rounded-full border px-4 py-2 text-sm whitespace-nowrap 2xl:px-5",
+    isPrimary ? "nav-action-btn-primary border-gold/40 text-cream" : "nav-action-btn-outline border-white/20 text-cream",
+  );
+
+  const inner = (
+    <>
+      <span
+        className={cn(
+          "nav-action-fill absolute inset-0 rounded-full",
+          isPrimary ? "bg-gold" : "bg-gold/10",
+        )}
+        aria-hidden="true"
+      />
+      <span className="nav-action-text relative z-10">{children}</span>
+    </>
+  );
+
+  if (href) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+        {inner}
+      </a>
+    );
+  }
+
+  return (
+    <button type="button" onClick={onClick} className={className}>
+      {inner}
+    </button>
+  );
+}
+
+function MobileNavLink({
+  label,
+  onClick,
+}: {
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="mobile-nav-link w-full rounded-lg px-3 py-2.5 text-left text-sm text-cream/80 transition-all duration-300 hover:translate-x-1.5 hover:bg-white/5 hover:text-gold"
+    >
+      <span className="flex items-center gap-2">
+        <span className="h-1 w-1 rounded-full bg-gold/50" aria-hidden="true" />
+        {label}
+      </span>
+    </button>
+  );
+}
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     registerGSAP();
   }, { scope: navRef });
+
+  useGSAP(
+    () => {
+      registerGSAP();
+      const menu = menuRef.current;
+      if (!menu) return;
+
+      const links = menu.querySelectorAll(".mobile-nav-link");
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      if (!open) {
+        gsap.set(links, { clearProps: "opacity,transform" });
+        return;
+      }
+
+      if (prefersReducedMotion) {
+        gsap.set(links, { opacity: 1, x: 0 });
+        return;
+      }
+
+      gsap.fromTo(
+        links,
+        { opacity: 0, x: -12 },
+        { opacity: 1, x: 0, duration: 0.35, stagger: 0.04, ease: "power3.out" },
+      );
+    },
+    { scope: menuRef, dependencies: [open] },
+  );
 
   const handleNavClick = (href: string) => {
     setOpen(false);
@@ -27,11 +156,10 @@ export function Navbar() {
       className="fixed top-0 right-0 left-0 z-50 border-b border-white/10 bg-[#0a0a0a]/80 backdrop-blur-md"
     >
       <nav className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:h-16 sm:gap-4 sm:px-6 lg:px-8 xl:gap-6 xl:px-10">
-        {/* Logo — constrained width so it never pushes nav items */}
         <button
           type="button"
           onClick={() => handleNavClick("#hero")}
-          className="relative z-10 flex shrink-0 items-center"
+          className="nav-logo-btn relative z-10 flex shrink-0 items-center"
           aria-label={`${siteConfig.name} home`}
         >
           <Image
@@ -44,72 +172,54 @@ export function Navbar() {
           />
         </button>
 
-        {/* Center links — xl+ only so tablet/mobile stay clean */}
-        <ul className="hidden min-w-0 flex-1 items-center justify-center gap-4 xl:flex xl:gap-5 2xl:gap-6">
+        <ul className="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex xl:gap-2 2xl:gap-3">
           {navLinks.map((link) => (
             <li key={link.href} className="shrink-0">
-              <button
-                type="button"
-                onClick={() => handleNavClick(link.href)}
-                className="text-sm text-cream/70 transition-colors hover:text-gold 2xl:text-[0.9375rem]"
-              >
-                {link.label}
-              </button>
+              <NavLinkItem label={link.label} onClick={() => handleNavClick(link.href)} />
             </li>
           ))}
         </ul>
 
-        {/* Right actions — xl+ */}
         <div className="hidden shrink-0 items-center gap-2 xl:flex 2xl:gap-3">
-          <SocialLinks variant="compact" className="[&_a]:text-cream/70 [&_a:hover]:text-gold" />
-          <a
-            href={siteConfig.resumePath}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full border border-white/20 px-4 py-2 text-sm whitespace-nowrap text-cream transition-colors hover:border-gold hover:text-gold 2xl:px-5"
-          >
+          <SocialLinks variant="compact" className="nav-social [&_a]:text-cream/70 [&_a]:transition-transform [&_a]:duration-300 [&_a:hover]:scale-110 [&_a:hover]:text-gold" />
+          <NavActionButton href={siteConfig.resumePath} variant="outline">
             Resume
-          </a>
-          <button
-            type="button"
-            onClick={() => handleNavClick("#contact")}
-            className="rounded-full border border-white/20 px-4 py-2 text-sm whitespace-nowrap text-cream transition-colors hover:border-gold hover:bg-gold hover:text-charcoal 2xl:px-5"
-          >
+          </NavActionButton>
+          <NavActionButton variant="primary" onClick={() => handleNavClick("#contact")}>
             Contact
-          </button>
+          </NavActionButton>
         </div>
 
-        {/* Mobile / tablet menu toggle */}
         <button
           type="button"
-          className="ml-auto flex h-10 w-10 shrink-0 flex-col items-center justify-center gap-1.5 xl:hidden"
+          className="nav-hamburger ml-auto flex h-10 w-10 shrink-0 flex-col items-center justify-center gap-1.5 rounded-lg transition-colors hover:bg-white/5 xl:hidden"
           onClick={() => setOpen(!open)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
         >
           <span
             className={cn(
-              "block h-0.5 w-5 bg-cream transition-transform sm:w-6",
-              open && "translate-y-2 rotate-45",
+              "block h-0.5 w-5 bg-cream transition-all duration-300 sm:w-6",
+              open && "translate-y-2 rotate-45 bg-gold",
             )}
           />
           <span
             className={cn(
-              "block h-0.5 w-5 bg-cream transition-opacity sm:w-6",
-              open && "opacity-0",
+              "block h-0.5 w-5 bg-cream transition-all duration-300 sm:w-6",
+              open && "opacity-0 scale-x-0",
             )}
           />
           <span
             className={cn(
-              "block h-0.5 w-5 bg-cream transition-transform sm:w-6",
-              open && "-translate-y-2 -rotate-45",
+              "block h-0.5 w-5 bg-cream transition-all duration-300 sm:w-6",
+              open && "-translate-y-2 -rotate-45 bg-gold",
             )}
           />
         </button>
       </nav>
 
-      {/* Slide-down menu for mobile + tablet */}
       <div
+        ref={menuRef}
         className={cn(
           "overflow-hidden border-t border-white/10 bg-[#0a0a0a] transition-[max-height,opacity] duration-300 xl:hidden",
           open ? "max-h-[85vh] opacity-100" : "max-h-0 opacity-0 border-t-transparent",
@@ -119,13 +229,7 @@ export function Navbar() {
           <ul className="grid grid-cols-2 gap-x-4 gap-y-1 sm:grid-cols-3">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <button
-                  type="button"
-                  onClick={() => handleNavClick(link.href)}
-                  className="w-full rounded-lg px-3 py-2.5 text-left text-sm text-cream/80 transition-colors hover:bg-white/5 hover:text-gold"
-                >
-                  {link.label}
-                </button>
+                <MobileNavLink label={link.label} onClick={() => handleNavClick(link.href)} />
               </li>
             ))}
           </ul>
@@ -135,21 +239,21 @@ export function Navbar() {
               href={siteConfig.resumePath}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center rounded-full border border-white/20 px-5 py-2.5 text-sm text-cream transition-colors hover:border-gold hover:text-gold sm:flex-none"
+              className="inline-flex flex-1 items-center justify-center rounded-full border border-white/20 px-5 py-2.5 text-sm text-cream transition-all duration-300 hover:-translate-y-0.5 hover:border-gold hover:text-gold hover:shadow-[0_4px_16px_rgba(237,179,60,0.2)] sm:flex-none"
             >
               View Resume
             </a>
             <button
               type="button"
               onClick={() => handleNavClick("#contact")}
-              className="inline-flex flex-1 items-center justify-center rounded-full bg-gold px-5 py-2.5 text-sm font-medium text-charcoal transition-colors hover:bg-gold-dark sm:flex-none"
+              className="inline-flex flex-1 items-center justify-center rounded-full bg-gold px-5 py-2.5 text-sm font-medium text-charcoal transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-dark hover:shadow-[0_4px_16px_rgba(237,179,60,0.35)] sm:flex-none"
             >
               Get in Touch
             </button>
           </div>
 
           <div className="mt-5 flex justify-center border-t border-white/10 pt-5">
-            <SocialLinks variant="compact" className="[&_a]:text-cream/70 [&_a:hover]:text-gold" />
+            <SocialLinks variant="compact" className="[&_a]:text-cream/70 [&_a:hover]:scale-110 [&_a:hover]:text-gold" />
           </div>
         </div>
       </div>

@@ -78,21 +78,6 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         },
       });
 
-      ScrollTrigger.batch(".skill-badge", {
-        onEnter: (elements) => {
-          gsap.from(elements, {
-            opacity: 0,
-            scale: 0.9,
-            duration: 0.5,
-            stagger: 0.04,
-            ease: "back.out(1.4)",
-            overwrite: true,
-          });
-        },
-        start: "top 90%",
-        once: true,
-      });
-
       window.addEventListener("load", refreshScroll);
       window.addEventListener("resize", refreshScroll);
 

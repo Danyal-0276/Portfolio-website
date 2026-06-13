@@ -169,6 +169,95 @@
   .hero-cutout {
     filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.45));
   }
+
+  .nav-link-btn {
+    isolation: isolate;
+  }
+
+  .nav-link-glow {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.75);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .nav-link-label {
+    transition:
+      transform 0.3s ease,
+      color 0.3s ease;
+  }
+
+  .nav-link-underline {
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .nav-link-btn:hover .nav-link-glow,
+  .nav-link-btn:focus-visible .nav-link-glow {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+
+  .nav-link-btn:hover .nav-link-label,
+  .nav-link-btn:focus-visible .nav-link-label {
+    transform: translateY(-2px);
+    color: var(--color-gold);
+  }
+
+  .nav-link-btn:hover .nav-link-underline,
+  .nav-link-btn:focus-visible .nav-link-underline {
+    transform: scaleX(1);
+  }
+
+  .nav-action-fill {
+    transform: scale(0);
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .nav-action-btn {
+    transition:
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease,
+      color 0.3s ease;
+  }
+
+  .nav-action-btn:hover,
+  .nav-action-btn:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--color-gold);
+    box-shadow: 0 4px 20px rgba(237, 179, 60, 0.25);
+  }
+
+  .nav-action-btn:hover .nav-action-fill,
+  .nav-action-btn:focus-visible .nav-action-fill {
+    transform: scale(1);
+  }
+
+  .nav-action-btn-primary:hover .nav-action-text,
+  .nav-action-btn-primary:focus-visible .nav-action-text {
+    color: var(--color-charcoal);
+  }
+
+  .nav-action-btn-outline:hover .nav-action-text,
+  .nav-action-btn-outline:focus-visible .nav-action-text {
+    color: var(--color-gold);
+  }
+
+  .nav-logo-btn img {
+    transition:
+      transform 0.35s ease,
+      filter 0.35s ease;
+  }
+
+  .nav-logo-btn:hover img,
+  .nav-logo-btn:focus-visible img {
+    transform: scale(1.06);
+    filter: drop-shadow(0 0 12px rgba(237, 179, 60, 0.45));
+  }
 }
 
 #smooth-wrapper {
@@ -196,5 +285,19 @@
   .hero-ring,
   .hero-ring-inner {
     animation: none !important;
+  }
+
+  .nav-link-glow,
+  .nav-link-label,
+  .nav-link-underline,
+  .nav-action-fill,
+  .nav-action-btn,
+  .nav-logo-btn img {
+    transition: none !important;
+  }
+
+  .nav-link-btn:hover .nav-link-label,
+  .nav-link-btn:focus-visible .nav-link-label {
+    transform: none;
   }
 }

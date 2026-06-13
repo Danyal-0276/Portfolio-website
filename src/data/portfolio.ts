@@ -28,6 +28,9 @@ export interface Experience {
 export interface SkillGroup {
   label: string;
   skills: string[];
+  accent: string;
+  /** Tailwind col-span classes for the bento grid (mobile + lg) */
+  span: string;
 }
 
 export const siteConfig = {
@@ -291,6 +294,8 @@ export const projects: Project[] = [
 export const skillGroups: SkillGroup[] = [
   {
     label: "Languages",
+    accent: "#edb33c",
+    span: "col-span-2 lg:col-span-2",
     skills: [
       "Python",
       "JavaScript",
@@ -306,14 +311,20 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: "Frontend",
+    accent: "#5b9bd5",
+    span: "col-span-2 lg:col-span-2",
     skills: ["React", "React Native", "Next.js", "Tailwind CSS", "Bootstrap", "Figma"],
   },
   {
     label: "Backend",
+    accent: "#6bc4a6",
+    span: "col-span-2 lg:col-span-2",
     skills: ["Node.js", "Express", "Django", "DRF", "REST APIs", "JWT", "Eel", "Resend"],
   },
   {
     label: "CS Fundamentals",
+    accent: "#c4b5fd",
+    span: "col-span-2 lg:col-span-2",
     skills: [
       "OOP",
       "Data Structures & Algorithms",
@@ -325,6 +336,8 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: "ML / AI",
+    accent: "#9b7ed9",
+    span: "col-span-2 lg:col-span-6",
     skills: [
       "PyTorch",
       "HuggingFace",
@@ -347,10 +360,14 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: "Databases",
+    accent: "#f093fb",
+    span: "col-span-2 lg:col-span-2",
     skills: ["MongoDB", "MySQL", "Firebase", "SQL", "NoSQL"],
   },
   {
     label: "DevOps & Cloud",
+    accent: "#43e97b",
+    span: "col-span-2 lg:col-span-2",
     skills: [
       "Git",
       "GitHub",
@@ -366,6 +383,8 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: "Tools & IDEs",
+    accent: "#fa709a",
+    span: "col-span-2 lg:col-span-6",
     skills: [
       "VS Code",
       "Cursor",
