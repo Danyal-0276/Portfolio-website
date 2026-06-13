@@ -4,6 +4,7 @@ import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import { projects } from "@/data/portfolio";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { ProjectSnapshotStack } from "@/components/ui/ProjectSnapshotStack";
 import { gsap, registerGSAP } from "@/lib/gsap";
 
 function ProjectPanel({
@@ -57,19 +58,7 @@ function ProjectPanel({
           </a>
         </div>
 
-        <div className="relative hidden aspect-square lg:block">
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-gold/20 to-charcoal/5" />
-          <div className="absolute inset-4 rounded-2xl border border-charcoal/10 bg-white p-8 shadow-xl">
-            <p className="mb-2 text-xs uppercase tracking-wider text-charcoal/40">Stack</p>
-            <ul className="space-y-3">
-              {project.tech.slice(0, 5).map((t) => (
-                <li key={t} className="border-b border-charcoal/5 pb-2 font-medium text-charcoal">
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <ProjectSnapshotStack projectId={project.id} className="mt-8 lg:mt-0" />
       </div>
     </article>
   );
@@ -122,7 +111,7 @@ export function ProjectShowcase() {
           <SectionHeading
             label="Projects"
             title="Scroll through selected work"
-            description="Each project with a clear description. Scroll horizontally on desktop to explore all eight."
+            description="Real screenshots from TRAK, POS, ML research, and more. Scroll horizontally on desktop to explore all eight."
           />
         </div>
       </div>

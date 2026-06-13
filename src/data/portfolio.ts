@@ -166,13 +166,13 @@ export const projects: Project[] = [
   },
   {
     id: "sentiment",
-    title: "Sentiment Analysis & Disease Detection",
+    title: "Disease Detection Models",
     description:
-      "ML research projects including tweet sentiment classification with LightGBM (99.5% accuracy) and multi-class disease detection using SVM, Naive Bayes, and Random Forest.",
+      "Multi-class disease classification using SVM, Naive Bayes, Random Forest, and a combined ensemble. Evaluated on 41 disease categories with confusion matrix analysis and balanced dataset distribution.",
     category: "Machine Learning",
-    tech: ["Python", "LightGBM", "scikit-learn", "SVM", "Random Forest"],
+    tech: ["Python", "scikit-learn", "SVM", "Random Forest", "Naive Bayes"],
     github: "https://github.com/Danyal-0276",
-    highlight: "99.5% classification accuracy",
+    highlight: "41-class classification",
   },
 ];
 
@@ -291,7 +291,7 @@ export const projectAccents: Record<string, string> = {
   sentiment: "linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)",
 };
 
-/** Public paths to project screenshots copied from Snapshots of projects/ */
+/** Public paths to project screenshots */
 export const projectSnapshots: Record<string, string[]> = {
   trak: ["/projects/trak-1.png", "/projects/trak-2.png", "/projects/trak-3.png"],
   pos: ["/projects/pos-1.jpeg", "/projects/pos-2.jpeg", "/projects/pos-3.jpeg"],
@@ -300,8 +300,29 @@ export const projectSnapshots: Record<string, string[]> = {
   scraper: ["/projects/scraper-1.png"],
   duolingo: ["/projects/duolingo-1.png", "/projects/duolingo-2.png"],
   "js-projects": ["/projects/js-projects-1.png"],
-  sentiment: ["/projects/sentiment-1.png"],
+  sentiment: [
+    "/projects/disease-distribution.png",
+    "/projects/disease-combined.png",
+    "/projects/disease-random-forest.png",
+    "/projects/disease-svm.png",
+    "/projects/disease-naive-bayes.png",
+  ],
 };
+
+const MOBILE_SNAPSHOT_PROJECTS = new Set(["trak", "duolingo"]);
+const CHART_SNAPSHOT_PROJECTS = new Set(["bert", "nids", "sentiment", "scraper"]);
+
+export function isMobileSnapshotProject(projectId: string) {
+  return MOBILE_SNAPSHOT_PROJECTS.has(projectId);
+}
+
+export function isChartSnapshotProject(projectId: string) {
+  return CHART_SNAPSHOT_PROJECTS.has(projectId);
+}
+
+export function getProjectSnapshotFit(projectId: string): "cover" | "contain" {
+  return CHART_SNAPSHOT_PROJECTS.has(projectId) ? "contain" : "cover";
+}
 
 export function getProjectThumbnail(projectId: string): string | undefined {
   return projectSnapshots[projectId]?.[0];

@@ -1,8 +1,9 @@
 "use client";
 
 import { useGSAP } from "@gsap/react";
+import Image from "next/image";
 import { useRef } from "react";
-import { projectAccents, projects } from "@/data/portfolio";
+import { getProjectSnapshotFit, getProjectThumbnail, isChartSnapshotProject, projects } from "@/data/portfolio";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Draggable, gsap, registerGSAP } from "@/lib/gsap";
 
@@ -28,8 +29,27 @@ export function ProjectCollage() {
       const board = boardRef.current;
       if (!board) return;
 
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
       const cards = gsap.utils.toArray<HTMLElement>(".collage-card");
       const draggables: Draggable[] = [];
+
+      if (!prefersReducedMotion) {
+        gsap.from(cards, {
+          opacity: 0,
+          y: 30,
+          duration: 0.6,
+          stagger: 0.06,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: board,
+            start: "top 85%",
+            once: true,
+          },
+        });
+      }
 
       cards.forEach((card) => {
         const d = Draggable.create(card, {
@@ -41,7 +61,7 @@ export function ProjectCollage() {
             gsap.to(card, { scale: 1.05, zIndex: 50, duration: 0.2 });
           },
           onRelease() {
-            gsap.to(card, { scale: 1, duration: 0.3 });
+            gsap.to(card, { scale: parseFloat(card.dataset.scale ?? "1"), duration: 0.25 });
           },
         });
         draggables.push(d[0]);
@@ -61,8 +81,8 @@ export function ProjectCollage() {
         top: `${layout.y}%`,
         rotation: layout.rotate,
         scale: layout.scale,
-        duration: 0.8,
-        ease: "power3.out",
+        duration: 0.9,
+        ease: "elastic.out(1, 0.7)",
       });
     });
   }
@@ -73,7 +93,7 @@ export function ProjectCollage() {
         <SectionHeading
           label="Interactive Collage"
           title="Play with the project snapshots"
-          description="Drag, toss, and rearrange the cards to explore my work your way."
+          description="Drag, toss, and rearrange real screenshots from my projects."
           dark
         />
 
@@ -91,7 +111,6 @@ export function ProjectCollage() {
           ref={boardRef}
           className="collage-board relative mx-auto aspect-[4/3] w-full max-w-5xl overflow-hidden rounded-3xl border border-cream/10 bg-charcoal-light/20 md:aspect-[16/10]"
         >
-          {/* Grid hint */}
           <div
             className="absolute inset-0 opacity-20"
             style={{
@@ -104,13 +123,14 @@ export function ProjectCollage() {
 
           {projects.map((project, i) => {
             const layout = collageLayout[i];
-            const gradient =
-              projectAccents[project.id] ??
-              "linear-gradient(135deg, #edb33c 0%, #343434 100%)";
+            const thumbnail = getProjectThumbnail(project.id);
+            const fit = getProjectSnapshotFit(project.id);
+            const isChart = isChartSnapshotProject(project.id);
 
             return (
               <div
                 key={project.id}
+                data-scale={layout.scale}
                 className="collage-card absolute w-[38%] max-w-[220px] cursor-grab touch-none select-none active:cursor-grabbing md:w-[28%] md:max-w-[260px]"
                 style={{
                   left: `${layout.x}%`,
@@ -119,12 +139,32 @@ export function ProjectCollage() {
                   zIndex: i + 1,
                 }}
               >
-                <div className="overflow-hidden rounded-xl shadow-2xl shadow-black/40">
+                <div className="overflow-hidden rounded-xl shadow-2xl shadow-black/50 ring-1 ring-white/10">
                   <div
-                    className="flex aspect-[4/3] items-end p-4"
-                    style={{ background: gradient }}
+                    className={cn(
+                      "relative bg-white",
+                      isChart ? "aspect-square" : "aspect-[4/3]",
+                    )}
                   >
-                    <span className="rounded-full bg-black/30 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur-sm">
+                    {thumbnail ? (
+                      <Image
+                        src={thumbnail}
+                        alt={`${project.title} preview`}
+                        fill
+                        className={cn(
+                          fit === "contain" ? "object-contain p-1.5" : "object-cover object-top",
+                        )}
+                        sizes="260px"
+                        quality={70}
+                        loading="lazy"
+                        draggable={false}
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center bg-gold/20 text-xs text-cream/50">
+                        No preview
+                      </div>
+                    )}
+                    <span className="absolute bottom-2 left-2 rounded-full bg-black/50 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur-sm">
                       {project.category}
                     </span>
                   </div>
@@ -148,7 +188,7 @@ export function ProjectCollage() {
           })}
 
           <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center text-xs text-cream/30">
-            Drag cards anywhere on the board
+            Drag snapshot cards anywhere on the board
           </p>
         </div>
       </div>
