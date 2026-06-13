@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { siteConfig } from "@/data/portfolio";
+import { hero, siteConfig } from "@/data/portfolio";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SocialLinks } from "@/components/ui/SocialLinks";
@@ -60,8 +60,7 @@ export function Contact() {
             <div>
               <h3 className="mb-2 font-serif text-xl text-charcoal">Get in touch</h3>
               <p className="text-charcoal-light">
-                I&apos;m based in Lahore, Pakistan and open to remote opportunities,
-                internships, and collaborations.
+                I&apos;m based in {siteConfig.location}. {hero.availability}.
               </p>
             </div>
 

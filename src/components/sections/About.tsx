@@ -35,6 +35,16 @@ export function About() {
                 <span className="font-medium text-charcoal">Focus:</span>{" "}
                 {about.education.focus}
               </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {about.education.coursework.map((course) => (
+                  <span
+                    key={course}
+                    className="rounded-full border border-charcoal/10 bg-white px-2.5 py-1 text-xs text-charcoal/70"
+                  >
+                    {course}
+                  </span>
+                ))}
+              </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">

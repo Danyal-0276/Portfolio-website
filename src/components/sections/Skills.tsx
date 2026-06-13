@@ -9,7 +9,7 @@ export function Skills() {
         <SectionHeading
           label="Skills"
           title="Technologies I work with"
-          description="A toolkit spanning frontend, backend, machine learning, and DevOps."
+          description="Languages, frameworks, CS fundamentals, ML tooling, databases, cloud deployment, and the tools I use daily."
         />
 
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
