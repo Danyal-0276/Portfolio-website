@@ -379,7 +379,7 @@ export const projectSnapshots: Record<string, string[]> = {
   ],
 };
 
-const MOBILE_SNAPSHOT_PROJECTS = new Set(["trak", "duolingo"]);
+const MOBILE_SNAPSHOT_PROJECTS = new Set(["duolingo"]);
 const CHART_SNAPSHOT_PROJECTS = new Set(["bert", "nids", "sentiment", "scraper"]);
 const DARK_UI_SNAPSHOT_PROJECTS = new Set(["jarvis"]);
 
