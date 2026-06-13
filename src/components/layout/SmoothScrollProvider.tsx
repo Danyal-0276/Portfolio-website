@@ -20,9 +20,11 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       ).matches;
 
       if (prefersReducedMotion) {
-        gsap.set(".reveal", { opacity: 1, y: 0 });
+        gsap.set(".reveal, .project-card", { opacity: 1, y: 0 });
         return;
       }
+
+      gsap.set(".project-card", { opacity: 0, y: 40 });
 
       const smoother = ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
@@ -31,6 +33,16 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         effects: true,
         smoothTouch: 0.1,
       });
+
+      const refreshScroll = () => {
+        ScrollTrigger.refresh(true);
+        smoother?.refresh?.();
+      };
+
+      refreshScroll();
+      requestAnimationFrame(refreshScroll);
+      setTimeout(refreshScroll, 250);
+      setTimeout(refreshScroll, 1000);
 
       const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
       heroTl
@@ -58,19 +70,20 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         once: true,
       });
 
-      ScrollTrigger.batch(".project-card", {
-        onEnter: (elements) => {
-          gsap.from(elements, {
-            opacity: 0,
-            y: 50,
+      ScrollTrigger.create({
+        trigger: "#projects-grid",
+        start: "top 85%",
+        once: true,
+        onEnter: () => {
+          gsap.to(".project-card", {
+            opacity: 1,
+            y: 0,
             duration: 0.7,
             stagger: 0.08,
             ease: "power3.out",
             overwrite: true,
           });
         },
-        start: "top 90%",
-        once: true,
       });
 
       ScrollTrigger.batch(".skill-badge", {
@@ -88,13 +101,12 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         once: true,
       });
 
-      const refresh = () => ScrollTrigger.refresh();
-      window.addEventListener("load", refresh);
-      window.addEventListener("resize", refresh);
+      window.addEventListener("load", refreshScroll);
+      window.addEventListener("resize", refreshScroll);
 
       return () => {
-        window.removeEventListener("load", refresh);
-        window.removeEventListener("resize", refresh);
+        window.removeEventListener("load", refreshScroll);
+        window.removeEventListener("resize", refreshScroll);
         smoother?.kill();
       };
     },

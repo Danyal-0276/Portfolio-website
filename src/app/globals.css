@@ -62,6 +62,8 @@
 #smooth-content {
   overflow: visible;
   width: 100%;
+  /* Ensure ScrollSmoother calculates full page height including last sections */
+  padding-bottom: 2rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

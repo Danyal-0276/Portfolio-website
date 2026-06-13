@@ -18,7 +18,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
   return (
     <article
       className={cn(
-        "project-card reveal group flex h-full flex-col rounded-2xl border border-charcoal/8 bg-white p-6 shadow-sm transition-shadow hover:shadow-md",
+        "project-card group flex h-full flex-col rounded-2xl border border-charcoal/8 bg-white p-6 shadow-sm transition-shadow hover:shadow-md",
         className,
       )}
     >

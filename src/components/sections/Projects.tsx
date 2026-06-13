@@ -12,7 +12,10 @@ export function Projects() {
           description="From production POS systems to NLP research pipelines — eight projects that showcase my range."
         />
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+        <div
+          id="projects-grid"
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2"
+        >
           {projects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
