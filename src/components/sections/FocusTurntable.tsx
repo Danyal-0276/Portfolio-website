@@ -12,8 +12,9 @@ import {
 import { cn } from "@/lib/utils";
 
 function getActiveIndex(rotation: number) {
-  const normalized = ((rotation % 360) + 360) % 360;
-  return Math.round(normalized / 90) % focusAreas.length;
+  // Which segment is aligned to the top (12 o'clock) after rotation
+  const index = Math.round(-rotation / 90) % focusAreas.length;
+  return ((index % focusAreas.length) + focusAreas.length) % focusAreas.length;
 }
 
 export function FocusTurntable() {
@@ -41,6 +42,12 @@ export function FocusTurntable() {
           setHoveredIndex(null);
         },
         onThrowUpdate() {
+          setActiveIndex(getActiveIndex(this.rotation));
+        },
+        onThrowComplete() {
+          setActiveIndex(getActiveIndex(this.rotation));
+        },
+        onDragEnd() {
           setActiveIndex(getActiveIndex(this.rotation));
         },
       });
@@ -91,12 +98,19 @@ export function FocusTurntable() {
                   onMouseEnter={() => setHoveredIndex(i)}
                   onMouseLeave={() => setHoveredIndex(null)}
                   onClick={() => {
+                    setHoveredIndex(null);
                     setActiveIndex(i);
                     if (discRef.current) {
                       gsap.to(discRef.current, {
                         rotation: -i * 90,
                         duration: 0.6,
                         ease: "power3.out",
+                        onUpdate() {
+                          if (discRef.current) {
+                            const rot = gsap.getProperty(discRef.current, "rotation") as number;
+                            setActiveIndex(getActiveIndex(rot));
+                          }
+                        },
                       });
                     }
                   }}
@@ -159,13 +173,10 @@ export function FocusTurntable() {
             </p>
           </div>
 
-          {/* Detail panel */}
-          <div
-            className="reveal rounded-2xl border border-charcoal/8 bg-cream p-8 transition-all duration-300"
-            key={active.id}
-          >
+          {/* Detail panel — no "reveal" class; it updates live as the dial turns */}
+          <div className="rounded-2xl border border-charcoal/8 bg-cream p-8 transition-all duration-300">
             <span
-              className="mb-4 inline-block h-1 w-12 rounded-full"
+              className="mb-4 inline-block h-1 w-12 rounded-full transition-colors duration-300"
               style={{ backgroundColor: active.accent }}
             />
             <p className="mb-1 text-sm font-medium uppercase tracking-widest text-charcoal/50">
@@ -180,7 +191,7 @@ export function FocusTurntable() {
                   className="flex items-center gap-3 text-sm text-charcoal"
                 >
                   <span
-                    className="h-1.5 w-1.5 shrink-0 rounded-full"
+                    className="h-1.5 w-1.5 shrink-0 rounded-full transition-colors duration-300"
                     style={{ backgroundColor: active.accent }}
                   />
                   {service}
