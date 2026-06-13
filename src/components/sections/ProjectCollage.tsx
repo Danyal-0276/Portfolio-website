@@ -23,6 +23,7 @@ const collageLayout = [
 export function ProjectCollage() {
   const sectionRef = useRef<HTMLElement>(null);
   const boardRef = useRef<HTMLDivElement>(null);
+  const draggablesRef = useRef<Draggable[]>([]);
 
   useGSAP(
     () => {
@@ -35,8 +36,19 @@ export function ProjectCollage() {
         "(prefers-reduced-motion: reduce)",
       ).matches;
 
-      const cards = gsap.utils.toArray<HTMLElement>(".collage-card");
-      const draggables: Draggable[] = [];
+      const cards = gsap.utils.toArray<HTMLElement>(".collage-card", board);
+      draggablesRef.current = [];
+
+      cards.forEach((card, i) => {
+        const layout = collageLayout[i];
+        gsap.set(card, {
+          rotation: layout.rotate,
+          scale: layout.scale,
+          x: 0,
+          y: 0,
+          zIndex: i + 1,
+        });
+      });
 
       if (!prefersReducedMotion) {
         gsap.from(cards, {
@@ -53,38 +65,45 @@ export function ProjectCollage() {
         });
       }
 
-      cards.forEach((card) => {
-        const d = Draggable.create(card, {
+      cards.forEach((card, i) => {
+        const layout = collageLayout[i];
+        const [d] = Draggable.create(card, {
           type: "x,y",
           bounds: board,
           inertia: true,
           edgeResistance: 0.65,
           onPress() {
-            gsap.to(card, { scale: 1.05, zIndex: 50, duration: 0.2 });
+            gsap.to(card, { scale: layout.scale * 1.05, zIndex: 50, duration: 0.2 });
           },
           onRelease() {
-            gsap.to(card, { scale: parseFloat(card.dataset.scale ?? "1"), duration: 0.25 });
+            gsap.to(card, { scale: layout.scale, duration: 0.25 });
           },
         });
-        draggables.push(d[0]);
+        draggablesRef.current.push(d);
       });
 
-      return () => draggables.forEach((d) => d.kill());
+      return () => draggablesRef.current.forEach((d) => d.kill());
     },
     { scope: sectionRef },
   );
 
   function resetLayout() {
-    const cards = gsap.utils.toArray<HTMLElement>(".collage-card");
-    cards.forEach((card, i) => {
+    draggablesRef.current.forEach((d, i) => {
       const layout = collageLayout[i];
+      const card = d.target as HTMLElement;
+
       gsap.to(card, {
-        left: `${layout.x}%`,
-        top: `${layout.y}%`,
+        x: 0,
+        y: 0,
         rotation: layout.rotate,
         scale: layout.scale,
+        zIndex: i + 1,
         duration: 0.9,
         ease: "power3.out",
+        overwrite: true,
+        onComplete: () => {
+          d.update();
+        },
       });
     });
   }
@@ -138,8 +157,6 @@ export function ProjectCollage() {
                 style={{
                   left: `${layout.x}%`,
                   top: `${layout.y}%`,
-                  transform: `rotate(${layout.rotate}deg) scale(${layout.scale})`,
-                  zIndex: i + 1,
                 }}
               >
                 <div className="overflow-hidden rounded-xl shadow-2xl shadow-black/50 ring-1 ring-white/10">
