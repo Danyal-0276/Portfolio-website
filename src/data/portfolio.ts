@@ -290,3 +290,19 @@ export const projectAccents: Record<string, string> = {
   "js-projects": "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
   sentiment: "linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)",
 };
+
+/** Public paths to project screenshots copied from Snapshots of projects/ */
+export const projectSnapshots: Record<string, string[]> = {
+  trak: ["/projects/trak-1.png", "/projects/trak-2.png", "/projects/trak-3.png"],
+  pos: ["/projects/pos-1.jpeg", "/projects/pos-2.jpeg", "/projects/pos-3.jpeg"],
+  bert: ["/projects/bert-1.png", "/projects/bert-2.png"],
+  nids: ["/projects/nids-1.png", "/projects/nids-2.png"],
+  scraper: ["/projects/scraper-1.png"],
+  duolingo: ["/projects/duolingo-1.png", "/projects/duolingo-2.png"],
+  "js-projects": ["/projects/js-projects-1.png"],
+  sentiment: ["/projects/sentiment-1.png"],
+};
+
+export function getProjectThumbnail(projectId: string): string | undefined {
+  return projectSnapshots[projectId]?.[0];
+}
