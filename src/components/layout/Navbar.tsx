@@ -23,13 +23,13 @@ export function Navbar() {
   return (
     <header
       ref={navRef}
-      className="fixed top-0 right-0 left-0 z-50 border-b border-charcoal/5 bg-cream/80 backdrop-blur-md"
+      className="fixed top-0 right-0 left-0 z-50 border-b border-white/10 bg-[#0a0a0a]/75 backdrop-blur-md"
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:px-12 lg:px-20">
         <button
           type="button"
           onClick={() => handleNavClick("#hero")}
-          className="font-serif text-xl text-charcoal transition-colors hover:text-gold-dark"
+          className="font-serif text-xl text-cream transition-colors hover:text-gold"
         >
           DT<span className="text-gold">.</span>
         </button>
@@ -40,7 +40,7 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={() => handleNavClick(link.href)}
-                className="text-sm text-charcoal-light transition-colors hover:text-gold-dark"
+                className="text-sm text-cream/70 transition-colors hover:text-gold"
               >
                 {link.label}
               </button>
@@ -49,11 +49,11 @@ export function Navbar() {
         </ul>
 
         <div className="hidden items-center gap-6 md:flex">
-          <SocialLinks variant="compact" />
+          <SocialLinks variant="compact" className="[&_a]:text-cream/70 [&_a:hover]:text-gold" />
           <button
             type="button"
             onClick={() => handleNavClick("#contact")}
-            className="rounded-full bg-charcoal px-5 py-2 text-sm text-cream transition-colors hover:bg-gold hover:text-charcoal"
+            className="rounded-full border border-white/20 px-5 py-2 text-sm text-cream transition-colors hover:border-gold hover:bg-gold hover:text-charcoal"
           >
             Get in Touch
           </button>
@@ -68,19 +68,19 @@ export function Navbar() {
         >
           <span
             className={cn(
-              "block h-0.5 w-6 bg-charcoal transition-transform",
+              "block h-0.5 w-6 bg-cream transition-transform",
               open && "translate-y-2 rotate-45",
             )}
           />
           <span
             className={cn(
-              "block h-0.5 w-6 bg-charcoal transition-opacity",
+              "block h-0.5 w-6 bg-cream transition-opacity",
               open && "opacity-0",
             )}
           />
           <span
             className={cn(
-              "block h-0.5 w-6 bg-charcoal transition-transform",
+              "block h-0.5 w-6 bg-cream transition-transform",
               open && "-translate-y-2 -rotate-45",
             )}
           />
@@ -88,14 +88,14 @@ export function Navbar() {
       </nav>
 
       {open && (
-        <div className="border-t border-charcoal/5 bg-cream px-6 py-4 md:hidden">
+        <div className="border-t border-white/10 bg-[#0a0a0a] px-6 py-4 md:hidden">
           <ul className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <button
                   type="button"
                   onClick={() => handleNavClick(link.href)}
-                  className="text-base text-charcoal-light"
+                  className="text-base text-cream/70"
                 >
                   {link.label}
                 </button>
@@ -105,7 +105,7 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={() => handleNavClick("#contact")}
-                className="text-base font-medium text-gold-dark"
+                className="text-base font-medium text-gold"
               >
                 Get in Touch
               </button>

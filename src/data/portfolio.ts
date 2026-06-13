@@ -54,7 +54,31 @@ export const hero = {
   subtext:
     "I build production-grade web systems and research AI models for misinformation detection, from POS ecosystems deployed in restaurants to BERT-family benchmarks on 100K+ news samples.",
   availability: "Open to internships & collaborations",
+  intro:
+    "Hey there! I'm a Full-Stack Web Developer and AI/ML Researcher building production apps and research pipelines in Lahore.",
+  roleLineLeft: "FULL-STACK",
+  roleLineRight: "DEVELOPER",
+  roleLineSecondary: "AI & ML RESEARCH",
 };
+
+export const techMarquee = [
+  "React",
+  "Next.js",
+  "TypeScript",
+  "Node.js",
+  "Python",
+  "PyTorch",
+  "MongoDB",
+  "Django",
+  "HuggingFace",
+  "Playwright",
+  "PySpark",
+  "Tailwind CSS",
+  "Express",
+  "scikit-learn",
+  "React Native",
+  "Git",
+];
 
 export const about = {
   bio: [

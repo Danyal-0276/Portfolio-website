@@ -66,6 +66,28 @@
     line-height: 0.85;
     letter-spacing: -0.04em;
   }
+
+  .hero-grid {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: linear-gradient(to right, black 30%, transparent 85%);
+  }
+
+  .hero-portrait {
+    -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  }
+
+  .hero-portrait-fade {
+    background: linear-gradient(
+      to bottom,
+      transparent 45%,
+      rgba(10, 10, 10, 0.4) 70%,
+      #0a0a0a 100%
+    );
+  }
 }
 
 #smooth-wrapper {

@@ -1,105 +1,113 @@
 "use client";
 
 import Image from "next/image";
-import { about, hero, siteConfig } from "@/data/portfolio";
+import { hero, siteConfig } from "@/data/portfolio";
+import { Button } from "@/components/ui/Button";
 import { scrollToSection } from "@/lib/gsap";
 
 export function Hero() {
+  const nameParts = siteConfig.name.toUpperCase().split(" ");
+
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen flex-col overflow-hidden pt-24 pb-8"
+      className="hero-dark relative min-h-screen overflow-hidden bg-[#0a0a0a] pt-24 text-cream"
     >
-      <div className="grid-bg absolute inset-0" aria-hidden="true" />
-
+      {/* Subtle grid + golden glow */}
+      <div className="hero-grid absolute inset-0 opacity-30" aria-hidden="true" />
       <div
-        className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden"
+        className="pointer-events-none absolute top-[30%] left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full opacity-30 blur-3xl"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(237,179,60,0.35) 0%, rgba(237,179,60,0.08) 45%, transparent 70%)",
+        }}
         aria-hidden="true"
-      >
-        <span className="hero-bg-text absolute left-[-2%] font-serif text-charcoal/[0.04] select-none">
-          DEV
-        </span>
-        <span className="hero-bg-text absolute right-[-2%] font-serif text-charcoal/[0.04] select-none">
-          EL
-        </span>
-      </div>
+      />
 
-      <div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center px-6 md:px-12">
-        <div className="mb-8 flex w-full max-w-3xl items-start justify-between gap-4 text-sm">
-          <div>
-            <p className="hero-name font-serif text-lg font-medium text-charcoal md:text-xl">
-              {siteConfig.name}
-            </p>
-            <p className="hero-greeting text-charcoal/50">{hero.tagline}</p>
-          </div>
-          <div className="hidden text-right sm:block">
-            <p className="hero-headline font-medium text-charcoal">{hero.roles[0]}</p>
-            <p className="text-charcoal/50">{hero.roles[1]}</p>
-            <span className="mt-2 inline-flex items-center gap-2 rounded-full border border-charcoal/10 bg-white/80 px-4 py-1.5 text-xs backdrop-blur-sm">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
-              {hero.availability}
-            </span>
-          </div>
+      <div className="relative mx-auto flex min-h-[calc(100vh-6rem)] max-w-7xl flex-col px-6 md:px-12">
+        {/* Large name behind portrait */}
+        <div
+          className="hero-name-bg pointer-events-none absolute inset-x-0 top-[14%] z-10 flex flex-col items-center select-none md:top-[16%]"
+          aria-hidden="true"
+        >
+          <span className="hero-title-line text-[clamp(2.8rem,11vw,7.5rem)] leading-[0.9] font-bold tracking-tighter text-white/[0.07]">
+            {nameParts[0]}
+          </span>
+          <span className="hero-title-line -mt-1 text-[clamp(2.8rem,11vw,7.5rem)] leading-[0.9] font-bold tracking-tighter text-white/[0.07] md:-mt-2">
+            {nameParts.slice(1).join(" ")}
+          </span>
         </div>
 
-        <div className="relative mb-8 w-full max-w-xs md:max-w-sm">
-          <div
-            className="hero-image relative mx-auto aspect-[3/4] w-full max-w-[280px] overflow-hidden pill-frame shadow-2xl shadow-charcoal/15 md:max-w-[320px]"
-            data-speed="0.9"
-          >
+        {/* Role text flanking the portrait */}
+        <div
+          className="pointer-events-none absolute inset-x-0 top-[38%] z-20 hidden items-center justify-between px-[4%] md:flex lg:px-[8%]"
+          aria-hidden="true"
+        >
+          <span className="hero-role-left text-[clamp(1.6rem,5vw,4rem)] font-bold tracking-tight text-white/25">
+            {hero.roleLineLeft}
+          </span>
+          <span className="hero-role-right text-[clamp(1.6rem,5vw,4rem)] font-bold tracking-tight text-white/25">
+            {hero.roleLineRight}
+          </span>
+        </div>
+
+        {/* Merged portrait */}
+        <div className="relative z-30 mx-auto mt-[8vh] flex w-full max-w-[min(340px,78vw)] flex-1 flex-col items-center justify-start md:mt-[10vh]">
+          <div className="hero-image relative aspect-[3/4] w-full">
             <Image
               src="/images/profile.png"
               alt={`${siteConfig.name}, professional headshot`}
               fill
               priority
-              className="object-cover object-top"
-              sizes="(max-width: 768px) 280px, 320px"
+              className="hero-portrait object-cover object-top"
+              sizes="(max-width: 768px) 78vw, 340px"
             />
+            {/* Bottom fade merges photo into dark background */}
+            <div className="hero-portrait-fade pointer-events-none absolute inset-0" aria-hidden="true" />
           </div>
-        </div>
 
-        <div className="hero-subtext mb-6 text-center">
-          <p className="font-serif text-2xl text-charcoal md:text-3xl lg:text-4xl">
-            {hero.roles[0]}
+          <p className="hero-role-mobile mt-4 text-center text-sm font-semibold tracking-[0.25em] text-white/40 uppercase md:hidden">
+            {hero.roleLineLeft} · {hero.roleLineRight}
           </p>
-          <p className="mt-1 text-lg text-gold-dark md:text-xl">&</p>
-          <p className="font-serif text-2xl text-charcoal md:text-3xl lg:text-4xl">
-            {hero.roles[1]}
+          <p className="mt-1 text-center text-xs tracking-[0.2em] text-gold/70 uppercase md:hidden">
+            {hero.roleLineSecondary}
           </p>
         </div>
 
-        <div className="hero-subtext w-full max-w-5xl">
-          <div className="grid items-end gap-8 border-t border-charcoal/10 pt-8 md:grid-cols-[auto_1fr_auto]">
-            <button
-              type="button"
-              onClick={() => scrollToSection("#focus")}
-              className="hero-cta flex h-12 w-12 items-center justify-center rounded-lg border border-charcoal/10 bg-white transition-colors hover:border-gold hover:bg-gold/5"
-              aria-label="Scroll to focus areas"
-            >
-              <svg className="h-5 w-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-            </button>
-
-            <p className="hero-headline max-w-xl text-base leading-relaxed text-charcoal-light md:text-lg">
-              {hero.subtext}
+        {/* Bottom row: status, bio, CTA */}
+        <div className="hero-subtext relative z-40 mx-auto grid w-full max-w-6xl gap-8 pb-10 md:grid-cols-[1fr_auto_1fr] md:items-end md:gap-6">
+          <div className="hero-greeting space-y-4 md:max-w-sm">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs text-cream/80 backdrop-blur-sm">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+              {hero.availability}
+            </span>
+            <p className="hero-headline text-sm leading-relaxed text-cream/60 md:text-base">
+              {hero.intro}
             </p>
+          </div>
 
-            <div className="flex flex-wrap gap-6 md:gap-8">
-              <div className="text-center md:text-right">
-                <p className="font-serif text-4xl text-charcoal">{about.highlights[0].value}</p>
-                <p className="text-xs uppercase tracking-wider text-charcoal/50">CGPA</p>
-              </div>
-              <div className="text-center md:text-right">
-                <p className="font-serif text-4xl text-charcoal">{about.highlights[1].value}</p>
-                <p className="text-xs uppercase tracking-wider text-charcoal/50">Projects</p>
-              </div>
-            </div>
+          <div className="hidden text-center md:block">
+            <p className="text-xs tracking-[0.3em] text-gold/80 uppercase">{hero.roleLineSecondary}</p>
+          </div>
+
+          <div className="hero-cta flex flex-wrap items-center gap-3 md:justify-end">
+            <Button
+              variant="primary"
+              onClick={() => scrollToSection("#contact")}
+              className="bg-cream text-charcoal hover:bg-gold"
+            >
+              Schedule Call
+            </Button>
+            <Button
+              variant="outline"
+              href={siteConfig.resumePath}
+              className="border-white/25 text-cream hover:border-gold hover:text-gold"
+            >
+              View Resume
+            </Button>
           </div>
         </div>
       </div>
-
-      <div className="hero-line gold-line mx-auto mt-6 w-24" />
     </section>
   );
 }
