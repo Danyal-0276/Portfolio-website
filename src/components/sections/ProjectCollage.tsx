@@ -3,7 +3,7 @@
 import { useGSAP } from "@gsap/react";
 import Image from "next/image";
 import { useRef } from "react";
-import { getProjectSnapshotFit, getProjectThumbnail, isChartSnapshotProject, projects } from "@/data/portfolio";
+import { getProjectSnapshotFit, getProjectThumbnail, isChartSnapshotProject, isDarkUiSnapshotProject, projects } from "@/data/portfolio";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Draggable, gsap, registerGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
@@ -17,6 +17,7 @@ const collageLayout = [
   { x: 45, y: 65, rotate: -8, scale: 1 },
   { x: 75, y: 22, rotate: 3, scale: 0.88 },
   { x: 22, y: 78, rotate: -4, scale: 0.94 },
+  { x: 58, y: 82, rotate: 6, scale: 0.86 },
 ];
 
 export function ProjectCollage() {
@@ -127,6 +128,7 @@ export function ProjectCollage() {
             const thumbnail = getProjectThumbnail(project.id);
             const fit = getProjectSnapshotFit(project.id);
             const isChart = isChartSnapshotProject(project.id);
+            const isDarkUi = isDarkUiSnapshotProject(project.id);
 
             return (
               <div
@@ -143,7 +145,8 @@ export function ProjectCollage() {
                 <div className="overflow-hidden rounded-xl shadow-2xl shadow-black/50 ring-1 ring-white/10">
                   <div
                     className={cn(
-                      "relative bg-white",
+                      "relative",
+                      isDarkUi ? "bg-black" : "bg-white",
                       isChart ? "aspect-square" : "aspect-[4/3]",
                     )}
                   >

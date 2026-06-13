@@ -48,8 +48,16 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="hidden items-center gap-6 md:flex">
+        <div className="hidden items-center gap-5 md:flex">
           <SocialLinks variant="compact" className="[&_a]:text-cream/70 [&_a:hover]:text-gold" />
+          <a
+            href={siteConfig.resumePath}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full border border-white/20 px-5 py-2 text-sm text-cream transition-colors hover:border-gold hover:text-gold"
+          >
+            View Resume
+          </a>
           <button
             type="button"
             onClick={() => handleNavClick("#contact")}
@@ -101,6 +109,16 @@ export function Navbar() {
                 </button>
               </li>
             ))}
+            <li>
+              <a
+                href={siteConfig.resumePath}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-base text-cream/70"
+              >
+                View Resume
+              </a>
+            </li>
             <li>
               <button
                 type="button"

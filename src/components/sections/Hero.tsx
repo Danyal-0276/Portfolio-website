@@ -11,100 +11,79 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="hero-dark relative min-h-screen overflow-hidden bg-[#0a0a0a] pt-24 text-cream"
+      className="hero-dark relative min-h-screen overflow-hidden bg-[#0a0a0a] pt-20 text-cream md:pt-24"
     >
-      {/* Subtle grid + golden glow */}
-      <div className="hero-grid absolute inset-0 opacity-30" aria-hidden="true" />
-      <div
-        className="pointer-events-none absolute top-[30%] left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full opacity-30 blur-3xl"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(237,179,60,0.35) 0%, rgba(237,179,60,0.08) 45%, transparent 70%)",
-        }}
-        aria-hidden="true"
-      />
+      <div className="hero-grid absolute inset-0 opacity-40" aria-hidden="true" />
 
-      <div className="relative mx-auto flex min-h-[calc(100vh-6rem)] max-w-7xl flex-col px-6 md:px-12">
-        {/* Large name behind portrait */}
-        <div
-          className="hero-name-bg pointer-events-none absolute inset-x-0 top-[14%] z-10 flex flex-col items-center select-none md:top-[16%]"
-          aria-hidden="true"
-        >
-          <span className="hero-title-line text-[clamp(2.8rem,11vw,7.5rem)] leading-[0.9] font-bold tracking-tighter text-white/[0.07]">
-            {nameParts[0]}
-          </span>
-          <span className="hero-title-line -mt-1 text-[clamp(2.8rem,11vw,7.5rem)] leading-[0.9] font-bold tracking-tighter text-white/[0.07] md:-mt-2">
-            {nameParts.slice(1).join(" ")}
-          </span>
-        </div>
+      {/* Golden horizon arc — James Lux style */}
+      <div className="hero-arc pointer-events-none absolute right-0 bottom-0 h-[55vh] w-[min(900px,85vw)] opacity-50" aria-hidden="true" />
 
-        {/* Role text flanking the portrait */}
-        <div
-          className="pointer-events-none absolute inset-x-0 top-[38%] z-20 hidden items-center justify-between px-[4%] md:flex lg:px-[8%]"
-          aria-hidden="true"
-        >
-          <span className="hero-role-left text-[clamp(1.6rem,5vw,4rem)] font-bold tracking-tight text-white/25">
-            {hero.roleLineLeft}
-          </span>
-          <span className="hero-role-right text-[clamp(1.6rem,5vw,4rem)] font-bold tracking-tight text-white/25">
-            {hero.roleLineRight}
-          </span>
-        </div>
-
-        {/* Merged portrait */}
-        <div className="relative z-30 mx-auto mt-[8vh] flex w-full max-w-[min(340px,78vw)] flex-1 flex-col items-center justify-start md:mt-[10vh]">
-          <div className="hero-image relative aspect-[3/4] w-full">
-            <Image
-              src="/images/profile.png"
-              alt={`${siteConfig.name}, professional headshot`}
-              fill
-              priority
-              className="hero-portrait object-cover object-top"
-              sizes="(max-width: 768px) 78vw, 340px"
-            />
-            {/* Bottom fade merges photo into dark background */}
-            <div className="hero-portrait-fade pointer-events-none absolute inset-0" aria-hidden="true" />
-          </div>
-
-          <p className="hero-role-mobile mt-4 text-center text-sm font-semibold tracking-[0.25em] text-white/40 uppercase md:hidden">
-            {hero.roleLineLeft} · {hero.roleLineRight}
-          </p>
-          <p className="mt-1 text-center text-xs tracking-[0.2em] text-gold/70 uppercase md:hidden">
-            {hero.roleLineSecondary}
-          </p>
-        </div>
-
-        {/* Bottom row: status, bio, CTA */}
-        <div className="hero-subtext relative z-40 mx-auto grid w-full max-w-6xl gap-8 pb-10 md:grid-cols-[1fr_auto_1fr] md:items-end md:gap-6">
-          <div className="hero-greeting space-y-4 md:max-w-sm">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs text-cream/80 backdrop-blur-sm">
+      <div className="relative mx-auto min-h-[calc(100vh-5rem)] max-w-[1400px] px-6 md:px-12 lg:px-16">
+        <div className="grid min-h-[inherit] items-center gap-6 lg:grid-cols-12 lg:gap-10">
+          {/* Left column — intro & CTA */}
+          <div className="hero-greeting relative z-40 order-2 flex flex-col justify-center gap-6 py-6 lg:order-1 lg:col-span-4 lg:py-16">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs text-cream/80 backdrop-blur-sm">
               <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
               {hero.availability}
             </span>
-            <p className="hero-headline text-sm leading-relaxed text-cream/60 md:text-base">
+
+            <p className="hero-headline max-w-sm text-base leading-relaxed text-cream/65 md:text-lg">
               {hero.intro}
             </p>
+
+            <div className="hero-cta flex flex-wrap gap-3">
+              <Button
+                variant="primary"
+                onClick={() => scrollToSection("#contact")}
+                className="rounded-full bg-cream px-8 text-charcoal hover:bg-gold"
+              >
+                Schedule Call
+              </Button>
+              <Button
+                variant="outline"
+                href={siteConfig.resumePath}
+                className="rounded-full border-white/25 text-cream hover:border-gold hover:text-gold"
+              >
+                View Resume
+              </Button>
+            </div>
           </div>
 
-          <div className="hidden text-center md:block">
-            <p className="text-xs tracking-[0.3em] text-gold/80 uppercase">{hero.roleLineSecondary}</p>
-          </div>
+          {/* Center stage — name, outline role, merged portrait */}
+          <div className="relative order-1 flex min-h-[58vh] flex-col items-center justify-end lg:order-2 lg:col-span-8 lg:min-h-[calc(100vh-8rem)]">
+            {/* Solid name + outlined role behind portrait */}
+            <div
+              className="pointer-events-none absolute inset-x-0 top-[6%] z-10 flex flex-col items-center select-none md:top-[10%]"
+              aria-hidden="true"
+            >
+              <span className="hero-title-line text-[clamp(3rem,11.5vw,8.5rem)] leading-[0.88] font-bold tracking-[-0.04em] text-white">
+                {nameParts[0]}
+              </span>
+              <span className="hero-title-line -mt-1 text-[clamp(3rem,11.5vw,8.5rem)] leading-[0.88] font-bold tracking-[-0.04em] text-white md:-mt-3">
+                {nameParts.slice(1).join(" ")}
+              </span>
+              <p className="hero-role-outline mt-1 text-[clamp(1.6rem,4.8vw,4rem)] leading-none font-bold tracking-tight uppercase md:mt-2">
+                {hero.roleOutline}
+              </p>
+            </div>
 
-          <div className="hero-cta flex flex-wrap items-center gap-3 md:justify-end">
-            <Button
-              variant="primary"
-              onClick={() => scrollToSection("#contact")}
-              className="bg-cream text-charcoal hover:bg-gold"
-            >
-              Schedule Call
-            </Button>
-            <Button
-              variant="outline"
-              href={siteConfig.resumePath}
-              className="border-white/25 text-cream hover:border-gold hover:text-gold"
-            >
-              View Resume
-            </Button>
+            {/* Portrait merged into dark background */}
+            <div className="hero-image relative z-30 mx-auto h-[min(58vh,580px)] w-full max-w-[min(440px,92vw)] lg:h-[min(72vh,680px)]">
+              <div className="hero-portrait-merge relative h-full w-full">
+                <Image
+                  src="/images/profile-hero.png"
+                  alt={`${siteConfig.name}, professional portrait`}
+                  fill
+                  priority
+                  className="hero-cutout object-contain object-bottom"
+                  sizes="(max-width: 768px) 92vw, 440px"
+                />
+              </div>
+            </div>
+
+            <p className="hero-role-mobile relative z-20 mt-3 text-center text-xs font-medium tracking-[0.28em] text-white/35 uppercase lg:hidden">
+              {hero.roleLineSecondary}
+            </p>
           </div>
         </div>
       </div>

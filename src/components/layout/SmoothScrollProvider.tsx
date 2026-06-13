@@ -40,12 +40,11 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
 
       const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
       heroTl
-        .from(".hero-title-line", { opacity: 0, y: 40, duration: 0.8, stagger: 0.1 })
-        .from(".hero-image", { opacity: 0, scale: 0.92, duration: 1 }, "-=0.5")
-        .from(".hero-role-left", { opacity: 0, x: -30, duration: 0.7 }, "-=0.6")
-        .from(".hero-role-right", { opacity: 0, x: 30, duration: 0.7 }, "-=0.7")
-        .from(".hero-greeting", { opacity: 0, y: 20, duration: 0.6 }, "-=0.4")
-        .from(".hero-cta", { opacity: 0, y: 20, duration: 0.5, stagger: 0.08 }, "-=0.3");
+        .from(".hero-greeting", { opacity: 0, y: 24, duration: 0.7 })
+        .from(".hero-title-line", { opacity: 0, y: 50, duration: 0.9, stagger: 0.12 }, "-=0.4")
+        .from(".hero-role-outline", { opacity: 0, y: 30, duration: 0.8 }, "-=0.5")
+        .from(".hero-image", { opacity: 0, scale: 0.94, duration: 1.1, ease: "power2.out" }, "-=0.7")
+        .from(".hero-cta", { opacity: 0, y: 16, duration: 0.5, stagger: 0.08 }, "-=0.5");
 
       ScrollTrigger.batch(".reveal", {
         onEnter: (elements) => {

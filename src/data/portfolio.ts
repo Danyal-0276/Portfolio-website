@@ -36,7 +36,7 @@ export const siteConfig = {
   description:
     "Computer Science student at UCP specializing in full-stack development, NLP research, and fake news detection. Building production systems with React, Next.js, Django, and PyTorch.",
   url: "https://portfolio-website-danyal.vercel.app",
-  ogImage: "/images/profile.png",
+  ogImage: "/images/profile-hero.png",
   email: "donibutt2112@gmail.com",
   phone: "+92 370 7076164",
   location: "Lahore, Punjab, Pakistan",
@@ -58,8 +58,41 @@ export const hero = {
     "Hey there! I'm a Full-Stack Web Developer and AI/ML Researcher building production apps and research pipelines in Lahore.",
   roleLineLeft: "FULL-STACK",
   roleLineRight: "DEVELOPER",
-  roleLineSecondary: "AI & ML RESEARCH",
+  roleOutline: "Full-Stack Developer",
+  roleLineSecondary: "AI & ML RESEARCHER",
 };
+
+export interface Certification {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  description: string;
+  image: string;
+  verifyUrl?: string;
+}
+
+export const certifications: Certification[] = [
+  {
+    id: "google-ai-fundamentals",
+    title: "AI Fundamentals",
+    issuer: "Google · Coursera",
+    date: "Apr 2026",
+    description:
+      "Google Career Certificate covering core AI concepts, machine learning workflows, and practical applications for modern software development.",
+    image: "/certifications/google-ai-fundamentals.png",
+    verifyUrl: "https://coursera.org/verify/7C403PQ3QE0D",
+  },
+  {
+    id: "huggingface-agents",
+    title: "Fundamentals of Agents",
+    issuer: "Hugging Face",
+    date: "May 2026",
+    description:
+      "Unit 1: Foundations of Agents in the Hugging Face Agents Course — building and understanding AI agent architectures.",
+    image: "/certifications/huggingface-agents.png",
+  },
+];
 
 export const techMarquee = [
   "React",
@@ -77,7 +110,7 @@ export const techMarquee = [
   "Express",
   "scikit-learn",
   "React Native",
-  "Git",
+  "Gemini",
 ];
 
 export const about = {
@@ -95,7 +128,7 @@ export const about = {
   },
   highlights: [
     { label: "CGPA", value: "3.59" },
-    { label: "Projects", value: "8+" },
+    { label: "Projects", value: "9+" },
     { label: "Internship", value: "Tri Tech" },
     { label: "Research", value: "100K+ samples" },
   ],
@@ -127,6 +160,16 @@ export const projects: Project[] = [
     tech: ["React Native", "Django", "DRF", "MongoDB", "HuggingFace", "JWT"],
     github: "https://github.com/Danyal-0276/TRAK.git",
     highlight: "Full-stack mobile + API",
+  },
+  {
+    id: "jarvis",
+    title: "J.A.R.V.I.S — Personal AI Assistant",
+    description:
+      "Iron Man-inspired voice and chat assistant with a cinematic UI: 3D particle sphere, SiriWave visualizer, Google Gemini brain, voice commands, secure document search, and Gmail integration. Runs locally on localhost.",
+    category: "Full Stack",
+    tech: ["Python", "Eel", "Gemini", "JavaScript", "Bootstrap", "Canvas"],
+    github: "https://github.com/Danyal-0276/Jarvis.git",
+    highlight: "Voice + AI desktop assistant",
   },
   {
     id: "pos",
@@ -231,6 +274,7 @@ export const navLinks = [
   { label: "About", href: "#about" },
   { label: "Focus", href: "#focus" },
   { label: "Experience", href: "#experience" },
+  { label: "Certifications", href: "#certifications" },
   { label: "Projects", href: "#projects" },
   { label: "Collage", href: "#collage" },
   { label: "Contact", href: "#contact" },
@@ -306,6 +350,7 @@ export const focusAreas: FocusArea[] = [
 
 export const projectAccents: Record<string, string> = {
   trak: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+  jarvis: "linear-gradient(135deg, #0ea5e9 0%, #6366f1 50%, #a855f7 100%)",
   pos: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
   bert: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
   nids: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
@@ -318,6 +363,7 @@ export const projectAccents: Record<string, string> = {
 /** Public paths to project screenshots */
 export const projectSnapshots: Record<string, string[]> = {
   trak: ["/projects/trak-1.png", "/projects/trak-2.png", "/projects/trak-3.png"],
+  jarvis: ["/projects/jarvis-1.png"],
   pos: ["/projects/pos-1.jpeg", "/projects/pos-2.jpeg", "/projects/pos-3.jpeg"],
   bert: ["/projects/bert-1.png", "/projects/bert-2.png"],
   nids: ["/projects/nids-1.png", "/projects/nids-2.png"],
@@ -335,6 +381,7 @@ export const projectSnapshots: Record<string, string[]> = {
 
 const MOBILE_SNAPSHOT_PROJECTS = new Set(["trak", "duolingo"]);
 const CHART_SNAPSHOT_PROJECTS = new Set(["bert", "nids", "sentiment", "scraper"]);
+const DARK_UI_SNAPSHOT_PROJECTS = new Set(["jarvis"]);
 
 export function isMobileSnapshotProject(projectId: string) {
   return MOBILE_SNAPSHOT_PROJECTS.has(projectId);
@@ -344,8 +391,14 @@ export function isChartSnapshotProject(projectId: string) {
   return CHART_SNAPSHOT_PROJECTS.has(projectId);
 }
 
+export function isDarkUiSnapshotProject(projectId: string) {
+  return DARK_UI_SNAPSHOT_PROJECTS.has(projectId);
+}
+
 export function getProjectSnapshotFit(projectId: string): "cover" | "contain" {
-  return CHART_SNAPSHOT_PROJECTS.has(projectId) ? "contain" : "cover";
+  if (CHART_SNAPSHOT_PROJECTS.has(projectId)) return "contain";
+  if (DARK_UI_SNAPSHOT_PROJECTS.has(projectId)) return "contain";
+  return "cover";
 }
 
 export function getProjectThumbnail(projectId: string): string | undefined {

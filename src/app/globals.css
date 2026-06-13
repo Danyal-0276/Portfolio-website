@@ -75,18 +75,35 @@
     mask-image: linear-gradient(to right, black 30%, transparent 85%);
   }
 
-  .hero-portrait {
-    -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  .hero-arc {
+    background:
+      radial-gradient(
+        ellipse 100% 80% at 100% 100%,
+        rgba(237, 179, 60, 0.22) 0%,
+        rgba(237, 179, 60, 0.06) 40%,
+        transparent 70%
+      );
   }
 
-  .hero-portrait-fade {
-    background: linear-gradient(
-      to bottom,
-      transparent 45%,
-      rgba(10, 10, 10, 0.4) 70%,
-      #0a0a0a 100%
-    );
+  .hero-role-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.7);
+    paint-order: stroke fill;
+  }
+
+  @media (min-width: 768px) {
+    .hero-role-outline {
+      -webkit-text-stroke-width: 2px;
+    }
+  }
+
+  .hero-portrait-merge {
+    -webkit-mask-image: linear-gradient(to bottom, black 72%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 72%, transparent 100%);
+  }
+
+  .hero-cutout {
+    filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.45));
   }
 }
 

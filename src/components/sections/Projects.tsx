@@ -9,7 +9,7 @@ export function Projects() {
         <SectionHeading
           label="Projects"
           title="Selected work across the stack"
-          description="From production POS systems to NLP research pipelines. Eight projects that showcase my range."
+          description="From production POS systems to NLP research pipelines. Nine projects that showcase my range."
         />
 
         <div

@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import {
   getProjectSnapshotFit,
   isChartSnapshotProject,
+  isDarkUiSnapshotProject,
   isMobileSnapshotProject,
   projectSnapshots,
 } from "@/data/portfolio";
@@ -26,6 +27,7 @@ export function ProjectSnapshotStack({ projectId, className }: ProjectSnapshotSt
   const images = projectSnapshots[projectId] ?? [];
   const isMobileFrame = isMobileSnapshotProject(projectId);
   const isChart = isChartSnapshotProject(projectId);
+  const isDarkUi = isDarkUiSnapshotProject(projectId);
   const objectFit = getProjectSnapshotFit(projectId);
 
   useGSAP(
@@ -137,7 +139,9 @@ export function ProjectSnapshotStack({ projectId, className }: ProjectSnapshotSt
             "absolute inset-0 overflow-hidden shadow-xl shadow-charcoal/15",
             isMobileFrame
               ? "rounded-[2.25rem] border-[10px] border-charcoal bg-charcoal ring-1 ring-white/10"
-              : "rounded-xl border border-charcoal/15 bg-white",
+              : isDarkUi
+                ? "rounded-xl border border-cyan-500/20 bg-[#0a0a0a] shadow-[0_0_30px_rgba(14,165,233,0.15)]"
+                : "rounded-xl border border-charcoal/15 bg-white",
           )}
         >
           {isMobileFrame && (
@@ -146,7 +150,7 @@ export function ProjectSnapshotStack({ projectId, className }: ProjectSnapshotSt
             </div>
           )}
 
-          {!isMobileFrame && (
+          {!isMobileFrame && !isDarkUi && (
             <div className="relative z-10 flex items-center gap-1.5 border-b border-charcoal/10 bg-cream px-3 py-2">
               <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
               <span className="h-2.5 w-2.5 rounded-full bg-gold/80" />
@@ -154,11 +158,24 @@ export function ProjectSnapshotStack({ projectId, className }: ProjectSnapshotSt
             </div>
           )}
 
+          {isDarkUi && (
+            <div className="relative z-10 flex items-center gap-1.5 border-b border-cyan-500/10 bg-[#111] px-3 py-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-red-400/60" />
+              <span className="h-2.5 w-2.5 rounded-full bg-cyan-400/60" />
+              <span className="h-2.5 w-2.5 rounded-full bg-indigo-400/60" />
+            </div>
+          )}
+
           <div
             ref={imageWrapRef}
             className={cn(
-              "relative w-full bg-white",
-              isMobileFrame ? "h-full pt-5" : isChart ? "h-[calc(100%-2.25rem)]" : "h-[calc(100%-2.25rem)]",
+              "relative w-full",
+              isMobileFrame
+                ? "h-full pt-5"
+                : isChart || isDarkUi
+                  ? "h-[calc(100%-2.25rem)]"
+                  : "h-[calc(100%-2.25rem)]",
+              isDarkUi && "bg-black",
             )}
           >
             <Image
