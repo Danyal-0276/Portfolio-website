@@ -20,11 +20,11 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       ).matches;
 
       if (prefersReducedMotion) {
-        gsap.set(".reveal, .project-card", { opacity: 1, y: 0 });
+        gsap.set(".reveal, .project-card:not(.showcase-panel)", { opacity: 1, y: 0 });
         return;
       }
 
-      gsap.set(".project-card", { opacity: 0, y: 40 });
+      gsap.set(".project-card:not(.showcase-panel)", { opacity: 0, y: 40 });
 
       const smoother = ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
@@ -75,7 +75,7 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         start: "top 85%",
         once: true,
         onEnter: () => {
-          gsap.to(".project-card", {
+          gsap.to(".project-card:not(.showcase-panel)", {
             opacity: 1,
             y: 0,
             duration: 0.7,

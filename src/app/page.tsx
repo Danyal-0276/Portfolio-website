@@ -1,7 +1,9 @@
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
+import { FocusTurntable } from "@/components/sections/FocusTurntable";
 import { Experience } from "@/components/sections/Experience";
-import { Projects } from "@/components/sections/Projects";
+import { ProjectShowcase } from "@/components/sections/ProjectShowcase";
+import { ProjectCollage } from "@/components/sections/ProjectCollage";
 import { Skills } from "@/components/sections/Skills";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/layout/Navbar";
@@ -10,9 +12,11 @@ export default function Home() {
   return (
     <main>
       <Hero />
+      <FocusTurntable />
       <About />
       <Experience />
-      <Projects />
+      <ProjectShowcase />
+      <ProjectCollage />
       <Skills />
       <Contact />
       <Footer />

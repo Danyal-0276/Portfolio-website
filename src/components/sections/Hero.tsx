@@ -1,80 +1,105 @@
 "use client";
 
 import Image from "next/image";
-import { hero, siteConfig } from "@/data/portfolio";
-import { Button } from "@/components/ui/Button";
-import { SocialLinks } from "@/components/ui/SocialLinks";
+import { about, hero, siteConfig } from "@/data/portfolio";
 import { scrollToSection } from "@/lib/gsap";
 
 export function Hero() {
   return (
     <section
       id="hero"
-      className="section-padding flex min-h-screen items-center pt-28"
+      className="relative flex min-h-screen flex-col overflow-hidden pt-24 pb-8"
     >
-      <div className="section-container grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-        <div className="relative mx-auto w-full max-w-md lg:mx-0">
+      <div className="grid-bg absolute inset-0" aria-hidden="true" />
+
+      <div
+        className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden"
+        aria-hidden="true"
+      >
+        <span className="hero-bg-text absolute left-[-2%] font-serif text-charcoal/[0.04] select-none">
+          DEV
+        </span>
+        <span className="hero-bg-text absolute right-[-2%] font-serif text-charcoal/[0.04] select-none">
+          EL
+        </span>
+      </div>
+
+      <div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center px-6 md:px-12">
+        <div className="mb-8 flex w-full max-w-3xl items-start justify-between gap-4 text-sm">
+          <div>
+            <p className="hero-name font-serif text-lg font-medium text-charcoal md:text-xl">
+              {siteConfig.name}
+            </p>
+            <p className="hero-greeting text-charcoal/50">{hero.tagline}</p>
+          </div>
+          <div className="hidden text-right sm:block">
+            <p className="hero-headline font-medium text-charcoal">{hero.roles[0]}</p>
+            <p className="text-charcoal/50">{hero.roles[1]}</p>
+            <span className="mt-2 inline-flex items-center gap-2 rounded-full border border-charcoal/10 bg-white/80 px-4 py-1.5 text-xs backdrop-blur-sm">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+              {hero.availability}
+            </span>
+          </div>
+        </div>
+
+        <div className="relative mb-8 w-full max-w-xs md:max-w-sm">
           <div
-            className="hero-image relative aspect-[4/5] overflow-hidden rounded-3xl shadow-2xl shadow-charcoal/20"
-            data-speed="0.85"
+            className="hero-image relative mx-auto aspect-[3/4] w-full max-w-[280px] overflow-hidden pill-frame shadow-2xl shadow-charcoal/15 md:max-w-[320px]"
+            data-speed="0.9"
           >
             <Image
               src="/images/profile.png"
-              alt={`${siteConfig.name} — professional headshot`}
+              alt={`${siteConfig.name}, professional headshot`}
               fill
               priority
               className="object-cover object-top"
-              sizes="(max-width: 1024px) 100vw, 480px"
+              sizes="(max-width: 768px) 280px, 320px"
             />
           </div>
-          <div className="absolute -right-4 -bottom-4 -z-10 h-full w-full rounded-3xl bg-gold/20" />
         </div>
 
-        <div className="flex flex-col gap-6">
-          <p className="hero-greeting text-sm font-medium uppercase tracking-widest text-gold-dark">
-            {hero.greeting}
+        <div className="hero-subtext mb-6 text-center">
+          <p className="font-serif text-2xl text-charcoal md:text-3xl lg:text-4xl">
+            {hero.roles[0]}
           </p>
-
-          <h1 className="hero-name font-serif text-5xl leading-none text-charcoal md:text-6xl lg:text-7xl">
-            {hero.name}
-          </h1>
-
-          <div className="hero-line gold-line w-24" />
-
-          <p className="hero-headline text-xl font-medium text-charcoal md:text-2xl">
-            {hero.headline}
+          <p className="mt-1 text-lg text-gold-dark md:text-xl">&</p>
+          <p className="font-serif text-2xl text-charcoal md:text-3xl lg:text-4xl">
+            {hero.roles[1]}
           </p>
+        </div>
 
-          <p className="hero-subtext max-w-xl text-lg leading-relaxed text-charcoal-light">
-            {hero.subtext}
-          </p>
-
-          <p className="inline-flex items-center gap-2 text-sm text-charcoal/60">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
-            {hero.availability}
-          </p>
-
-          <SocialLinks variant="hero" />
-
-          <div className="hero-cta flex flex-wrap gap-4 pt-2">
-            <Button
-              variant="primary"
-              onClick={() => scrollToSection("#projects")}
+        <div className="hero-subtext w-full max-w-5xl">
+          <div className="grid items-end gap-8 border-t border-charcoal/10 pt-8 md:grid-cols-[auto_1fr_auto]">
+            <button
+              type="button"
+              onClick={() => scrollToSection("#focus")}
+              className="hero-cta flex h-12 w-12 items-center justify-center rounded-lg border border-charcoal/10 bg-white transition-colors hover:border-gold hover:bg-gold/5"
+              aria-label="Scroll to focus areas"
             >
-              View Projects
-            </Button>
-            <Button variant="outline" href={siteConfig.resumePath}>
-              Download Resume
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => scrollToSection("#contact")}
-            >
-              Contact Me
-            </Button>
+              <svg className="h-5 w-5 text-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </button>
+
+            <p className="hero-headline max-w-xl text-base leading-relaxed text-charcoal-light md:text-lg">
+              {hero.subtext}
+            </p>
+
+            <div className="flex flex-wrap gap-6 md:gap-8">
+              <div className="text-center md:text-right">
+                <p className="font-serif text-4xl text-charcoal">{about.highlights[0].value}</p>
+                <p className="text-xs uppercase tracking-wider text-charcoal/50">CGPA</p>
+              </div>
+              <div className="text-center md:text-right">
+                <p className="font-serif text-4xl text-charcoal">{about.highlights[1].value}</p>
+                <p className="text-xs uppercase tracking-wider text-charcoal/50">Projects</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <div className="hero-line gold-line mx-auto mt-6 w-24" />
     </section>
   );
 }

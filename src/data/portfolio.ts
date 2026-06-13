@@ -32,7 +32,7 @@ export interface SkillGroup {
 
 export const siteConfig = {
   name: "Danyal Tanveer",
-  title: "Danyal Tanveer | Full-Stack & ML Developer",
+  title: "Danyal Tanveer | Full-Stack Web Developer & AI/ML Researcher",
   description:
     "Computer Science student at UCP specializing in full-stack development, NLP research, and fake news detection. Building production systems with React, Next.js, Django, and PyTorch.",
   url: "https://portfolio-website-danyal.vercel.app",
@@ -48,22 +48,24 @@ export const siteConfig = {
 export const hero = {
   greeting: "Hello, I'm",
   name: "Danyal Tanveer",
-  headline: "CS Student @ UCP | Full-Stack & ML Developer | NLP Research",
+  roles: ["Full-Stack Web Developer", "AI & ML Researcher"],
+  tagline: "Full-Stack Web Developer · AI & ML Researcher",
+  headline: "Full-Stack Web Developer & AI/ML Researcher",
   subtext:
-    "I build production-grade web systems and research AI models for misinformation detection — from POS ecosystems deployed in restaurants to BERT-family benchmarks on 100K+ news samples.",
+    "I build production-grade web systems and research AI models for misinformation detection, from POS ecosystems deployed in restaurants to BERT-family benchmarks on 100K+ news samples.",
   availability: "Open to internships & collaborations",
 };
 
 export const about = {
   bio: [
     "I'm a Computer Science student at the University of Central Punjab with a passion for building software that works in the real world and research that pushes the boundaries of NLP.",
-    "My work spans full-stack development — Next.js POS systems used by restaurants in Lahore — and academic research on multimodal fake news detection, where I benchmark BERT-family transformers on large-scale datasets under Dr. Nauman Irshad.",
+    "My work spans full-stack development (Next.js POS systems used by restaurants in Lahore) and academic research on multimodal fake news detection, where I benchmark BERT-family transformers on large-scale datasets with my fellow UCP student Nauman Irshad.",
     "I thrive at the intersection of engineering and research: shipping clean APIs, polished UIs, and reproducible ML pipelines.",
   ],
   education: {
     degree: "BSc Computer Science",
     institution: "University of Central Punjab (UCP)",
-    period: "Sep 2022 – Jul 2026",
+    period: "Sep 2022 to Jul 2026",
     cgpa: "3.59 / 4.00",
     focus: "Multimodal fake news detection & BERT-family benchmarking",
   },
@@ -80,10 +82,10 @@ export const experience: Experience[] = [
     id: "tri-tech",
     company: "Tri Tech Technology LLC",
     role: "Full-Stack Developer Intern",
-    period: "Jul 2025 – Dec 2025",
+    period: "Jul 2025 to Dec 2025",
     location: "Lahore, Pakistan",
     description: [
-      "Built and deployed a complete POS ecosystem for CAP Cafe and Extraction restaurants — covering in-store operations, admin dashboards, and backend APIs.",
+      "Built and deployed a complete POS ecosystem for CAP Cafe and Extraction restaurants, covering in-store operations, admin dashboards, and backend APIs.",
       "Developed the client frontend with Next.js 15 and React 19, integrated with Express + MongoDB backend featuring JWT auth, Swagger docs, and role-based access.",
       "Collaborated in an Agile workflow, delivering production features used daily by restaurant staff.",
     ],
@@ -94,7 +96,7 @@ export const experience: Experience[] = [
 export const projects: Project[] = [
   {
     id: "trak",
-    title: "TRAK — AI News Credibility Platform",
+    title: "TRAK: AI News Credibility Platform",
     description:
       "Mobile-first news intelligence app combining personalized topic tracking with backend AI credibility analysis. JWT auth, role-based navigation, and HuggingFace-powered misinformation scoring.",
     category: "Full Stack",
@@ -106,7 +108,7 @@ export const projects: Project[] = [
     id: "pos",
     title: "POS Ecosystem",
     description:
-      "Production point-of-sale system deployed for CAP Cafe and Extraction — three connected apps: in-store POS, admin panel, and centralized Express API with Swagger documentation.",
+      "Production point-of-sale system deployed for CAP Cafe and Extraction. Three connected apps: in-store POS, admin panel, and centralized Express API with Swagger documentation.",
     category: "Full Stack",
     tech: ["Next.js 15", "React 19", "TypeScript", "Express", "MongoDB"],
     github: "https://github.com/Danyal-0276/POS-client.git",
@@ -136,7 +138,7 @@ export const projects: Project[] = [
     id: "scraper",
     title: "Multi-Marketplace Product Scraper",
     description:
-      "Browser-based scraper for Amazon, Daraz.pk, and eBay across configurable categories. Exports normalized product data to multi-sheet Excel workbooks — no API keys required.",
+      "Browser-based scraper for Amazon, Daraz.pk, and eBay across configurable categories. Exports normalized product data to multi-sheet Excel workbooks, no API keys required.",
     category: "Data Engineering",
     tech: ["Python", "Playwright", "pandas", "openpyxl"],
     github: "https://github.com/Danyal-0276/Ecommerce-website-scappers.git",
@@ -156,7 +158,7 @@ export const projects: Project[] = [
     id: "js-projects",
     title: "JavaScript Basic Projects",
     description:
-      "Collection of 18 beginner-friendly web apps built with vanilla HTML, CSS, and JavaScript — covering DOM manipulation, browser APIs, local storage, and external API integration.",
+      "Collection of 18 beginner-friendly web apps built with vanilla HTML, CSS, and JavaScript, covering DOM manipulation, browser APIs, local storage, and external API integration.",
     category: "Frontend",
     tech: ["HTML", "CSS", "JavaScript", "Browser APIs"],
     github: "https://github.com/Danyal-0276/Javascript-basic-projects.git",
@@ -203,8 +205,88 @@ export const skillGroups: SkillGroup[] = [
 
 export const navLinks = [
   { label: "About", href: "#about" },
+  { label: "Focus", href: "#focus" },
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
-  { label: "Skills", href: "#skills" },
+  { label: "Collage", href: "#collage" },
   { label: "Contact", href: "#contact" },
 ];
+
+export interface FocusArea {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  services: string[];
+  accent: string;
+}
+
+export const focusAreas: FocusArea[] = [
+  {
+    id: "fullstack",
+    title: "Full-Stack Development",
+    subtitle: "Web · API · Production",
+    description:
+      "End-to-end systems from React/Next.js frontends to Express and Django APIs, deployed as POS platforms used daily in restaurants.",
+    services: [
+      "Next.js & React SPAs",
+      "REST APIs & JWT auth",
+      "MongoDB data modeling",
+      "Swagger docs & Agile delivery",
+    ],
+    accent: "#edb33c",
+  },
+  {
+    id: "ml",
+    title: "ML & NLP Research",
+    subtitle: "Transformers · Benchmarks",
+    description:
+      "Fake news detection research benchmarking BERT-family models on 100K+ samples, with reproducible pipelines built in PyTorch and HuggingFace.",
+    services: [
+      "BERT / RoBERTa fine-tuning",
+      "Dataset curation & EDA",
+      "Model comparison workflows",
+      "Jupyter & experiment tracking",
+    ],
+    accent: "#9b7ed9",
+  },
+  {
+    id: "mobile",
+    title: "Mobile Development",
+    subtitle: "iOS · Android · Cross-platform",
+    description:
+      "Native Android apps and React Native clients with Firebase auth, personalized feeds, and polished mobile UX patterns.",
+    services: [
+      "React Native apps",
+      "Android (Java/Kotlin)",
+      "Firebase & OAuth flows",
+      "Offline-first patterns",
+    ],
+    accent: "#5b9bd5",
+  },
+  {
+    id: "data",
+    title: "Data Engineering",
+    subtitle: "Spark · Scraping · Pipelines",
+    description:
+      "Distributed ML on PySpark, browser automation scrapers, and export pipelines that turn raw data into actionable insights.",
+    services: [
+      "PySpark MLlib pipelines",
+      "Playwright web scrapers",
+      "Excel/CSV export workflows",
+      "Ensemble model evaluation",
+    ],
+    accent: "#6bc4a6",
+  },
+];
+
+export const projectAccents: Record<string, string> = {
+  trak: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+  pos: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+  bert: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+  nids: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+  scraper: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+  duolingo: "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)",
+  "js-projects": "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
+  sentiment: "linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)",
+};

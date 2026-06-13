@@ -129,7 +129,7 @@ export function Footer() {
             <span className="text-gold">.</span>
           </p>
           <p className="mt-1 text-sm text-cream/60">
-            Full-Stack & ML Developer · Lahore, Pakistan
+            Full-Stack Web Developer & AI/ML Researcher · Lahore, Pakistan
           </p>
         </div>
 
