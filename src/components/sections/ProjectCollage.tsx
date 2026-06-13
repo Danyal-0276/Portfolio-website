@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { getProjectSnapshotFit, getProjectThumbnail, isChartSnapshotProject, projects } from "@/data/portfolio";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Draggable, gsap, registerGSAP } from "@/lib/gsap";
+import { cn } from "@/lib/utils";
 
 const collageLayout = [
   { x: 8, y: 12, rotate: -6, scale: 1 },
@@ -82,7 +83,7 @@ export function ProjectCollage() {
         rotation: layout.rotate,
         scale: layout.scale,
         duration: 0.9,
-        ease: "elastic.out(1, 0.7)",
+        ease: "power3.out",
       });
     });
   }
