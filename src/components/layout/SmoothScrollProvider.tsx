@@ -23,7 +23,7 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       if (prefersReducedMotion) {
         gsap.set(".reveal", { opacity: 1, y: 0 });
         gsap.set(
-          ".hero-meta-row, .hero-char, .hero-role-char, .hero-headline, .hero-cta, .hero-image, .hero-role-title",
+          ".hero-meta-row, .hero-char, .hero-role-char, .hero-headline, .hero-cta, .hero-image, .hero-role-title, .hero-role-secondary",
           { opacity: 1, clearProps: "transform" },
         );
         document.documentElement.classList.remove("is-loading");
@@ -31,7 +31,7 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       }
 
       const heroTargets =
-        ".hero-meta-row, .hero-char, .hero-role-char, .hero-headline, .hero-cta, .hero-image, .hero-role-title";
+        ".hero-meta-row, .hero-char, .hero-role-char, .hero-headline, .hero-cta, .hero-image, .hero-role-title, .hero-role-secondary";
 
       const introAlreadyDone =
         hasSeenIntro() || document.documentElement.classList.contains("is-ready");
@@ -92,6 +92,12 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
               { autoAlpha: 0, y: 12 },
               { autoAlpha: 1, y: 0, duration: 0.5, force3D: true },
               "-=0.25",
+            )
+            .fromTo(
+              ".hero-role-secondary",
+              { autoAlpha: 0, y: 10 },
+              { autoAlpha: 1, y: 0, duration: 0.45, force3D: true },
+              "-=0.35",
             )
             .fromTo(
               ".hero-headline",

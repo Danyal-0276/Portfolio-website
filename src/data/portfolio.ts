@@ -38,12 +38,12 @@ export const siteConfig = {
   name: "Danyal Tanveer",
   title: "Danyal Tanveer | Full-Stack Web Developer & AI/ML Researcher",
   description:
-    "Computer Science student at UCP specializing in full-stack development, NLP research, and fake news detection. Building production systems with React, Next.js, Django, and PyTorch.",
+    "Full-stack web developer and AI/ML researcher. Building production applications with React, Next.js, and Node.js, and working with deep learning architectures from RNNs and LSTMs to transformers in PyTorch.",
   url: "https://portfolio-website-git-main-danyal-tanveer-s-projects.vercel.app",
   ogImage: "/images/profile-orange.png",
   logoPath: "/images/logo.png",
   faviconPath: "/images/favicon-512.png",
-  faviconVersion: "3",
+  faviconVersion: "5",
   email: "donibutt2112@gmail.com",
   phone: "+92 370 7076164",
   location: "Lahore, Punjab, Pakistan",
@@ -60,10 +60,10 @@ export const hero = {
   motto: "Navigating the unknown, line by line",
   headline: "Full-Stack Web Developer & AI/ML Researcher",
   subtext:
-    "I build production-grade web systems and research AI models for misinformation detection, from POS ecosystems deployed in restaurants to BERT-family benchmarks on 100K+ news samples.",
+    "I'm a full-stack developer and AI/ML researcher & developer.",
   availability: "Open to fresher roles, internships & collaborations",
   intro:
-    "Hey there! I'm a Full-Stack Web Developer and AI/ML Researcher building production apps and research pipelines.",
+    "Full-stack developer who builds production web systems, and AI/ML researcher working across classical and modern deep learning architectures.",
   roleLineLeft: "FULL STACK",
   roleLineRight: "DEVELOPER",
   roleOutline: "Full Stack Developer",
@@ -164,16 +164,17 @@ export const techMarquee = [
 
 export const about = {
   bio: [
-    "I'm a Computer Science student at the University of Central Punjab with a passion for building software that works in the real world and research that pushes the boundaries of NLP.",
-    "My work spans full-stack development (Next.js POS systems used by restaurants in Lahore) and academic research on multimodal fake news detection, where I benchmark BERT-family transformers on large-scale datasets with my fellow UCP student Nauman Irshad.",
-    "I thrive at the intersection of engineering and research: shipping clean APIs, polished UIs, and reproducible ML pipelines.",
+    "I'm a Computer Science student at the University of Central Punjab with a focus on full-stack development and applied machine learning. I care about software that ships to real users and models built on solid engineering fundamentals.",
+    "On the engineering side, I build end-to-end web products: React and Next.js interfaces, REST APIs, JWT authentication, database design, and deployments that stay running in production. During my internship at Tri Tech, I delivered a complete POS platform now used daily in Lahore restaurants.",
+    "On the AI/ML side, my studies go well beyond a single niche. I've covered deep learning in depth, from RNNs, LSTMs, and GANs to transformer-based models, training and evaluating architectures in PyTorch and Hugging Face on large-scale datasets.",
+    "I'm most at home where product work and model work meet: clean APIs, thoughtful UIs, and reproducible ML pipelines I can iterate on with confidence.",
   ],
   education: {
     degree: "BSc Computer Science",
     institution: "University of Central Punjab (UCP)",
     period: "Sep 2022 to Jul 2026",
     cgpa: "3.59 / 4.00",
-    focus: "Multimodal fake news detection & BERT-family benchmarking",
+    focus: "Deep learning, transformer architectures, and full-stack software engineering",
     coursework: [
       "OOP",
       "Data Structures & Algorithms",
@@ -181,6 +182,7 @@ export const about = {
       "Operating Systems",
       "Computer Networks",
       "Machine Learning",
+      "Deep Learning",
       "NLP",
       "Software Engineering",
       "Discrete Mathematics",
@@ -223,16 +225,6 @@ export const projects: Project[] = [
     highlight: "Full-stack mobile + API",
   },
   {
-    id: "jarvis",
-    title: "J.A.R.V.I.S, Personal AI Assistant",
-    description:
-      "Iron Man-inspired voice and chat assistant with a cinematic UI: 3D particle sphere, SiriWave visualizer, Google Gemini brain, voice commands, secure document search, and Gmail integration. Runs locally on localhost.",
-    category: "Full Stack",
-    tech: ["Python", "Eel", "Gemini", "JavaScript", "Bootstrap", "Canvas"],
-    github: "https://github.com/Danyal-0276/Jarvis.git",
-    highlight: "Voice + AI desktop assistant",
-  },
-  {
     id: "pos",
     title: "POS Ecosystem",
     description:
@@ -245,6 +237,26 @@ export const projects: Project[] = [
       { value: "3", label: "Connected apps" },
       { value: "2", label: "Live restaurants" },
     ],
+  },
+  {
+    id: "duolingo",
+    title: "Duolingo Clone (MAD)",
+    description:
+      "Android language-learning app with onboarding, Firebase auth (Google/Facebook), multi-step lesson selection, and bottom-navigation dashboard with five fragment screens.",
+    category: "Mobile",
+    tech: ["Java", "Android SDK", "Firebase", "Material Components", "ViewBinding", "RecyclerView"],
+    github: "https://github.com/Danyal-0276/Doulingo-Clone.git",
+    highlight: "Firebase + OAuth",
+  },
+  {
+    id: "jarvis",
+    title: "J.A.R.V.I.S, Personal AI Assistant",
+    description:
+      "Iron Man-inspired voice and chat assistant with a cinematic UI: 3D particle sphere, SiriWave visualizer, Google Gemini brain, voice commands, secure document search, and Gmail integration. Runs locally on localhost.",
+    category: "Full Stack",
+    tech: ["Python", "Eel", "Gemini", "JavaScript", "Bootstrap", "Canvas"],
+    github: "https://github.com/Danyal-0276/Jarvis.git",
+    highlight: "Voice + AI desktop assistant",
   },
   {
     id: "bert",
@@ -275,16 +287,6 @@ export const projects: Project[] = [
     tech: ["Python", "Playwright", "pandas", "openpyxl"],
     github: "https://github.com/Danyal-0276/Ecommerce-website-scappers.git",
     highlight: "3 marketplaces, CLI runner",
-  },
-  {
-    id: "duolingo",
-    title: "Duolingo Clone (MAD)",
-    description:
-      "Android language-learning app with onboarding, Firebase auth (Google/Facebook), multi-step lesson selection, and bottom-navigation dashboard with five fragment screens.",
-    category: "Mobile",
-    tech: ["Java", "Android SDK", "Firebase", "Material Components", "ViewBinding", "RecyclerView"],
-    github: "https://github.com/Danyal-0276/Doulingo-Clone.git",
-    highlight: "Firebase + OAuth",
   },
   {
     id: "js-projects",

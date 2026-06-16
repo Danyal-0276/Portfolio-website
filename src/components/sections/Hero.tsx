@@ -204,16 +204,8 @@ export function Hero() {
       className="hero-dark section-aurora relative flex min-h-screen flex-col overflow-hidden pt-14 text-cream sm:pt-16 md:pt-[4.25rem]"
     >
       <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-1 flex-col px-6 md:px-12 lg:px-16">
-        <div className="hero-meta-row flex shrink-0 items-center justify-between py-4 md:py-6">
-          <button
-            type="button"
-            onClick={() => scrollToSection("#hero")}
-            className="text-xs font-bold tracking-[0.15em] text-white uppercase md:text-sm"
-          >
-            {nameParts.join(" ")}
-          </button>
-
-          <p className="hero-drag-hint hidden max-w-[280px] text-center text-[10px] tracking-[0.2em] text-cream/30 uppercase lg:block">
+        <div className="hero-meta-row flex shrink-0 items-center justify-end gap-6 py-4 md:justify-between md:py-6">
+          <p className="hero-drag-hint hidden max-w-[280px] flex-1 text-center text-[10px] tracking-[0.2em] text-cream/30 uppercase lg:block">
             {hero.motto} {hero.dragHint}
           </p>
 
@@ -242,6 +234,9 @@ export function Hero() {
 
               <p className="hero-role-title mt-4 font-display text-[clamp(0.875rem,2.5vw,1.125rem)] font-semibold tracking-[0.28em] text-accent uppercase md:mt-5">
                 {hero.roleLineLeft} {hero.roleLineRight}
+              </p>
+              <p className="hero-role-secondary mt-2 font-display text-[clamp(0.75rem,2vw,0.9375rem)] font-medium tracking-[0.24em] text-cream/55 uppercase">
+                {hero.roleLineSecondary}
               </p>
             </div>
 

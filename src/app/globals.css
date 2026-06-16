@@ -95,8 +95,24 @@
     transition: opacity 0.4s ease;
   }
 
+  .loader-logo,
+  .loader-logo img,
+  .loader-logo span,
+  .nav-logo-btn span {
+    background: transparent !important;
+  }
+
   .loader-logo {
     will-change: transform, opacity;
+  }
+
+  .nav-logo-btn,
+  .nav-logo-mark {
+    background: transparent !important;
+  }
+
+  .nav-logo-mark {
+    display: block;
   }
 
   .hero-portrait-aurora-spot,
@@ -632,6 +648,7 @@
 
   .nav-logo-btn img,
   .nav-logo-mark {
+    background: transparent !important;
     transition:
       transform 0.35s ease,
       filter 0.35s ease;

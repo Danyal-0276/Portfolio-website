@@ -45,8 +45,7 @@ export function About() {
             <p className="text-[clamp(4rem,12vw,8rem)] leading-none font-bold tracking-[-0.04em] text-white uppercase">
               About
             </p>
-            <div className="mt-6 flex items-center gap-4">
-              <span className="h-px w-12 bg-accent" />
+            <div className="mt-6">
               <span className="text-xs tracking-[0.22em] text-accent uppercase">
                 01 / The drive
               </span>
@@ -55,8 +54,8 @@ export function About() {
 
           <div className="lg:col-span-7">
             <p className="text-[clamp(1.5rem,3.5vw,2.25rem)] leading-snug font-medium tracking-tight text-white">
-              I build production software and research AI systems, craft isn&apos;t a shortcut,
-              it&apos;s the path.
+              I build software that ships and models that learn, with the same standard of
+              craft in both.
             </p>
             <p className="mt-6 text-base leading-relaxed text-cream/60 md:text-lg">
               {about.bio[0]}

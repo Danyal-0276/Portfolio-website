@@ -136,14 +136,15 @@ export function PageLoader() {
       aria-live="polite"
     >
       <div className="loader-content pointer-events-none relative z-10 flex w-full max-w-md flex-col items-center px-8">
-        <div className="loader-logo mb-10">
+        <div className="loader-logo mb-10 bg-transparent">
           <Image
             src={siteConfig.logoPath}
             alt={`${siteConfig.name} logo`}
-            width={512}
-            height={342}
+            width={375}
+            height={170}
             priority
-            className="h-24 w-auto sm:h-32 md:h-36"
+            unoptimized
+            className="h-24 w-auto bg-transparent sm:h-32 md:h-36"
           />
         </div>
 

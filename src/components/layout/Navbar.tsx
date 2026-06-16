@@ -203,10 +203,11 @@ export function Navbar() {
             <Image
               src={siteConfig.logoPath}
               alt={`${siteConfig.name} logo`}
-              width={1024}
-              height={682}
+              width={375}
+              height={170}
               priority
-              className="nav-logo-mark h-10 w-auto sm:h-11 lg:h-12"
+              unoptimized
+              className="nav-logo-mark h-7 w-auto bg-transparent sm:h-8 lg:h-8"
             />
           </button>
 
