@@ -5,6 +5,8 @@ import { useRef } from "react";
 import { techMarquee } from "@/data/portfolio";
 import { gsap, registerGSAP } from "@/lib/gsap";
 
+const MARQUEE_DURATION = 65;
+
 export function TechMarquee() {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -29,7 +31,7 @@ export function TechMarquee() {
 
       gsap.to(track, {
         x: -totalWidth,
-        duration: 35,
+        duration: MARQUEE_DURATION,
         ease: "none",
         repeat: -1,
       });
@@ -41,16 +43,16 @@ export function TechMarquee() {
     <section
       ref={sectionRef}
       aria-label="Technologies I work with"
-      className="border-y border-white/10 bg-[#0a0a0a] py-6"
+      className="border-y border-white/10 bg-[#0a0a0a] py-5 md:py-6"
     >
       <div className="overflow-hidden">
-        <div ref={trackRef} className="marquee-track flex w-max items-center gap-12 px-6">
+        <div ref={trackRef} className="marquee-track flex w-max items-center gap-14 px-6 md:gap-16">
           {items.map((tech, i) => (
             <div
               key={`${tech}-${i}`}
-              className="flex shrink-0 items-center gap-3 text-white/50 transition-colors hover:text-gold"
+              className="flex shrink-0 items-center gap-3 text-white/45 transition-colors duration-300 hover:text-accent"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-gold/60" />
+              <span className="h-1.5 w-1.5 rounded-full bg-accent/50" />
               <span className="whitespace-nowrap text-sm font-medium tracking-wide uppercase md:text-base">
                 {tech}
               </span>

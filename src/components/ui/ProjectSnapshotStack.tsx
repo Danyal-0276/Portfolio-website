@@ -16,9 +16,15 @@ import { cn } from "@/lib/utils";
 interface ProjectSnapshotStackProps {
   projectId: string;
   className?: string;
+  /** Disable entrance scroll animation when parent handles reveals */
+  disableScrollReveal?: boolean;
 }
 
-export function ProjectSnapshotStack({ projectId, className }: ProjectSnapshotStackProps) {
+export function ProjectSnapshotStack({
+  projectId,
+  className,
+  disableScrollReveal = false,
+}: ProjectSnapshotStackProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageWrapRef = useRef<HTMLDivElement>(null);
   const indexRef = useRef(0);
@@ -41,7 +47,7 @@ export function ProjectSnapshotStack({ projectId, className }: ProjectSnapshotSt
         "(prefers-reduced-motion: reduce)",
       ).matches;
 
-      if (!prefersReducedMotion) {
+      if (!prefersReducedMotion && !disableScrollReveal) {
         gsap.from(container, {
           opacity: 0,
           y: 40,
@@ -97,7 +103,7 @@ export function ProjectSnapshotStack({ projectId, className }: ProjectSnapshotSt
         observer.disconnect();
       };
     },
-    { scope: containerRef, dependencies: [projectId, images.length] },
+    { scope: containerRef, dependencies: [projectId, images.length, disableScrollReveal] },
   );
 
   function goTo(index: number) {

@@ -55,6 +55,7 @@ export const hero = {
   name: "Danyal Tanveer",
   roles: ["Full-Stack Web Developer", "AI & ML Researcher"],
   tagline: "Full-Stack Web Developer · AI & ML Researcher",
+  motto: "Navigating the unknown, line by line",
   headline: "Full-Stack Web Developer & AI/ML Researcher",
   subtext:
     "I build production-grade web systems and research AI models for misinformation detection, from POS ecosystems deployed in restaurants to BERT-family benchmarks on 100K+ news samples.",
@@ -65,6 +66,7 @@ export const hero = {
   roleLineRight: "DEVELOPER",
   roleOutline: "Full-Stack Developer",
   roleLineSecondary: "AI & ML RESEARCHER",
+  roleBadge: "FULL-STACK DEVELOPER · LAHORE, PK",
 };
 
 export interface Certification {

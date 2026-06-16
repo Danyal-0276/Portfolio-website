@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { projects } from "@/data/portfolio";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectSnapshotStack } from "@/components/ui/ProjectSnapshotStack";
-import { gsap, registerGSAP } from "@/lib/gsap";
+import { gsap, registerGSAP, ScrollSmoother, ScrollTrigger } from "@/lib/gsap";
 
 function ProjectPanel({
   project,
@@ -19,23 +19,23 @@ function ProjectPanel({
   return (
     <article className={className}>
       <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-2">
-        <div>
-          <span className="mb-4 inline-block font-serif text-6xl text-charcoal/10 md:text-8xl">
+        <div className="project-panel-content">
+          <span className="project-reveal project-number mb-4 inline-block font-serif text-6xl text-charcoal/10 md:text-8xl">
             {String(index + 1).padStart(2, "0")}
           </span>
-          <p className="mb-2 text-sm font-medium uppercase tracking-widest text-gold-dark">
+          <p className="project-reveal mb-2 text-sm font-medium tracking-widest text-accent uppercase">
             {project.category}
           </p>
-          <h3 className="mb-4 font-serif text-2xl text-charcoal md:text-4xl lg:text-5xl">
+          <h3 className="project-reveal mb-4 font-serif text-2xl text-charcoal md:text-4xl lg:text-5xl">
             {project.title}
           </h3>
           {project.highlight && (
-            <p className="mb-4 text-sm text-charcoal/50">{project.highlight}</p>
+            <p className="project-reveal mb-4 text-sm text-charcoal/50">{project.highlight}</p>
           )}
-          <p className="mb-6 max-w-lg text-base leading-relaxed text-charcoal-light md:text-lg">
+          <p className="project-reveal mb-6 max-w-lg text-base leading-relaxed text-charcoal-light md:text-lg">
             {project.description}
           </p>
-          <div className="mb-6 flex flex-wrap gap-2 md:mb-8">
+          <div className="project-reveal mb-6 flex flex-wrap gap-2 md:mb-8">
             {project.tech.map((t) => (
               <span
                 key={t}
@@ -49,7 +49,8 @@ function ProjectPanel({
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-charcoal px-6 py-3 text-sm font-medium text-cream transition-colors hover:bg-gold hover:text-charcoal"
+            className="project-reveal inline-flex items-center gap-2 rounded-full bg-charcoal px-6 py-3 text-sm font-medium text-cream transition-colors hover:bg-accent hover:text-white"
+            data-cursor="view"
           >
             View on GitHub
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,7 +59,9 @@ function ProjectPanel({
           </a>
         </div>
 
-        <ProjectSnapshotStack projectId={project.id} className="mt-8 lg:mt-0" />
+        <div className="project-snapshot-wrap mt-8 lg:mt-0">
+          <ProjectSnapshotStack projectId={project.id} disableScrollReveal />
+        </div>
       </div>
     </article>
   );
@@ -75,31 +78,172 @@ export function ProjectShowcase() {
 
       const track = trackRef.current;
       const pin = pinRef.current;
-      if (!track || !pin) return;
+      const section = sectionRef.current;
+      if (!track || !pin || !section) return;
 
-      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
       const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
 
-      if (!isDesktop || prefersReducedMotion) return;
+      const refreshScroll = () => {
+        ScrollTrigger.refresh(true);
+        ScrollSmoother.get()?.refresh();
+      };
 
-      gsap.set(".project-card", { opacity: 1, y: 0 });
+      let refreshDebounce: gsap.core.Tween | null = null;
+      const scheduleRefresh = () => {
+        refreshDebounce?.kill();
+        refreshDebounce = gsap.delayedCall(0.15, refreshScroll);
+      };
 
-      const tween = gsap.to(track, {
-        x: () => -(track.scrollWidth - pin.offsetWidth),
-        ease: "none",
-        scrollTrigger: {
-          trigger: pin,
-          pin: true,
-          scrub: 1,
-          start: "top top",
-          end: () => `+=${track.scrollWidth - pin.offsetWidth}`,
-          invalidateOnRefresh: true,
+      /* Mobile / tablet: staggered scroll reveals */
+      const mobileCards = gsap.utils.toArray<HTMLElement>(".project-card-mobile", section);
+      if (mobileCards.length && !prefersReducedMotion) {
+        mobileCards.forEach((card) => {
+          const reveals = card.querySelectorAll(".project-reveal");
+          gsap.set(reveals, { opacity: 0, y: 36 });
+
+          ScrollTrigger.create({
+            trigger: card,
+            start: "top 82%",
+            once: true,
+            onEnter: () => {
+              gsap.to(reveals, {
+                opacity: 1,
+                y: 0,
+                duration: 0.65,
+                stagger: 0.07,
+                ease: "power3.out",
+              });
+            },
+          });
+
+          const snapshot = card.querySelector(".project-snapshot-wrap");
+          if (snapshot) {
+            gsap.from(snapshot, {
+              opacity: 0,
+              scale: 0.92,
+              duration: 0.8,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 78%",
+                once: true,
+              },
+            });
+          }
+        });
+      }
+
+      const mm = gsap.matchMedia();
+
+      mm.add(
+        "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          gsap.set(track, { x: 0 });
+
+          const panels = gsap.utils.toArray<HTMLElement>(".showcase-panel", track);
+          panels.forEach((panel) => {
+            gsap.set(panel.querySelectorAll(".project-reveal"), {
+              opacity: 0,
+              y: 48,
+            });
+          });
+
+          const getScrollDistance = () =>
+            Math.max(0, track.scrollWidth - pin.offsetWidth);
+
+          const horizontalTween = gsap.to(track, {
+            x: () => -getScrollDistance(),
+            ease: "none",
+            scrollTrigger: {
+              trigger: pin,
+              pin: true,
+              scrub: 1,
+              start: "top top",
+              end: () => `+=${getScrollDistance()}`,
+              invalidateOnRefresh: true,
+              anticipatePin: 1,
+            },
+          });
+
+          panels.forEach((panel) => {
+            const reveals = panel.querySelectorAll(".project-reveal");
+            const snapshot = panel.querySelector(".project-snapshot-wrap");
+
+            gsap.to(reveals, {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              stagger: 0.06,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: panel,
+                containerAnimation: horizontalTween,
+                start: "left 65%",
+                end: "left 35%",
+                toggleActions: "play none none reverse",
+              },
+            });
+
+            if (snapshot) {
+              gsap.fromTo(
+                snapshot,
+                { x: 60, opacity: 0.6 },
+                {
+                  x: -20,
+                  opacity: 1,
+                  ease: "none",
+                  scrollTrigger: {
+                    trigger: panel,
+                    containerAnimation: horizontalTween,
+                    start: "left right",
+                    end: "right left",
+                    scrub: 1,
+                  },
+                },
+              );
+            }
+
+            const number = panel.querySelector(".project-number");
+            if (number) {
+              gsap.fromTo(
+                number,
+                { scale: 0.8, opacity: 0.05 },
+                {
+                  scale: 1,
+                  opacity: 0.12,
+                  ease: "none",
+                  scrollTrigger: {
+                    trigger: panel,
+                    containerAnimation: horizontalTween,
+                    start: "left 80%",
+                    end: "left 20%",
+                    scrub: 1,
+                  },
+                },
+              );
+            }
+          });
+
+          refreshScroll();
+          requestAnimationFrame(refreshScroll);
+
+          const resizeObserver = new ResizeObserver(scheduleRefresh);
+          resizeObserver.observe(track);
+          resizeObserver.observe(pin);
+
+          return () => {
+            resizeObserver.disconnect();
+          };
         },
-      });
+        sectionRef,
+      );
 
-      return () => tween.scrollTrigger?.kill();
+      return () => {
+        refreshDebounce?.kill();
+        mm.revert();
+      };
     },
     { scope: sectionRef },
   );
@@ -116,19 +260,17 @@ export function ProjectShowcase() {
         </div>
       </div>
 
-      {/* Mobile / tablet: vertical stack */}
       <div className="section-container space-y-16 pb-16 lg:hidden">
         {projects.map((project, index) => (
           <ProjectPanel
             key={project.id}
             project={project}
             index={index}
-            className="project-card reveal rounded-2xl border border-charcoal/8 bg-white p-6 md:p-10"
+            className="project-card-mobile rounded-2xl border border-charcoal/8 bg-white p-6 md:p-10"
           />
         ))}
       </div>
 
-      {/* Desktop: horizontal scroll pin */}
       <div
         ref={pinRef}
         className="showcase-pin relative hidden h-screen overflow-hidden lg:block"
@@ -139,7 +281,7 @@ export function ProjectShowcase() {
               key={project.id}
               project={project}
               index={index}
-              className="showcase-panel project-card flex h-full w-screen shrink-0 flex-col justify-center px-16 xl:px-24"
+              className="showcase-panel flex h-full w-screen shrink-0 flex-col justify-center px-16 xl:px-24"
             />
           ))}
         </div>

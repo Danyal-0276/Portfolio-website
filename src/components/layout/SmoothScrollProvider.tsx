@@ -20,16 +20,14 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       ).matches;
 
       if (prefersReducedMotion) {
-        gsap.set(".reveal, .project-card:not(.showcase-panel)", { opacity: 1, y: 0 });
+        gsap.set(".reveal", { opacity: 1, y: 0 });
         return;
       }
-
-      gsap.set(".project-card:not(.showcase-panel)", { opacity: 0, y: 40 });
 
       const smoother = ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
         content: "#smooth-content",
-        smooth: 0.9,
+        smooth: 1.1,
         effects: false,
         smoothTouch: 0.05,
       });
@@ -38,26 +36,39 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         ScrollTrigger.refresh(true);
         smoother?.refresh();
       };
-      refreshScroll();
+
       requestAnimationFrame(refreshScroll);
-      setTimeout(refreshScroll, 500);
+      const refreshTimer = window.setTimeout(refreshScroll, 400);
 
       const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
       heroTl
-        .from(".hero-orb", { opacity: 0, scale: 0.85, duration: 1.2, stagger: 0.15, ease: "power2.out" })
-        .from(".hero-greeting", { opacity: 0, y: 24, duration: 0.7 }, "-=0.8")
-        .from(".hero-title-line", { opacity: 0, y: 50, duration: 0.9, stagger: 0.12 }, "-=0.4")
-        .from(".hero-role-outline", { opacity: 0, y: 30, duration: 0.8 }, "-=0.5")
-        .from(".hero-image", { opacity: 0, scale: 0.94, duration: 1.1, ease: "power2.out" }, "-=0.7")
-        .from(".hero-cta", { opacity: 0, y: 16, duration: 0.5, stagger: 0.08 }, "-=0.5");
+        .from(".hero-orb", { opacity: 0, scale: 0.85, duration: 1, stagger: 0.12, ease: "power2.out" })
+        .from(".hero-meta-row", { opacity: 0, y: -12, duration: 0.5 }, "-=0.85")
+        .from(".hero-char", {
+          opacity: 0,
+          y: 60,
+          duration: 0.65,
+          stagger: 0.018,
+          ease: "power3.out",
+        }, "-=0.4")
+        .from(".hero-role-char", {
+          opacity: 0,
+          y: 30,
+          duration: 0.55,
+          stagger: 0.012,
+          ease: "power3.out",
+        }, "-=0.35")
+        .from(".hero-greeting > *:not(h1)", { opacity: 0, y: 20, duration: 0.5, stagger: 0.06 }, "-=0.3")
+        .from(".hero-image", { opacity: 0, y: 30, scale: 0.96, duration: 0.9, ease: "power2.out" }, "-=0.5")
+        .from(".hero-cta", { opacity: 0, y: 14, duration: 0.45, stagger: 0.07 }, "-=0.4");
 
       ScrollTrigger.batch(".reveal", {
         onEnter: (elements) => {
           gsap.to(elements, {
             opacity: 1,
             y: 0,
-            duration: 0.8,
-            stagger: 0.12,
+            duration: 0.75,
+            stagger: 0.1,
             ease: "power3.out",
             overwrite: true,
           });
@@ -66,28 +77,20 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         once: true,
       });
 
-      ScrollTrigger.create({
-        trigger: "#projects-grid",
-        start: "top 85%",
-        once: true,
-        onEnter: () => {
-          gsap.to(".project-card:not(.showcase-panel)", {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            stagger: 0.08,
-            ease: "power3.out",
-            overwrite: true,
-          });
-        },
-      });
+      let resizeTimer: ReturnType<typeof setTimeout>;
+      const onResize = () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(refreshScroll, 150);
+      };
 
       window.addEventListener("load", refreshScroll);
-      window.addEventListener("resize", refreshScroll);
+      window.addEventListener("resize", onResize);
 
       return () => {
+        window.clearTimeout(refreshTimer);
+        clearTimeout(resizeTimer);
         window.removeEventListener("load", refreshScroll);
-        window.removeEventListener("resize", refreshScroll);
+        window.removeEventListener("resize", onResize);
         smoother?.kill();
       };
     },

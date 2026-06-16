@@ -1,4 +1,7 @@
+"use client";
+
 import { cn } from "@/lib/utils";
+import { useMagnetic } from "@/hooks/useMagnetic";
 
 type ButtonVariant = "primary" | "secondary" | "ghost" | "outline";
 
@@ -6,6 +9,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   href?: string;
   external?: boolean;
+  magnetic?: boolean;
 }
 
 const variants: Record<ButtonVariant, string> = {
@@ -18,11 +22,37 @@ const variants: Record<ButtonVariant, string> = {
     "border-2 border-charcoal/20 bg-transparent text-charcoal hover:border-gold hover:text-gold-dark",
 };
 
+function MagneticWrap({
+  children,
+  className,
+  enabled,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  enabled?: boolean;
+}) {
+  const { ref, onMouseMove, onMouseLeave } = useMagnetic({ strength: 0.3 });
+
+  if (!enabled) return <>{children}</>;
+
+  return (
+    <span
+      ref={ref as React.RefObject<HTMLSpanElement>}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      className={cn("inline-block transition-transform duration-300 ease-out", className)}
+    >
+      {children}
+    </span>
+  );
+}
+
 export function Button({
   className,
   variant = "primary",
   href,
   external,
+  magnetic = false,
   children,
   ...props
 }: ButtonProps) {
@@ -34,19 +64,24 @@ export function Button({
 
   if (href) {
     return (
-      <a
-        href={href}
-        className={classes}
-        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      >
-        {children}
-      </a>
+      <MagneticWrap enabled={magnetic}>
+        <a
+          href={href}
+          className={classes}
+          data-cursor="view"
+          {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        >
+          {children}
+        </a>
+      </MagneticWrap>
     );
   }
 
   return (
-    <button className={classes} {...props}>
-      {children}
-    </button>
+    <MagneticWrap enabled={magnetic}>
+      <button className={classes} data-cursor="view" {...props}>
+        {children}
+      </button>
+    </MagneticWrap>
   );
 }

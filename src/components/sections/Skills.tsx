@@ -4,7 +4,7 @@ import { useGSAP } from "@gsap/react";
 import { useMemo, useRef } from "react";
 import { skillGroups } from "@/data/portfolio";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { gsap, registerGSAP } from "@/lib/gsap";
+import { gsap, registerGSAP, ScrollTrigger } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 
 export function Skills() {
@@ -17,7 +17,10 @@ export function Skills() {
   useGSAP(
     () => {
       registerGSAP();
-      const cards = gsap.utils.toArray<HTMLElement>(".skill-bento-card");
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const cards = gsap.utils.toArray<HTMLElement>(".skill-bento-card", section);
       if (cards.length === 0) return;
 
       const prefersReducedMotion = window.matchMedia(
@@ -25,22 +28,71 @@ export function Skills() {
       ).matches;
 
       if (prefersReducedMotion) {
-        gsap.set(cards, { opacity: 1, y: 0 });
+        gsap.set(cards, { opacity: 1, y: 0, rotateX: 0, rotateY: 0 });
         return;
       }
 
-      gsap.from(cards, {
-        opacity: 0,
-        y: 24,
-        duration: 0.65,
-        stagger: 0.07,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 82%",
-          once: true,
+      gsap.set(cards, { opacity: 0, y: 40, scale: 0.96 });
+
+      ScrollTrigger.batch(cards, {
+        onEnter: (batch) => {
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: "power3.out",
+            overwrite: true,
+          });
+
+          batch.forEach((card) => {
+            const badges = card.querySelectorAll(".skill-badge");
+            gsap.from(badges, {
+              opacity: 0,
+              y: 10,
+              scale: 0.9,
+              duration: 0.4,
+              stagger: 0.025,
+              ease: "back.out(1.4)",
+              delay: 0.15,
+            });
+          });
         },
+        start: "top 88%",
+        once: true,
       });
+
+      const tiltCleanups: (() => void)[] = [];
+
+      cards.forEach((card) => {
+        const rotX = gsap.quickTo(card, "rotateX", { duration: 0.45, ease: "power2.out" });
+        const rotY = gsap.quickTo(card, "rotateY", { duration: 0.45, ease: "power2.out" });
+
+        const onMove = (e: MouseEvent) => {
+          const rect = card.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          rotY(x * 10);
+          rotX(-y * 10);
+        };
+
+        const onLeave = () => {
+          rotX(0);
+          rotY(0);
+        };
+
+        card.addEventListener("mousemove", onMove);
+        card.addEventListener("mouseleave", onLeave);
+        tiltCleanups.push(() => {
+          card.removeEventListener("mousemove", onMove);
+          card.removeEventListener("mouseleave", onLeave);
+        });
+      });
+
+      return () => {
+        tiltCleanups.forEach((fn) => fn());
+      };
     },
     { scope: sectionRef },
   );
@@ -51,7 +103,6 @@ export function Skills() {
       id="skills"
       className="relative overflow-hidden px-6 py-16 md:px-12 md:py-20 lg:px-20"
     >
-      {/* Background */}
       <div className="absolute inset-0 bg-charcoal" aria-hidden="true" />
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.35]"
@@ -65,7 +116,7 @@ export function Skills() {
       />
       <div
         className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[min(700px,90vw)] -translate-x-1/2 rounded-full blur-[100px]"
-        style={{ background: "radial-gradient(circle, rgba(237,179,60,0.12), transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(255,107,0,0.1), transparent 70%)" }}
         aria-hidden="true"
       />
 
@@ -79,7 +130,7 @@ export function Skills() {
             className="mb-0"
           />
           <div className="flex shrink-0 items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 backdrop-blur-sm">
-            <span className="font-serif text-2xl text-gold">{totalSkills}</span>
+            <span className="font-serif text-2xl text-accent">{totalSkills}</span>
             <span className="text-xs leading-tight text-cream/50 uppercase tracking-wider">
               skills
               <br />
@@ -93,12 +144,12 @@ export function Skills() {
             <article
               key={group.label}
               className={cn(
-                "skill-bento-card group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] p-3.5 transition-colors duration-300 hover:border-white/15 hover:bg-white/[0.06] sm:p-4",
+                "skill-bento-card group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] p-3.5 transition-colors duration-300 hover:border-accent/25 hover:bg-white/[0.06] sm:p-4",
                 group.span,
               )}
             >
               <div
-                className="pointer-events-none absolute -top-8 -right-8 h-24 w-24 rounded-full opacity-20 blur-2xl transition-opacity duration-300 group-hover:opacity-35"
+                className="pointer-events-none absolute -top-8 -right-8 h-24 w-24 rounded-full opacity-20 blur-2xl transition-opacity duration-300 group-hover:opacity-40"
                 style={{ backgroundColor: group.accent }}
                 aria-hidden="true"
               />
@@ -120,7 +171,7 @@ export function Skills() {
                 {group.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="skill-badge inline-flex rounded-md border border-white/[0.08] bg-black/20 px-2 py-0.5 text-[11px] leading-snug text-cream/75 transition-colors duration-200 hover:border-gold/40 hover:bg-gold/10 hover:text-cream sm:px-2.5 sm:py-1 sm:text-xs"
+                    className="skill-badge inline-flex rounded-md border border-white/[0.08] bg-black/20 px-2 py-0.5 text-[11px] leading-snug text-cream/75 transition-colors duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-cream sm:px-2.5 sm:py-1 sm:text-xs"
                   >
                     {skill}
                   </span>

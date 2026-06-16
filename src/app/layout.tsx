@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Instrument_Serif } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
+import { CursorProvider } from "@/components/layout/CursorProvider";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
 import { siteConfig } from "@/data/portfolio";
 import "./globals.css";
@@ -64,6 +65,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <Navbar />
+        <CursorProvider />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
     </html>
