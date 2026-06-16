@@ -20,7 +20,7 @@ function ProjectPanel({
     <article className={className}>
       <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-2">
         <div className="project-panel-content">
-          <span className="project-reveal project-number mb-4 inline-block font-display text-6xl text-white/10 md:text-8xl">
+          <span className="project-reveal project-number mb-4 inline-block font-display text-6xl md:text-8xl">
             {String(index + 1).padStart(2, "0")}
           </span>
           <p className="project-reveal mb-2 text-sm font-medium tracking-widest text-accent uppercase">
@@ -197,10 +197,10 @@ export function ProjectShowcase() {
             if (number) {
               gsap.fromTo(
                 number,
-                { scale: 0.8, opacity: 0.05 },
+                { scale: 0.88, opacity: 0.45 },
                 {
                   scale: 1,
-                  opacity: 0.12,
+                  opacity: 1,
                   ease: "none",
                   scrollTrigger: {
                     trigger: panel,
@@ -242,7 +242,6 @@ export function ProjectShowcase() {
 
   return (
     <section id="projects" ref={sectionRef} className="relative section-aurora text-cream">
-      <div className="hero-dot-grid pointer-events-none absolute inset-0 opacity-15" aria-hidden="true" />
       <div className="section-padding relative pb-0">
         <div className="section-container">
           <SectionHeading

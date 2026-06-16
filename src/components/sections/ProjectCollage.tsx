@@ -110,7 +110,6 @@ export function ProjectCollage() {
 
   return (
     <section id="collage" ref={sectionRef} className="section-padding section-aurora relative overflow-hidden text-cream">
-      <div className="hero-dot-grid pointer-events-none absolute inset-0 opacity-15" aria-hidden="true" />
       <div className="section-container relative">
         <SectionHeading
           label="Interactive Collage"

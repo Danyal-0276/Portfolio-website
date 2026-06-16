@@ -51,12 +51,6 @@ export function Certifications() {
       ref={sectionRef}
       className="section-padding section-aurora relative overflow-hidden text-cream"
     >
-      <div
-        className="pointer-events-none absolute -left-24 bottom-0 h-72 w-72 rounded-full blur-[100px]"
-        style={{ background: "radial-gradient(circle, rgba(45,212,191,0.1), transparent 70%)" }}
-        aria-hidden="true"
-      />
-
       <div className="section-container relative">
         <SectionHeading
           dark

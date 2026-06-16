@@ -203,10 +203,10 @@ export function Navbar() {
             <Image
               src={siteConfig.logoPath}
               alt={`${siteConfig.name} logo`}
-              width={108}
-              height={44}
+              width={1024}
+              height={682}
               priority
-              className="h-8 w-auto max-w-[5.5rem] object-contain object-left sm:h-9 sm:max-w-[6.5rem] lg:h-10 lg:max-w-[7.5rem]"
+              className="nav-logo-mark h-10 w-auto sm:h-11 lg:h-12"
             />
           </button>
 
@@ -314,7 +314,7 @@ export function Footer() {
             <span className="text-accent">.</span>
           </p>
           <p className="mt-1 max-w-xs text-sm text-cream/60 sm:max-w-none">
-            Full-Stack Web Developer & AI/ML Researcher · Lahore, Pakistan
+            Full Stack Web Developer & AI/ML Researcher, Lahore, Pakistan
           </p>
         </div>
 

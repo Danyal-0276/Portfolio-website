@@ -191,13 +191,6 @@ export function Skills() {
       id="skills"
       className="relative overflow-hidden section-aurora text-cream"
     >
-      <div className="hero-dot-grid pointer-events-none absolute inset-0 opacity-20" aria-hidden="true" />
-      <div
-        className="pointer-events-none absolute -right-32 top-1/3 h-96 w-96 rounded-full blur-[120px]"
-        style={{ background: "radial-gradient(circle, rgba(45,212,191,0.12), transparent 70%)" }}
-        aria-hidden="true"
-      />
-
       <div className="section-padding relative pb-0">
         <div className="section-container skills-intro">
           <SplitHeading
@@ -206,7 +199,7 @@ export function Skills() {
             className="mb-4 font-display text-[clamp(2rem,6vw,3.5rem)] leading-none"
           />
           <p className="max-w-xl text-base text-cream/55">
-            {totalSkills} skills across {skillGroups.length} domains — scroll to cycle through each
+            {totalSkills} skills across {skillGroups.length} domains, scroll to cycle through each
             layer on desktop.
           </p>
         </div>

@@ -169,7 +169,7 @@ export function FocusTurntable() {
             </div>
 
             <p className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-8 text-center text-xs text-charcoal/40">
-              Drag to rotate · Hover labels for details
+              Drag to rotate, hover labels for details
             </p>
           </div>
 

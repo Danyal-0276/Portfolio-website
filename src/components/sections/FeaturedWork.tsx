@@ -87,7 +87,7 @@ export function FeaturedWork() {
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <div className="featured-content">
               <p className="mb-4 text-xs tracking-[0.22em] text-cream/40 uppercase">
-                {featuredProject.category} · {featuredProject.tech.slice(0, 3).join(", ")}
+                {featuredProject.category}, {featuredProject.tech.slice(0, 3).join(", ")}
               </p>
               <h3 className="mb-5 text-[clamp(1.75rem,4vw,2.75rem)] leading-tight font-bold tracking-tight text-white">
                 {featuredProject.title}

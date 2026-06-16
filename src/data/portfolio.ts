@@ -55,7 +55,7 @@ export const hero = {
   greeting: "Hello, I'm",
   name: "Danyal Tanveer",
   roles: ["Full-Stack Web Developer", "AI & ML Researcher"],
-  tagline: "Full-Stack Web Developer · AI & ML Researcher",
+  tagline: "Full Stack Web Developer, AI & ML Researcher",
   motto: "Navigating the unknown, line by line",
   headline: "Full-Stack Web Developer & AI/ML Researcher",
   subtext:
@@ -63,13 +63,13 @@ export const hero = {
   availability: "Open to fresher roles, internships & collaborations",
   intro:
     "Hey there! I'm a Full-Stack Web Developer and AI/ML Researcher building production apps and research pipelines.",
-  roleLineLeft: "FULL-STACK",
+  roleLineLeft: "FULL STACK",
   roleLineRight: "DEVELOPER",
-  roleOutline: "Full-Stack Developer",
+  roleOutline: "Full Stack Developer",
   roleLineSecondary: "AI & ML RESEARCHER",
-  roleBadge: "FULL-STACK DEVELOPER · LAHORE, PK",
+  roleBadge: "FULL STACK DEVELOPER, LAHORE, PK",
   dragHint: "DRAG TO MOVE",
-  portraitSrc: "/images/profile-orange.png",
+  portraitSrc: "/images/profile-hero.png",
 };
 
 export const statsBand = [
@@ -93,7 +93,7 @@ export const certifications: Certification[] = [
   {
     id: "google-ai-fundamentals",
     title: "AI Fundamentals",
-    issuer: "Google · Coursera",
+    issuer: "Google, Coursera",
     date: "Apr 2026",
     description:
       "Google Career Certificate covering core AI concepts, machine learning workflows, and practical applications for modern software development.",
@@ -106,7 +106,7 @@ export const certifications: Certification[] = [
     issuer: "Hugging Face",
     date: "May 2026",
     description:
-      "Unit 1: Foundations of Agents in the Hugging Face Agents Course — building and understanding AI agent architectures.",
+      "Unit 1: Foundations of Agents in the Hugging Face Agents Course, building and understanding AI agent architectures.",
     image: "/certifications/huggingface-agents.png",
   },
 ];
@@ -223,7 +223,7 @@ export const projects: Project[] = [
   },
   {
     id: "jarvis",
-    title: "J.A.R.V.I.S — Personal AI Assistant",
+    title: "J.A.R.V.I.S, Personal AI Assistant",
     description:
       "Iron Man-inspired voice and chat assistant with a cinematic UI: 3D particle sphere, SiriWave visualizer, Google Gemini brain, voice commands, secure document search, and Gmail integration. Runs locally on localhost.",
     category: "Full Stack",
@@ -443,7 +443,7 @@ export const focusAreas: FocusArea[] = [
   {
     id: "fullstack",
     title: "Full-Stack Development",
-    subtitle: "Web · API · Production",
+    subtitle: "Web, API, Production",
     description:
       "End-to-end systems from React/Next.js frontends to Express and Django APIs, deployed as POS platforms used daily in restaurants.",
     services: [
@@ -457,7 +457,7 @@ export const focusAreas: FocusArea[] = [
   {
     id: "ml",
     title: "ML & NLP Research",
-    subtitle: "Transformers · Benchmarks",
+    subtitle: "Transformers, Benchmarks",
     description:
       "Fake news detection research benchmarking BERT-family models on 100K+ samples, with reproducible pipelines built in PyTorch and HuggingFace.",
     services: [
@@ -471,7 +471,7 @@ export const focusAreas: FocusArea[] = [
   {
     id: "mobile",
     title: "Mobile Development",
-    subtitle: "iOS · Android · Cross-platform",
+    subtitle: "iOS, Android, Cross-platform",
     description:
       "Native Android apps and React Native clients with Firebase auth, personalized feeds, and polished mobile UX patterns.",
     services: [
@@ -485,7 +485,7 @@ export const focusAreas: FocusArea[] = [
   {
     id: "data",
     title: "Data Engineering",
-    subtitle: "Spark · Scraping · Pipelines",
+    subtitle: "Spark, Scraping, Pipelines",
     description:
       "Distributed ML on PySpark, browser automation scrapers, and export pipelines that turn raw data into actionable insights.",
     services: [

@@ -1,9 +1,8 @@
 "use client";
 
 import { useGSAP } from "@gsap/react";
-import Image from "next/image";
 import { useRef } from "react";
-import { about, siteConfig } from "@/data/portfolio";
+import { about } from "@/data/portfolio";
 import { SplitHeading } from "@/components/ui/SplitHeading";
 import { gsap, registerGSAP } from "@/lib/gsap";
 
@@ -40,8 +39,6 @@ export function About() {
       ref={sectionRef}
       className="relative overflow-hidden section-aurora py-20 text-cream md:py-28 lg:py-32"
     >
-      <div className="hero-dot-grid pointer-events-none absolute inset-0 opacity-25" aria-hidden="true" />
-
       <div className="relative mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
         <div className="about-block mb-16 grid gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
@@ -58,7 +55,7 @@ export function About() {
 
           <div className="lg:col-span-7">
             <p className="text-[clamp(1.5rem,3.5vw,2.25rem)] leading-snug font-medium tracking-tight text-white">
-              I build production software and research AI systems — craft isn&apos;t a shortcut,
+              I build production software and research AI systems, craft isn&apos;t a shortcut,
               it&apos;s the path.
             </p>
             <p className="mt-6 text-base leading-relaxed text-cream/60 md:text-lg">
@@ -67,45 +64,29 @@ export function About() {
           </div>
         </div>
 
-        <div className="about-block grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="relative lg:col-span-5">
-            <div className="glass-panel overflow-hidden p-2">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-xl">
-                <Image
-                  src="/images/profile-collage.png"
-                  alt={`${siteConfig.name} — developer portrait collage`}
-                  fill
-                  className="object-cover object-center"
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                />
-              </div>
-            </div>
-          </div>
+        <div className="about-block max-w-3xl space-y-6 lg:max-w-4xl">
+          {about.bio.slice(1).map((paragraph) => (
+            <p
+              key={paragraph.slice(0, 30)}
+              className="text-base leading-relaxed text-cream/65 md:text-lg"
+            >
+              {paragraph}
+            </p>
+          ))}
 
-          <div className="space-y-6 lg:col-span-7">
-            {about.bio.slice(1).map((paragraph) => (
-              <p
-                key={paragraph.slice(0, 30)}
-                className="about-block text-base leading-relaxed text-cream/65 md:text-lg"
-              >
-                {paragraph}
-              </p>
-            ))}
-
-            <div className="about-block rounded-2xl border border-white/10 bg-white/[0.04] p-6 md:p-8">
-              <SplitHeading
-                solid="EDUCATION"
-                outline="DETAILS"
-                className="mb-4 text-xl md:text-2xl"
-              />
-              <p className="font-medium text-white">{about.education.degree}</p>
-              <p className="text-sm text-cream/60">{about.education.institution}</p>
-              <p className="mt-1 text-sm text-cream/40">{about.education.period}</p>
-              <span className="mt-4 inline-block rounded-full bg-accent/15 px-3 py-1 text-sm font-medium text-accent">
-                CGPA {about.education.cgpa}
-              </span>
-              <p className="mt-4 text-sm text-cream/60">{about.education.focus}</p>
-            </div>
+          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 md:p-8">
+            <SplitHeading
+              solid="EDUCATION"
+              outline="DETAILS"
+              className="mb-4 text-xl md:text-2xl"
+            />
+            <p className="font-medium text-white">{about.education.degree}</p>
+            <p className="text-sm text-cream/60">{about.education.institution}</p>
+            <p className="mt-1 text-sm text-cream/40">{about.education.period}</p>
+            <span className="mt-4 inline-block rounded-full bg-accent/15 px-3 py-1 text-sm font-medium text-accent">
+              CGPA {about.education.cgpa}
+            </span>
+            <p className="mt-4 text-sm text-cream/60">{about.education.focus}</p>
           </div>
         </div>
       </div>
