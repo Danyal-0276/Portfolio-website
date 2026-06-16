@@ -3,7 +3,7 @@
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import { gsap, registerGSAP, ScrollSmoother, ScrollTrigger } from "@/lib/gsap";
-import { runAfterIntro } from "@/lib/site-intro";
+import { runAfterIntro, hasSeenIntro } from "@/lib/site-intro";
 
 interface SmoothScrollProviderProps {
   children: React.ReactNode;
@@ -30,10 +30,15 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         return;
       }
 
-      gsap.set(
-        ".hero-meta-row, .hero-char, .hero-role-char, .hero-headline, .hero-cta, .hero-image, .hero-role-title",
-        { opacity: 0 },
-      );
+      const heroTargets =
+        ".hero-meta-row, .hero-char, .hero-role-char, .hero-headline, .hero-cta, .hero-image, .hero-role-title";
+
+      const introAlreadyDone =
+        hasSeenIntro() || document.documentElement.classList.contains("is-ready");
+
+      if (!introAlreadyDone) {
+        gsap.set(heroTargets, { opacity: 0 });
+      }
 
       let smoother: ScrollSmoother | null = null;
       let teardownExperience: (() => void) | undefined;
@@ -56,43 +61,59 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         const refreshTimer = window.setTimeout(refreshScroll, 400);
         let resizeTimer: ReturnType<typeof window.setTimeout>;
 
-        const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
-        heroTl
-          .from(".hero-meta-row", { opacity: 0, y: -12, duration: 0.5 })
-          .from(
-            ".hero-char",
-            {
-              opacity: 0,
-              y: 80,
-              duration: 0.7,
-              stagger: 0.02,
-              ease: "power3.out",
+        if (!introAlreadyDone) {
+          const heroTl = gsap.timeline({
+            defaults: { ease: "power3.out" },
+            onComplete: () => {
+              gsap.set(heroTargets, { clearProps: "opacity,transform" });
             },
-            "-=0.2",
-          )
-          .from(
-            ".hero-role-char",
-            {
-              opacity: 0,
-              y: 50,
-              duration: 0.6,
-              stagger: 0.015,
-              ease: "power3.out",
-            },
-            "-=0.35",
-          )
-          .from(".hero-role-title", { opacity: 0, y: 12, duration: 0.55 }, "-=0.25")
-          .from(".hero-headline", { opacity: 0, y: 20, duration: 0.5 }, "-=0.2")
-          .from(
-            ".hero-cta",
-            { opacity: 0, y: 14, duration: 0.45, stagger: 0.07 },
-            "-=0.15",
-          )
-          .from(
-            ".hero-image",
-            { opacity: 0, y: 28, scale: 0.96, duration: 0.9, ease: "power2.out" },
-            "-=0.55",
-          );
+          });
+
+          heroTl
+            .fromTo(
+              ".hero-meta-row",
+              { opacity: 0, y: -12 },
+              { opacity: 1, y: 0, duration: 0.5 },
+            )
+            .fromTo(
+              ".hero-char",
+              { opacity: 0, y: 80 },
+              { opacity: 1, y: 0, duration: 0.7, stagger: 0.02 },
+              "-=0.2",
+            )
+            .fromTo(
+              ".hero-role-char",
+              { opacity: 0, y: 50 },
+              { opacity: 1, y: 0, duration: 0.6, stagger: 0.015 },
+              "-=0.35",
+            )
+            .fromTo(
+              ".hero-role-title",
+              { opacity: 0, y: 12 },
+              { opacity: 1, y: 0, duration: 0.55 },
+              "-=0.25",
+            )
+            .fromTo(
+              ".hero-headline",
+              { opacity: 0, y: 20 },
+              { opacity: 1, y: 0, duration: 0.5 },
+              "-=0.2",
+            )
+            .fromTo(
+              ".hero-cta button",
+              { opacity: 0, y: 14 },
+              { opacity: 1, y: 0, duration: 0.45, stagger: 0.07 },
+              "-=0.15",
+            )
+            .fromTo(
+              ".hero-image",
+              { opacity: 0, y: 28, scale: 0.96 },
+              { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: "power2.out" },
+              "-=0.55",
+            );
+        } else {
+          gsap.set(heroTargets, { opacity: 1, clearProps: "transform" });
+        }
 
         ScrollTrigger.batch(".reveal", {
           onEnter: (elements) => {

@@ -41,7 +41,7 @@ export function runAfterIntro(callback: () => void): () => void {
   if (typeof window === "undefined") return () => {};
 
   if (hasSeenIntro() || document.documentElement.classList.contains("is-ready")) {
-    callback();
+    requestAnimationFrame(() => callback());
     return () => {};
   }
 

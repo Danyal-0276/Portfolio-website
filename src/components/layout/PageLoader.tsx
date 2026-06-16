@@ -73,9 +73,10 @@ export function PageLoader() {
           ease: "power2.out",
           onUpdate: updateProgress,
           onComplete: () => {
+            completeIntro();
+
             const exitTl = gsap.timeline({
               onComplete: () => {
-                completeIntro();
                 setVisible(false);
               },
             });

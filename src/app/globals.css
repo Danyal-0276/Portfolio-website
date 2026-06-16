@@ -81,16 +81,9 @@
     transform: translateY(40px);
   }
 
-  html.is-loading .hero-meta-row,
-  html.is-loading .hero-char,
-  html.is-loading .hero-role-char,
-  html.is-loading .hero-headline,
-  html.is-loading .hero-cta,
-  html.is-loading .hero-image,
-  html.is-loading .hero-role-title,
   html.is-loading #smooth-wrapper,
   html.is-loading header {
-    opacity: 0;
+    visibility: hidden;
   }
 
   html.is-loading body {
