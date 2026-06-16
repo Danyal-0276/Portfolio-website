@@ -45,22 +45,24 @@ export function Hero() {
           });
         }
 
+        const portrait = portraitRef.current;
+        const movePortraitX = portrait
+          ? gsap.quickTo(portrait, "x", { duration: 0.55, ease: "power2.out" })
+          : null;
+        const movePortraitY = portrait
+          ? gsap.quickTo(portrait, "y", { duration: 0.55, ease: "power2.out" })
+          : null;
+
         const onMove = (e: MouseEvent) => {
-          const portrait = portraitRef.current;
-          if (!portrait) return;
+          if (!portrait || !movePortraitX || !movePortraitY) return;
           const rect = section.getBoundingClientRect();
           const relX = (e.clientX - rect.left) / rect.width - 0.5;
           const relY = (e.clientY - rect.top) / rect.height - 0.5;
-          gsap.to(portrait, {
-            x: relX * 14,
-            y: relY * 10,
-            duration: 0.6,
-            ease: "power2.out",
-            overwrite: "auto",
-          });
+          movePortraitX(relX * 14);
+          movePortraitY(relY * 10);
         };
 
-        section.addEventListener("mousemove", onMove);
+        section.addEventListener("mousemove", onMove, { passive: true });
         return () => section.removeEventListener("mousemove", onMove);
       } else if (portraitRef.current) {
         gsap.set(portraitRef.current, { opacity: 1, clearProps: "transform" });
@@ -84,6 +86,14 @@ export function Hero() {
       if (prefersReducedMotion) return;
 
       const pointer = { x: 0.52, y: 0.34, active: 0 };
+      let wrapWidth = 0;
+      let wrapHeight = 0;
+
+      const measureWrap = () => {
+        const rect = wrap.getBoundingClientRect();
+        wrapWidth = rect.width;
+        wrapHeight = rect.height;
+      };
 
       const placeLight = () => {
         const xPct = `${pointer.x * 100}%`;
@@ -94,45 +104,71 @@ export function Hero() {
         wrap.style.setProperty("--spot-y", yPct);
         wrap.style.setProperty("--spot-spread", `${spread}%`);
         wrap.style.setProperty("--light-strength", String(pointer.active));
-
-        if (spot) {
-          const rect = wrap.getBoundingClientRect();
-          gsap.set(spot, {
-            x: pointer.x * rect.width,
-            y: pointer.y * rect.height,
-            xPercent: -50,
-            yPercent: -50,
-            opacity: 0.35 + pointer.active * 0.55,
-            scale: 0.85 + pointer.active * 0.35,
-          });
-        }
       };
 
+      measureWrap();
       placeLight();
 
+      const moveSpotX = spot
+        ? gsap.quickTo(spot, "x", { duration: 0.55, ease: "power3.out" })
+        : null;
+      const moveSpotY = spot
+        ? gsap.quickTo(spot, "y", { duration: 0.55, ease: "power3.out" })
+        : null;
+      const fadeSpotOpacity = spot
+        ? gsap.quickTo(spot, "opacity", { duration: 0.45, ease: "power2.out" })
+        : null;
+      const fadeSpotScale = spot
+        ? gsap.quickTo(spot, "scale", { duration: 0.45, ease: "power2.out" })
+        : null;
+
+      const syncSpot = () => {
+        if (!spot || !wrapWidth) return;
+        moveSpotX?.(pointer.x * wrapWidth);
+        moveSpotY?.(pointer.y * wrapHeight);
+        fadeSpotOpacity?.(0.35 + pointer.active * 0.55);
+        fadeSpotScale?.(0.85 + pointer.active * 0.35);
+      };
+
+      if (spot) {
+        gsap.set(spot, { xPercent: -50, yPercent: -50, force3D: true });
+        syncSpot();
+      }
+
       const moveX = gsap.quickTo(pointer, "x", {
-        duration: 0.65,
+        duration: 0.55,
         ease: "power3.out",
-        onUpdate: placeLight,
+        onUpdate: () => {
+          placeLight();
+          syncSpot();
+        },
       });
       const moveY = gsap.quickTo(pointer, "y", {
-        duration: 0.65,
+        duration: 0.55,
         ease: "power3.out",
-        onUpdate: placeLight,
+        onUpdate: () => {
+          placeLight();
+          syncSpot();
+        },
       });
       const fadeActive = gsap.quickTo(pointer, "active", {
-        duration: 0.5,
+        duration: 0.45,
         ease: "power2.out",
-        onUpdate: placeLight,
+        onUpdate: () => {
+          placeLight();
+          syncSpot();
+        },
       });
 
       const onPointerMove = (event: PointerEvent) => {
+        if (!wrapWidth) measureWrap();
         const rect = wrap.getBoundingClientRect();
         moveX((event.clientX - rect.left) / rect.width);
         moveY((event.clientY - rect.top) / rect.height);
       };
 
       const onPointerEnter = () => {
+        measureWrap();
         wrap.classList.add("is-active");
         fadeActive(1);
       };
@@ -144,14 +180,18 @@ export function Hero() {
         moveY(0.34);
       };
 
+      const onResize = () => measureWrap();
+
       wrap.addEventListener("pointerenter", onPointerEnter);
       wrap.addEventListener("pointerleave", onPointerLeave);
-      wrap.addEventListener("pointermove", onPointerMove);
+      wrap.addEventListener("pointermove", onPointerMove, { passive: true });
+      window.addEventListener("resize", onResize, { passive: true });
 
       return () => {
         wrap.removeEventListener("pointerenter", onPointerEnter);
         wrap.removeEventListener("pointerleave", onPointerLeave);
         wrap.removeEventListener("pointermove", onPointerMove);
+        window.removeEventListener("resize", onResize);
       };
     },
     { scope: portraitInteractiveRef },

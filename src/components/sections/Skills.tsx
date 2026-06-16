@@ -57,7 +57,7 @@ export function Skills() {
           pin: true,
           start: "top top",
           end: () => `+=${window.innerHeight * skillGroups.length * 0.75}`,
-          scrub: 0.6,
+          scrub: 0.8,
           invalidateOnRefresh: true,
           onUpdate(self) {
             const index = Math.min(
@@ -70,6 +70,15 @@ export function Skills() {
             }
           },
         });
+      });
+
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top bottom",
+        end: "bottom top",
+        onLeave: () => floatTweensRef.current.forEach((tween) => tween.pause()),
+        onEnterBack: () => floatTweensRef.current.forEach((tween) => tween.resume()),
+        onLeaveBack: () => floatTweensRef.current.forEach((tween) => tween.pause()),
       });
 
       mm.add("(max-width: 1023px)", () => {
@@ -139,15 +148,16 @@ export function Skills() {
           stagger: 0.025,
           ease: "back.out(1.6)",
           onComplete: () => {
-            chips.forEach((chip, i) => {
+            const idleChips = chips.slice(0, Math.min(8, chips.length));
+            idleChips.forEach((chip, i) => {
               const tween = gsap.to(chip, {
-                y: gsap.utils.random(-8, 8),
-                x: gsap.utils.random(-4, 4),
-                duration: gsap.utils.random(2.5, 4.5),
+                y: gsap.utils.random(-5, 5),
+                duration: gsap.utils.random(3, 5),
                 repeat: -1,
                 yoyo: true,
                 ease: "sine.inOut",
-                delay: i * 0.04,
+                delay: i * 0.06,
+                force3D: true,
               });
               floatTweensRef.current.push(tween);
             });

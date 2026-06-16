@@ -83,14 +83,30 @@
 
   html.is-loading #smooth-wrapper,
   html.is-loading header {
-    visibility: hidden;
+    opacity: 0;
   }
 
   html.is-loading body {
     overflow: hidden;
   }
 
-  .loader-root {
+  html.is-ready #smooth-wrapper,
+  html.is-ready header {
+    transition: opacity 0.4s ease;
+  }
+
+  .loader-logo {
+    will-change: transform, opacity;
+  }
+
+  .hero-portrait-aurora-spot,
+  .hero-portrait-interactive,
+  .hero-image,
+  .hero-name-drag {
+    will-change: transform;
+  }
+
+  .aurora-cursor-stain {
     will-change: transform;
   }
 

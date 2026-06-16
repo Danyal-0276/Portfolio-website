@@ -43,6 +43,7 @@ export const siteConfig = {
   ogImage: "/images/profile-orange.png",
   logoPath: "/images/logo.png",
   faviconPath: "/images/favicon-512.png",
+  faviconVersion: "3",
   email: "donibutt2112@gmail.com",
   phone: "+92 370 7076164",
   location: "Lahore, Punjab, Pakistan",

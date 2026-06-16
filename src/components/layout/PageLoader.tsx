@@ -31,12 +31,17 @@ export function PageLoader() {
         return;
       }
 
+      gsap.set(root, { autoAlpha: 1 });
+
       const progressState = { value: 0 };
 
       const updateProgress = () => {
-        const rounded = Math.round(progressState.value);
-        counter.textContent = `${rounded}`;
-        gsap.set(progress, { scaleX: progressState.value / 100, transformOrigin: "left center" });
+        counter.textContent = `${Math.round(progressState.value)}`;
+        gsap.set(progress, {
+          scaleX: progressState.value / 100,
+          transformOrigin: "left center",
+          force3D: true,
+        });
       };
 
       gsap.set(progress, { scaleX: 0, transformOrigin: "left center" });
@@ -44,23 +49,16 @@ export function PageLoader() {
 
       const introTl = gsap.timeline();
       introTl
-        .from(".loader-aurora", { opacity: 0, duration: 0.5 })
         .from(
           ".loader-logo",
-          { opacity: 0, scale: 0.82, y: 16, duration: 0.65, ease: "back.out(1.6)" },
-          "-=0.2",
+          { autoAlpha: 0, scale: 0.82, y: 18, duration: 0.75, ease: "back.out(1.5)" },
         )
-        .from(
-          ".loader-letter",
-          { opacity: 0, y: 24, duration: 0.45, stagger: 0.04, ease: "power3.out" },
-          "-=0.35",
-        )
-        .from(".loader-tagline", { opacity: 0, y: 8, duration: 0.4 }, "-=0.2")
-        .from(".loader-track", { opacity: 0, scaleX: 0, duration: 0.45 }, "-=0.15");
+        .from(".loader-tagline", { autoAlpha: 0, y: 10, duration: 0.4 }, "-=0.35")
+        .from(".loader-track", { autoAlpha: 0, y: 8, duration: 0.4 }, "-=0.2");
 
       const progressTween = gsap.to(progressState, {
-        value: 92,
-        duration: 2.4,
+        value: 90,
+        duration: 1.8,
         ease: "power1.inOut",
         onUpdate: updateProgress,
       });
@@ -75,34 +73,42 @@ export function PageLoader() {
           onComplete: () => {
             completeIntro();
 
-            const exitTl = gsap.timeline({
-              onComplete: () => {
-                setVisible(false);
-              },
-            });
-
-            exitTl
-              .to(".loader-content", {
-                opacity: 0,
-                y: -18,
+            gsap
+              .timeline({
+                onComplete: () => setVisible(false),
+              })
+              .to(".loader-track", {
+                autoAlpha: 0,
+                y: 8,
                 duration: 0.35,
-                ease: "power2.in",
+                ease: "power2.inOut",
               })
               .to(
-                root,
+                ".loader-tagline",
+                { autoAlpha: 0, duration: 0.3, ease: "power2.inOut" },
+                "<",
+              )
+              .to(
+                ".loader-logo",
                 {
-                  yPercent: -100,
-                  duration: 0.85,
-                  ease: "power4.inOut",
+                  autoAlpha: 0,
+                  scale: 1.08,
+                  duration: 0.7,
+                  ease: "power2.inOut",
                 },
-                "-=0.05",
+                "-=0.1",
+              )
+              .to(
+                root,
+                { autoAlpha: 0, duration: 0.55, ease: "power2.inOut" },
+                "-=0.45",
               );
           },
         });
       };
 
       const minDelay = new Promise<void>((resolve) => {
-        window.setTimeout(resolve, 1600);
+        window.setTimeout(resolve, 1100);
       });
 
       const loadReady = new Promise<void>((resolve) => {
@@ -122,68 +128,34 @@ export function PageLoader() {
 
   if (!visible) return null;
 
-  const initials = siteConfig.name
-    .split(" ")
-    .map((part) => part[0])
-    .join("");
-
   return (
     <div
       ref={rootRef}
-      className="loader-root fixed inset-0 z-[200] flex items-center justify-center overflow-hidden bg-[#030508]"
+      className="loader-root pointer-events-none fixed inset-0 z-[200] flex items-center justify-center"
       aria-hidden={!visible}
       aria-live="polite"
     >
-      <div className="loader-aurora pointer-events-none absolute inset-0">
-        <div className="aurora-base-gradient absolute inset-0 opacity-80" />
-        <div
-          className="absolute left-1/4 top-1/3 h-64 w-64 rounded-full opacity-50 blur-3xl"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(45,212,191,0.45) 0%, transparent 70%)",
-          }}
-        />
-        <div
-          className="absolute bottom-1/4 right-1/4 h-72 w-72 rounded-full opacity-40 blur-3xl"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(34,211,238,0.35) 0%, transparent 72%)",
-          }}
-        />
-      </div>
-
-      <div className="loader-content relative z-10 flex w-full max-w-sm flex-col items-center px-8">
-        <div className="loader-logo mb-8">
+      <div className="loader-content pointer-events-none relative z-10 flex w-full max-w-md flex-col items-center px-8">
+        <div className="loader-logo mb-10">
           <Image
             src={siteConfig.logoPath}
-            alt=""
-            width={120}
-            height={80}
+            alt={`${siteConfig.name} logo`}
+            width={512}
+            height={342}
             priority
-            className="h-14 w-auto sm:h-16"
+            className="h-24 w-auto sm:h-32 md:h-36"
           />
-        </div>
-
-        <div className="loader-letters mb-3 flex gap-1 sm:gap-1.5" aria-hidden="true">
-          {initials.split("").map((letter, index) => (
-            <span
-              key={`${letter}-${index}`}
-              className="loader-letter font-display text-4xl font-bold tracking-tight text-white sm:text-5xl"
-            >
-              {letter}
-            </span>
-          ))}
         </div>
 
         <p className="loader-tagline mb-10 text-center text-[11px] tracking-[0.32em] text-cream/45 uppercase">
           Loading portfolio
         </p>
 
-        <div className="loader-track w-full">
+        <div className="loader-track w-full max-w-xs">
           <div className="relative h-px w-full overflow-hidden rounded-full bg-white/10">
             <div
               ref={progressRef}
-              className="absolute inset-0 bg-gradient-to-r from-accent via-glow to-accent-soft"
+              className="absolute inset-0 bg-gradient-to-r from-accent via-glow to-accent-soft will-change-transform"
             />
           </div>
           <div className="mt-4 flex items-end justify-between">

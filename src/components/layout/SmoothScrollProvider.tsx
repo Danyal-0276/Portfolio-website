@@ -47,9 +47,9 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         smoother = ScrollSmoother.create({
           wrapper: "#smooth-wrapper",
           content: "#smooth-content",
-          smooth: 1.1,
+          smooth: 0.85,
           effects: false,
-          smoothTouch: 0.05,
+          smoothTouch: 0.04,
         });
 
         const refreshScroll = () => {
@@ -72,43 +72,43 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
           heroTl
             .fromTo(
               ".hero-meta-row",
-              { opacity: 0, y: -12 },
-              { opacity: 1, y: 0, duration: 0.5 },
+              { autoAlpha: 0, y: -12 },
+              { autoAlpha: 1, y: 0, duration: 0.5, force3D: true },
             )
             .fromTo(
               ".hero-char",
-              { opacity: 0, y: 80 },
-              { opacity: 1, y: 0, duration: 0.7, stagger: 0.02 },
+              { autoAlpha: 0, y: 80 },
+              { autoAlpha: 1, y: 0, duration: 0.65, stagger: 0.018, force3D: true },
               "-=0.2",
             )
             .fromTo(
               ".hero-role-char",
-              { opacity: 0, y: 50 },
-              { opacity: 1, y: 0, duration: 0.6, stagger: 0.015 },
+              { autoAlpha: 0, y: 50 },
+              { autoAlpha: 1, y: 0, duration: 0.55, stagger: 0.012, force3D: true },
               "-=0.35",
             )
             .fromTo(
               ".hero-role-title",
-              { opacity: 0, y: 12 },
-              { opacity: 1, y: 0, duration: 0.55 },
+              { autoAlpha: 0, y: 12 },
+              { autoAlpha: 1, y: 0, duration: 0.5, force3D: true },
               "-=0.25",
             )
             .fromTo(
               ".hero-headline",
-              { opacity: 0, y: 20 },
-              { opacity: 1, y: 0, duration: 0.5 },
+              { autoAlpha: 0, y: 20 },
+              { autoAlpha: 1, y: 0, duration: 0.45, force3D: true },
               "-=0.2",
             )
             .fromTo(
               ".hero-cta button",
-              { opacity: 0, y: 14 },
-              { opacity: 1, y: 0, duration: 0.45, stagger: 0.07 },
+              { autoAlpha: 0, y: 14 },
+              { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.06, force3D: true },
               "-=0.15",
             )
             .fromTo(
               ".hero-image",
-              { opacity: 0, y: 28, scale: 0.96 },
-              { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: "power2.out" },
+              { autoAlpha: 0, y: 28, scale: 0.96 },
+              { autoAlpha: 1, y: 0, scale: 1, duration: 0.85, ease: "power2.out", force3D: true },
               "-=0.55",
             );
         } else {
@@ -118,21 +118,22 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         ScrollTrigger.batch(".reveal", {
           onEnter: (elements) => {
             gsap.to(elements, {
-              opacity: 1,
+              autoAlpha: 1,
               y: 0,
-              duration: 0.75,
-              stagger: 0.1,
+              duration: 0.65,
+              stagger: 0.08,
               ease: "power3.out",
-              overwrite: true,
+              overwrite: "auto",
+              force3D: true,
             });
           },
-          start: "top 85%",
+          start: "top 88%",
           once: true,
         });
 
         const onResize = () => {
           clearTimeout(resizeTimer);
-          resizeTimer = setTimeout(refreshScroll, 150);
+          resizeTimer = setTimeout(refreshScroll, 280);
         };
 
         window.addEventListener("load", refreshScroll);

@@ -28,6 +28,7 @@ export function AuroraBackground() {
           y: y * h,
           xPercent: -50,
           yPercent: -50,
+          force3D: true,
         });
       };
 
@@ -35,15 +36,30 @@ export function AuroraBackground() {
 
       if (prefersReducedMotion) return;
 
-      const moveX = gsap.quickTo(pointerSmooth.current, "x", {
-        duration: 1.05,
+      const stainX = gsap.quickTo(stain, "x", {
+        duration: 0.9,
         ease: "power3.out",
-        onUpdate: placeStain,
+      });
+      const stainY = gsap.quickTo(stain, "y", {
+        duration: 0.9,
+        ease: "power3.out",
+      });
+
+      const moveX = gsap.quickTo(pointerSmooth.current, "x", {
+        duration: 0.9,
+        ease: "power3.out",
+        onUpdate: () => {
+          stainX(pointerSmooth.current.x * window.innerWidth);
+          stainY(pointerSmooth.current.y * window.innerHeight);
+        },
       });
       const moveY = gsap.quickTo(pointerSmooth.current, "y", {
-        duration: 1.05,
+        duration: 0.9,
         ease: "power3.out",
-        onUpdate: placeStain,
+        onUpdate: () => {
+          stainX(pointerSmooth.current.x * window.innerWidth);
+          stainY(pointerSmooth.current.y * window.innerHeight);
+        },
       });
 
       const onPointerMove = (event: PointerEvent) => {
