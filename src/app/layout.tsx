@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Syne } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { CursorProvider } from "@/components/layout/CursorProvider";
+import { PageLoader } from "@/components/layout/PageLoader";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
 import { AuroraBackground } from "@/components/ui/AuroraBackground";
 import { siteConfig } from "@/data/portfolio";
@@ -57,8 +58,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${syne.variable}`}>
+    <html lang="en" className={`${inter.variable} ${syne.variable} is-loading`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add('is-loading');`,
+          }}
+        />
+      </head>
       <body>
+        <PageLoader />
         <a
           href="#hero"
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-ink"

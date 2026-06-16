@@ -29,36 +29,6 @@ export function Hero() {
       ).matches;
 
       if (!prefersReducedMotion) {
-        const portrait = portraitRef.current;
-        if (portrait) {
-          gsap.fromTo(
-            portrait,
-            { opacity: 0, y: 28, scale: 0.96 },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              duration: 0.9,
-              delay: 0.35,
-              ease: "power2.out",
-              clearProps: "opacity,transform",
-            },
-          );
-        }
-
-        gsap.fromTo(
-          ".hero-role-title",
-          { opacity: 0, y: 12 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            delay: 0.55,
-            ease: "power2.out",
-            clearProps: "opacity,transform",
-          },
-        );
-
         if (dragEl) {
           Draggable.create(dragEl, {
             type: "x,y",
