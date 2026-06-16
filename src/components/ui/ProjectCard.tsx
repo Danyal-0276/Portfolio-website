@@ -7,7 +7,7 @@ interface ProjectCardProps {
 }
 
 const categoryColors: Record<Project["category"], string> = {
-  "Full Stack": "bg-gold/15 text-gold-dark",
+  "Full Stack": "bg-accent/15 text-accent-dark",
   Mobile: "bg-blue-100 text-blue-800",
   "Machine Learning": "bg-purple-100 text-purple-800",
   "Data Engineering": "bg-emerald-100 text-emerald-800",
@@ -36,7 +36,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
         )}
       </div>
 
-      <h3 className="mb-2 font-serif text-xl text-charcoal group-hover:text-gold-dark">
+      <h3 className="mb-2 font-serif text-xl text-charcoal group-hover:text-accent-dark">
         {project.title}
       </h3>
 
@@ -59,7 +59,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
         href={project.github}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 text-sm font-medium text-gold-dark transition-colors hover:text-charcoal"
+        className="inline-flex items-center gap-2 text-sm font-medium text-accent-dark transition-colors hover:text-charcoal"
       >
         View on GitHub
         <svg

@@ -154,7 +154,7 @@ export function FocusTurntable() {
                   );
                 })}
                 <circle cx="100" cy="100" r="18" fill="#343434" />
-                <circle cx="100" cy="100" r="6" fill="#edb33c" />
+                <circle cx="100" cy="100" r="6" fill="#ff6b00" />
               </svg>
             </div>
 

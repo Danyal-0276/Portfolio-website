@@ -13,6 +13,7 @@ export interface Project {
   tech: string[];
   github: string;
   highlight?: string;
+  metrics?: { value: string; label: string }[];
 }
 
 export interface Experience {
@@ -39,7 +40,7 @@ export const siteConfig = {
   description:
     "Computer Science student at UCP specializing in full-stack development, NLP research, and fake news detection. Building production systems with React, Next.js, Django, and PyTorch.",
   url: "https://portfolio-website-git-main-danyal-tanveer-s-projects.vercel.app",
-  ogImage: "/images/profile-hero.png",
+  ogImage: "/images/profile-orange.png",
   logoPath: "/images/logo.png",
   faviconPath: "/images/favicon-512.png",
   email: "donibutt2112@gmail.com",
@@ -67,7 +68,16 @@ export const hero = {
   roleOutline: "Full-Stack Developer",
   roleLineSecondary: "AI & ML RESEARCHER",
   roleBadge: "FULL-STACK DEVELOPER · LAHORE, PK",
+  dragHint: "DRAG TO MOVE",
+  portraitSrc: "/images/profile-orange.png",
 };
+
+export const statsBand = [
+  { value: "9+", label: "Projects shipped" },
+  { value: "3.59", label: "CGPA at UCP" },
+  { value: "100K+", label: "Research samples" },
+  { value: "2", label: "Restaurants deployed" },
+];
 
 export interface Certification {
   id: string;
@@ -230,6 +240,10 @@ export const projects: Project[] = [
     tech: ["Next.js 15", "React 19", "TypeScript", "Express", "MongoDB", "Vercel", "Render"],
     github: "https://github.com/Danyal-0276/POS-client.git",
     highlight: "Deployed in production",
+    metrics: [
+      { value: "3", label: "Connected apps" },
+      { value: "2", label: "Live restaurants" },
+    ],
   },
   {
     id: "bert",
@@ -293,10 +307,12 @@ export const projects: Project[] = [
   },
 ];
 
+export const featuredProject = projects.find((p) => p.id === "pos")!;
+
 export const skillGroups: SkillGroup[] = [
   {
     label: "Languages",
-    accent: "#edb33c",
+    accent: "#2dd4bf",
     span: "col-span-2 lg:col-span-2",
     skills: [
       "Python",
@@ -313,19 +329,19 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: "Frontend",
-    accent: "#5b9bd5",
+    accent: "#22d3ee",
     span: "col-span-2 lg:col-span-2",
     skills: ["React", "React Native", "Next.js", "Tailwind CSS", "Bootstrap", "Figma"],
   },
   {
     label: "Backend",
-    accent: "#6bc4a6",
+    accent: "#14b8a6",
     span: "col-span-2 lg:col-span-2",
     skills: ["Node.js", "Express", "Django", "DRF", "REST APIs", "JWT", "Eel", "Resend"],
   },
   {
     label: "CS Fundamentals",
-    accent: "#c4b5fd",
+    accent: "#64748b",
     span: "col-span-2 lg:col-span-2",
     skills: [
       "OOP",
@@ -338,7 +354,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: "ML / AI",
-    accent: "#9b7ed9",
+    accent: "#5eead4",
     span: "col-span-2 lg:col-span-6",
     skills: [
       "PyTorch",
@@ -362,13 +378,13 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: "Databases",
-    accent: "#f093fb",
+    accent: "#0ea5e9",
     span: "col-span-2 lg:col-span-2",
     skills: ["MongoDB", "MySQL", "Firebase", "SQL", "NoSQL"],
   },
   {
     label: "DevOps & Cloud",
-    accent: "#43e97b",
+    accent: "#34d399",
     span: "col-span-2 lg:col-span-2",
     skills: [
       "Git",
@@ -385,7 +401,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: "Tools & IDEs",
-    accent: "#fa709a",
+    accent: "#67e8f9",
     span: "col-span-2 lg:col-span-6",
     skills: [
       "VS Code",
@@ -406,11 +422,11 @@ export const skillGroups: SkillGroup[] = [
 
 export const navLinks = [
   { label: "About", href: "#about" },
-  { label: "Focus", href: "#focus" },
   { label: "Experience", href: "#experience" },
-  { label: "Certifications", href: "#certifications" },
   { label: "Projects", href: "#projects" },
   { label: "Collage", href: "#collage" },
+  { label: "Skills", href: "#skills" },
+  { label: "Certifications", href: "#certifications" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -436,7 +452,7 @@ export const focusAreas: FocusArea[] = [
       "MongoDB data modeling",
       "Swagger docs & Agile delivery",
     ],
-    accent: "#edb33c",
+    accent: "#2dd4bf",
   },
   {
     id: "ml",
@@ -450,7 +466,7 @@ export const focusAreas: FocusArea[] = [
       "Model comparison workflows",
       "Jupyter & experiment tracking",
     ],
-    accent: "#9b7ed9",
+    accent: "#5eead4",
   },
   {
     id: "mobile",
@@ -464,7 +480,7 @@ export const focusAreas: FocusArea[] = [
       "Firebase & OAuth flows",
       "Offline-first patterns",
     ],
-    accent: "#5b9bd5",
+    accent: "#22d3ee",
   },
   {
     id: "data",
@@ -478,7 +494,7 @@ export const focusAreas: FocusArea[] = [
       "Excel/CSV export workflows",
       "Ensemble model evaluation",
     ],
-    accent: "#6bc4a6",
+    accent: "#14b8a6",
   },
 ];
 
@@ -488,7 +504,7 @@ export const projectAccents: Record<string, string> = {
   pos: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
   bert: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
   nids: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
-  scraper: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+  scraper: "linear-gradient(135deg, #fa709a 0%, #ff8533 100%)",
   duolingo: "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)",
   "js-projects": "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
   sentiment: "linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)",
@@ -529,10 +545,9 @@ export function isDarkUiSnapshotProject(projectId: string) {
   return DARK_UI_SNAPSHOT_PROJECTS.has(projectId);
 }
 
-export function getProjectSnapshotFit(projectId: string): "cover" | "contain" {
-  if (CHART_SNAPSHOT_PROJECTS.has(projectId)) return "contain";
-  if (DARK_UI_SNAPSHOT_PROJECTS.has(projectId)) return "contain";
-  return "cover";
+export function getProjectSnapshotFit(projectId?: string): "cover" | "contain" {
+  void projectId;
+  return "contain";
 }
 
 export function getProjectThumbnail(projectId: string): string | undefined {

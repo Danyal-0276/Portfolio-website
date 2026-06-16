@@ -47,7 +47,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="relative overflow-hidden bg-ink py-24 text-cream md:py-32">
+    <section id="contact" className="section-aurora relative overflow-hidden py-24 text-cream md:py-32">
       <div className="contact-glow pointer-events-none absolute inset-0" aria-hidden="true" />
       <div className="hero-noise pointer-events-none absolute inset-0 opacity-15" aria-hidden="true" />
 

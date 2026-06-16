@@ -62,7 +62,7 @@ export function SocialLinks({ variant = "default", className }: SocialLinksProps
               target="_blank"
               rel="noopener noreferrer"
               aria-label={link.name}
-              className="text-charcoal-light transition-colors hover:text-gold-dark"
+              className="text-charcoal-light transition-colors hover:text-accent-dark"
             >
               <Icon className="h-5 w-5" />
             </a>
@@ -83,10 +83,10 @@ export function SocialLinks({ variant = "default", className }: SocialLinksProps
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2.5 rounded-full border border-charcoal/15 bg-white/60 px-4 py-2.5 text-sm transition-all hover:border-gold hover:bg-gold/5 hover:text-gold-dark"
+              className="group inline-flex items-center gap-2.5 rounded-full border border-charcoal/15 bg-white/60 px-4 py-2.5 text-sm transition-all hover:border-accent hover:bg-accent/5 hover:text-accent-dark"
             >
-              <Icon className="h-4 w-4 text-charcoal transition-colors group-hover:text-gold-dark" />
-              <span className="font-medium text-charcoal group-hover:text-gold-dark">
+              <Icon className="h-4 w-4 text-charcoal transition-colors group-hover:text-accent-dark" />
+              <span className="font-medium text-charcoal group-hover:text-accent-dark">
                 {link.name}
               </span>
               <span className="hidden text-charcoal/50 sm:inline">·</span>
@@ -108,9 +108,9 @@ export function SocialLinks({ variant = "default", className }: SocialLinksProps
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 text-charcoal-light transition-colors hover:text-gold-dark"
+            className="flex items-center gap-3 text-charcoal-light transition-colors hover:text-accent-dark"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/15 text-gold-dark">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/15 text-accent-dark">
               <Icon className="h-5 w-5" />
             </span>
             <span>

@@ -20,20 +20,20 @@ export function SectionHeading({
       <p
         className={cn(
           "mb-3 text-sm font-medium uppercase tracking-widest",
-          dark ? "text-gold" : "text-gold-dark",
+          dark ? "text-accent" : "text-accent-dark",
         )}
       >
         {label}
       </p>
       <h2
         className={cn(
-          "font-serif text-3xl leading-tight sm:text-4xl md:text-5xl",
+          "font-display text-3xl leading-tight sm:text-4xl md:text-5xl",
           dark ? "text-cream" : "text-charcoal",
         )}
       >
         {title}
       </h2>
-      <div className={cn("gold-line mt-4", dark && "bg-gold")} />
+      <div className={cn("accent-line mt-4", dark && "bg-accent")} />
       {description && (
         <p
           className={cn(

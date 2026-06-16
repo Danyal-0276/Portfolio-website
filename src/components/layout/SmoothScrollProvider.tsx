@@ -21,6 +21,10 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
 
       if (prefersReducedMotion) {
         gsap.set(".reveal", { opacity: 1, y: 0 });
+        gsap.set(
+          ".hero-meta-row, .hero-char, .hero-role-char, .hero-headline, .hero-cta, .hero-image",
+          { opacity: 1, clearProps: "transform" },
+        );
         return;
       }
 
@@ -42,25 +46,23 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
 
       const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
       heroTl
-        .from(".hero-orb", { opacity: 0, scale: 0.85, duration: 1, stagger: 0.12, ease: "power2.out" })
-        .from(".hero-meta-row", { opacity: 0, y: -12, duration: 0.5 }, "-=0.85")
+        .from(".hero-meta-row", { opacity: 0, y: -12, duration: 0.5 })
         .from(".hero-char", {
           opacity: 0,
-          y: 60,
-          duration: 0.65,
-          stagger: 0.018,
+          y: 80,
+          duration: 0.7,
+          stagger: 0.02,
           ease: "power3.out",
-        }, "-=0.4")
+        }, "-=0.2")
         .from(".hero-role-char", {
           opacity: 0,
-          y: 30,
-          duration: 0.55,
-          stagger: 0.012,
+          y: 50,
+          duration: 0.6,
+          stagger: 0.015,
           ease: "power3.out",
         }, "-=0.35")
-        .from(".hero-greeting > *:not(h1)", { opacity: 0, y: 20, duration: 0.5, stagger: 0.06 }, "-=0.3")
-        .from(".hero-image", { opacity: 0, y: 30, scale: 0.96, duration: 0.9, ease: "power2.out" }, "-=0.5")
-        .from(".hero-cta", { opacity: 0, y: 14, duration: 0.45, stagger: 0.07 }, "-=0.4");
+        .from(".hero-headline", { opacity: 0, y: 20, duration: 0.5 }, "-=0.2")
+        .from(".hero-cta", { opacity: 0, y: 14, duration: 0.45, stagger: 0.07 }, "-=0.15");
 
       ScrollTrigger.batch(".reveal", {
         onEnter: (elements) => {

@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
-import { DM_Sans, Instrument_Serif } from "next/font/google";
+import { Inter, Syne } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { CursorProvider } from "@/components/layout/CursorProvider";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
+import { AuroraBackground } from "@/components/ui/AuroraBackground";
 import { siteConfig } from "@/data/portfolio";
 import "./globals.css";
 
-const dmSans = DM_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  variable: "--font-inter",
   display: "swap",
 });
 
-const instrumentSerif = Instrument_Serif({
+const syne = Syne({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-instrument-serif",
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-syne",
   display: "swap",
 });
 
@@ -56,17 +57,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${instrumentSerif.variable}`}>
+    <html lang="en" className={`${inter.variable} ${syne.variable}`}>
       <body>
         <a
           href="#hero"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-gold focus:px-4 focus:py-2 focus:text-charcoal"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-ink"
         >
           Skip to content
         </a>
-        <Navbar />
-        <CursorProvider />
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <AuroraBackground />
+        <div className="relative z-[1] bg-transparent">
+          <Navbar />
+          <CursorProvider />
+          <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        </div>
       </body>
     </html>
   );

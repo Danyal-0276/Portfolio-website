@@ -1,11 +1,16 @@
 # OS
 .DS_Store
 Thumbs.db
+Desktop.ini
 
-# Editor
+# Editor / IDE
 .vscode/
 .idea/
 .cursor/
+
+# Agent / tooling
+.agents/
+skills-lock.json
 
 # Dependencies
 node_modules/
@@ -18,18 +23,28 @@ out/
 dist/
 build/
 
-# Environment
+# Environment & secrets
 .env
 .env.local
 .env.*.local
 
-# Debug
+# Debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # TypeScript
 *.tsbuildinfo
 
 # Vercel
 .vercel
+
+# Temp / generated assets
+public/video-frames/
+*.mp4
+*.mov
+
+# Optional local-only folders (keep source assets in repo root if needed)
+# Snapshots of projects/
+# Readme of my projects/

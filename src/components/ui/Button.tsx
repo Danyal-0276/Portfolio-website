@@ -14,12 +14,12 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-gold text-charcoal hover:bg-gold-dark shadow-md shadow-gold/20",
+    "bg-accent text-ink hover:bg-accent-soft shadow-md shadow-accent/25",
   secondary:
-    "bg-charcoal text-cream hover:bg-charcoal-light",
-  ghost: "bg-transparent text-charcoal hover:bg-cream-dark",
+    "bg-white/10 text-cream hover:bg-white/15 border border-white/10",
+  ghost: "bg-transparent text-cream/80 hover:bg-white/5 hover:text-cream",
   outline:
-    "border-2 border-charcoal/20 bg-transparent text-charcoal hover:border-gold hover:text-gold-dark",
+    "border-2 border-white/20 bg-transparent text-cream hover:border-accent hover:text-accent-soft",
 };
 
 function MagneticWrap({
@@ -57,7 +57,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+    "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
     variants[variant],
     className,
   );

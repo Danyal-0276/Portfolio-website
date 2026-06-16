@@ -20,26 +20,26 @@ function ProjectPanel({
     <article className={className}>
       <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-2">
         <div className="project-panel-content">
-          <span className="project-reveal project-number mb-4 inline-block font-serif text-6xl text-charcoal/10 md:text-8xl">
+          <span className="project-reveal project-number mb-4 inline-block font-display text-6xl text-white/10 md:text-8xl">
             {String(index + 1).padStart(2, "0")}
           </span>
           <p className="project-reveal mb-2 text-sm font-medium tracking-widest text-accent uppercase">
             {project.category}
           </p>
-          <h3 className="project-reveal mb-4 font-serif text-2xl text-charcoal md:text-4xl lg:text-5xl">
+          <h3 className="project-reveal mb-4 font-display text-2xl text-white md:text-4xl lg:text-5xl">
             {project.title}
           </h3>
           {project.highlight && (
-            <p className="project-reveal mb-4 text-sm text-charcoal/50">{project.highlight}</p>
+            <p className="project-reveal mb-4 text-sm text-cream/50">{project.highlight}</p>
           )}
-          <p className="project-reveal mb-6 max-w-lg text-base leading-relaxed text-charcoal-light md:text-lg">
+          <p className="project-reveal mb-6 max-w-lg text-base leading-relaxed text-cream/70 md:text-lg">
             {project.description}
           </p>
           <div className="project-reveal mb-6 flex flex-wrap gap-2 md:mb-8">
             {project.tech.map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-charcoal/10 bg-white px-3 py-1 text-sm text-charcoal/70"
+                className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-cream/70"
               >
                 {t}
               </span>
@@ -49,7 +49,7 @@ function ProjectPanel({
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="project-reveal inline-flex items-center gap-2 rounded-full bg-charcoal px-6 py-3 text-sm font-medium text-cream transition-colors hover:bg-accent hover:text-white"
+            className="project-reveal inline-flex items-center gap-2 rounded-full border border-accent/35 bg-accent/10 px-6 py-3 text-sm font-medium text-accent-soft transition-colors hover:bg-accent hover:text-ink"
             data-cursor="view"
           >
             View on GitHub
@@ -101,54 +101,32 @@ export function ProjectShowcase() {
       if (mobileCards.length && !prefersReducedMotion) {
         mobileCards.forEach((card) => {
           const reveals = card.querySelectorAll(".project-reveal");
-          gsap.set(reveals, { opacity: 0, y: 36 });
 
           ScrollTrigger.create({
             trigger: card,
             start: "top 82%",
             once: true,
             onEnter: () => {
-              gsap.to(reveals, {
-                opacity: 1,
-                y: 0,
-                duration: 0.65,
-                stagger: 0.07,
-                ease: "power3.out",
-              });
+              gsap.fromTo(
+                reveals,
+                { opacity: 0, y: 36 },
+                { opacity: 1, y: 0, duration: 0.65, stagger: 0.07, ease: "power3.out", clearProps: "opacity,transform" },
+              );
             },
           });
-
-          const snapshot = card.querySelector(".project-snapshot-wrap");
-          if (snapshot) {
-            gsap.from(snapshot, {
-              opacity: 0,
-              scale: 0.92,
-              duration: 0.8,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 78%",
-                once: true,
-              },
-            });
-          }
+        });
+      } else if (mobileCards.length) {
+        mobileCards.forEach((card) => {
+          gsap.set(card.querySelectorAll(".project-reveal"), { opacity: 1, clearProps: "transform" });
         });
       }
 
       const mm = gsap.matchMedia();
 
-      mm.add(
-        "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
-        () => {
+      mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
           gsap.set(track, { x: 0 });
 
           const panels = gsap.utils.toArray<HTMLElement>(".showcase-panel", track);
-          panels.forEach((panel) => {
-            gsap.set(panel.querySelectorAll(".project-reveal"), {
-              opacity: 0,
-              y: 48,
-            });
-          });
 
           const getScrollDistance = () =>
             Math.max(0, track.scrollWidth - pin.offsetWidth);
@@ -161,44 +139,54 @@ export function ProjectShowcase() {
               pin: true,
               scrub: 1,
               start: "top top",
-              end: () => `+=${getScrollDistance()}`,
+              end: () => `+=${Math.max(getScrollDistance(), window.innerHeight * 0.5)}`,
               invalidateOnRefresh: true,
               anticipatePin: 1,
             },
           });
 
-          panels.forEach((panel) => {
+          panels.forEach((panel, panelIndex) => {
             const reveals = panel.querySelectorAll(".project-reveal");
             const snapshot = panel.querySelector(".project-snapshot-wrap");
 
-            gsap.to(reveals, {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              stagger: 0.06,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: panel,
-                containerAnimation: horizontalTween,
-                start: "left 65%",
-                end: "left 35%",
-                toggleActions: "play none none reverse",
+            if (panelIndex === 0) {
+              gsap.set(reveals, { opacity: 1, y: 0 });
+            }
+
+            gsap.fromTo(
+              reveals,
+              { opacity: panelIndex === 0 ? 1 : 0, y: panelIndex === 0 ? 0 : 48 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.06,
+                ease: "power3.out",
+                immediateRender: panelIndex !== 0,
+                scrollTrigger: {
+                  trigger: panel,
+                  containerAnimation: horizontalTween,
+                  start: "left 75%",
+                  end: "left 25%",
+                  toggleActions: "play none none reverse",
+                },
               },
-            });
+            );
 
             if (snapshot) {
               gsap.fromTo(
                 snapshot,
-                { x: 60, opacity: 0.6 },
+                { opacity: panelIndex === 0 ? 1 : 0.5, scale: panelIndex === 0 ? 1 : 0.94 },
                 {
-                  x: -20,
                   opacity: 1,
+                  scale: 1,
                   ease: "none",
+                  immediateRender: panelIndex !== 0,
                   scrollTrigger: {
                     trigger: panel,
                     containerAnimation: horizontalTween,
-                    start: "left right",
-                    end: "right left",
+                    start: "left 80%",
+                    end: "left 20%",
                     scrub: 1,
                   },
                 },
@@ -228,6 +216,7 @@ export function ProjectShowcase() {
 
           refreshScroll();
           requestAnimationFrame(refreshScroll);
+          gsap.delayedCall(0.5, refreshScroll);
 
           const resizeObserver = new ResizeObserver(scheduleRefresh);
           resizeObserver.observe(track);
@@ -236,9 +225,12 @@ export function ProjectShowcase() {
           return () => {
             resizeObserver.disconnect();
           };
-        },
-        sectionRef,
-      );
+        });
+
+      mm.add("(min-width: 1024px) and (prefers-reduced-motion: reduce)", () => {
+        gsap.set(section.querySelectorAll(".project-reveal"), { opacity: 1, clearProps: "transform" });
+        gsap.set(section.querySelectorAll(".project-snapshot-wrap"), { opacity: 1, clearProps: "transform" });
+      });
 
       return () => {
         refreshDebounce?.kill();
@@ -249,10 +241,12 @@ export function ProjectShowcase() {
   );
 
   return (
-    <section id="projects" ref={sectionRef} className="bg-cream">
-      <div className="section-padding pb-0">
+    <section id="projects" ref={sectionRef} className="relative section-aurora text-cream">
+      <div className="hero-dot-grid pointer-events-none absolute inset-0 opacity-15" aria-hidden="true" />
+      <div className="section-padding relative pb-0">
         <div className="section-container">
           <SectionHeading
+            dark
             label="Projects"
             title="Scroll through selected work"
             description="Real screenshots from TRAK, POS, ML research, and more. Scroll horizontally on desktop to explore all eight."
@@ -260,13 +254,13 @@ export function ProjectShowcase() {
         </div>
       </div>
 
-      <div className="section-container space-y-16 pb-16 lg:hidden">
+      <div className="section-container relative space-y-16 pb-16 lg:hidden">
         {projects.map((project, index) => (
           <ProjectPanel
             key={project.id}
             project={project}
             index={index}
-            className="project-card-mobile rounded-2xl border border-charcoal/8 bg-white p-6 md:p-10"
+            className="project-card-mobile glass-panel p-6 md:p-10"
           />
         ))}
       </div>
@@ -286,7 +280,7 @@ export function ProjectShowcase() {
           ))}
         </div>
 
-        <div className="pointer-events-none absolute bottom-8 left-1/2 flex -translate-x-1/2 items-center gap-2 text-xs text-charcoal/40">
+        <div className="pointer-events-none absolute bottom-8 left-1/2 flex -translate-x-1/2 items-center gap-2 text-xs text-cream/35">
           <span>Keep scrolling to browse projects</span>
           <svg className="h-4 w-4 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

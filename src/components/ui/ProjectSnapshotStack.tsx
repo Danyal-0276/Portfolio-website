@@ -2,120 +2,280 @@
 
 import { useGSAP } from "@gsap/react";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
-  getProjectSnapshotFit,
   isChartSnapshotProject,
   isDarkUiSnapshotProject,
   isMobileSnapshotProject,
   projectSnapshots,
 } from "@/data/portfolio";
-import { gsap, registerGSAP } from "@/lib/gsap";
+import { gsap, registerGSAP, ScrollTrigger } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 
 interface ProjectSnapshotStackProps {
   projectId: string;
   className?: string;
-  /** Disable entrance scroll animation when parent handles reveals */
   disableScrollReveal?: boolean;
 }
+
+const STACK_OFFSETS = [
+  { x: -14, y: 10, rotate: -4, scale: 0.96 },
+  { x: 12, y: 6, rotate: 3, scale: 0.98 },
+];
 
 export function ProjectSnapshotStack({
   projectId,
   className,
   disableScrollReveal = false,
 }: ProjectSnapshotStackProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const imageWrapRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const slidesRef = useRef<(HTMLDivElement | null)[]>([]);
+  const stackRef = useRef<(HTMLDivElement | null)[]>([]);
   const indexRef = useRef(0);
+  const animatingRef = useRef(false);
   const visibleRef = useRef(false);
   const [activeIndex, setActiveIndex] = useState(0);
+
   const images = projectSnapshots[projectId] ?? [];
   const isMobileFrame = isMobileSnapshotProject(projectId);
   const isChart = isChartSnapshotProject(projectId);
   const isDarkUi = isDarkUiSnapshotProject(projectId);
-  const objectFit = getProjectSnapshotFit(projectId);
+
+  const animateTo = useCallback(
+    (nextIndex: number) => {
+      const viewport = viewportRef.current;
+      if (!viewport || animatingRef.current || nextIndex === indexRef.current) return;
+
+      const current = slidesRef.current[indexRef.current];
+      const next = slidesRef.current[nextIndex];
+      if (!current || !next) return;
+
+      animatingRef.current = true;
+
+      gsap
+        .timeline({
+          onComplete: () => {
+            indexRef.current = nextIndex;
+            setActiveIndex(nextIndex);
+            animatingRef.current = false;
+            gsap.set(slidesRef.current, { zIndex: 0, pointerEvents: "none" });
+            gsap.set(next, { zIndex: 2, pointerEvents: "auto" });
+          },
+        })
+        .to(current, {
+          x: -90,
+          rotateY: -18,
+          opacity: 0,
+          scale: 0.92,
+          duration: 0.45,
+          ease: "power3.in",
+        })
+        .fromTo(
+          next,
+          { x: 90, rotateY: 18, opacity: 0, scale: 0.92 },
+          { x: 0, rotateY: 0, opacity: 1, scale: 1, duration: 0.55, ease: "power3.out" },
+          "-=0.15",
+        );
+
+      stackRef.current.forEach((layer, i) => {
+        if (!layer) return;
+        const offset = STACK_OFFSETS[i % STACK_OFFSETS.length];
+        gsap.to(layer, {
+          x: offset.x,
+          y: offset.y,
+          rotate: offset.rotate,
+          scale: offset.scale,
+          duration: 0.5,
+          ease: "power3.out",
+        });
+      });
+    },
+    [],
+  );
 
   useGSAP(
     () => {
       registerGSAP();
-      const container = containerRef.current;
-      const imageWrap = imageWrapRef.current;
-      if (!container || !imageWrap || images.length === 0) return;
+      const stage = stageRef.current;
+      const frame = frameRef.current;
+      const viewport = viewportRef.current;
+      if (!stage || !frame || !viewport || images.length === 0) return;
 
       const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
 
-      if (!prefersReducedMotion && !disableScrollReveal) {
-        gsap.from(container, {
-          opacity: 0,
-          y: 40,
-          duration: 0.7,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: container,
-            start: "top 90%",
-            once: true,
-          },
+      slidesRef.current.forEach((slide, i) => {
+        if (!slide) return;
+        gsap.set(slide, {
+          x: 0,
+          rotateY: 0,
+          opacity: i === 0 ? 1 : 0,
+          scale: 1,
+          zIndex: i === 0 ? 2 : 0,
+          pointerEvents: i === 0 ? "auto" : "none",
         });
-      }
+      });
 
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          visibleRef.current = entry.isIntersecting;
-        },
-        { threshold: 0.25, rootMargin: "100px" },
-      );
-      observer.observe(container);
+      if (!prefersReducedMotion) {
+        const playStackEntrance = () => {
+          if (entranceTl.progress() > 0) return;
+          entranceTl.play();
+        };
 
-      if (images.length <= 1 || prefersReducedMotion) {
-        return () => observer.disconnect();
-      }
+        gsap.set(frame, { clipPath: "circle(0% at 50% 50%)" });
+        gsap.set(stackRef.current, { opacity: 0, y: 30, rotate: 0 });
 
-      const cycle = () => {
-        if (!visibleRef.current) return;
-
-        const next = (indexRef.current + 1) % images.length;
-        gsap
-          .timeline()
-          .to(imageWrap, {
-            opacity: 0,
-            scale: 0.98,
-            duration: 0.3,
-            ease: "power2.in",
+        const entranceTl = gsap.timeline({ paused: true });
+        entranceTl
+          .to(frame, {
+            clipPath: "circle(150% at 50% 50%)",
+            duration: 1,
+            ease: "power3.inOut",
           })
-          .add(() => {
-            indexRef.current = next;
-            setActiveIndex(next);
-          })
-          .to(imageWrap, {
-            opacity: 1,
-            scale: 1,
-            duration: 0.35,
-            ease: "power2.out",
+          .to(
+            stackRef.current,
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              stagger: 0.1,
+              ease: "power3.out",
+            },
+            "-=0.5",
+          )
+          .from(
+            slidesRef.current[0],
+            { scale: 0.88, opacity: 0, duration: 0.7, ease: "back.out(1.2)" },
+            "-=0.35",
+          );
+
+        stackRef.current.forEach((layer, i) => {
+          if (!layer) return;
+          const offset = STACK_OFFSETS[i % STACK_OFFSETS.length];
+          entranceTl.to(
+            layer,
+            {
+              x: offset.x,
+              y: offset.y,
+              rotate: offset.rotate,
+              scale: offset.scale,
+              duration: 0.55,
+              ease: "back.out(1.4)",
+            },
+            "-=0.45",
+          );
+        });
+
+        if (disableScrollReveal) {
+          // Inside the horizontal project slider, IntersectionObserver often never fires.
+          gsap.set(frame, { clipPath: "circle(150% at 50% 50%)" });
+          gsap.set(stackRef.current, { opacity: 1, y: 0 });
+          stackRef.current.forEach((layer, i) => {
+            if (!layer) return;
+            const offset = STACK_OFFSETS[i % STACK_OFFSETS.length];
+            gsap.set(layer, {
+              x: offset.x,
+              y: offset.y,
+              rotate: offset.rotate,
+              scale: offset.scale,
+            });
           });
-      };
+          gsap.from(frame, { scale: 0.94, duration: 0.7, ease: "power3.out", clearProps: "transform" });
+          gsap.fromTo(
+            slidesRef.current[0],
+            { scale: 0.92, opacity: 0 },
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 0.65,
+              ease: "back.out(1.2)",
+              clearProps: "opacity,transform",
+            },
+          );
+        } else {
+          ScrollTrigger.create({
+            trigger: stage,
+            start: "top 88%",
+            once: true,
+            onEnter: playStackEntrance,
+          });
+        }
 
-      const interval = window.setInterval(cycle, 5000);
-      return () => {
-        window.clearInterval(interval);
-        observer.disconnect();
-      };
+        const onEnterFrame = () => {
+          if (images.length <= 1) return;
+          stackRef.current.forEach((layer, i) => {
+            if (!layer) return;
+            const offset = STACK_OFFSETS[i % STACK_OFFSETS.length];
+            gsap.to(layer, {
+              x: offset.x * 1.8,
+              y: offset.y * 1.4,
+              rotate: offset.rotate * 1.5,
+              duration: 0.4,
+              ease: "power2.out",
+            });
+          });
+          gsap.to(frame, { y: -4, duration: 0.35, ease: "power2.out" });
+        };
+
+        const onLeaveFrame = () => {
+          stackRef.current.forEach((layer, i) => {
+            if (!layer) return;
+            const offset = STACK_OFFSETS[i % STACK_OFFSETS.length];
+            gsap.to(layer, {
+              x: offset.x,
+              y: offset.y,
+              rotate: offset.rotate,
+              duration: 0.4,
+              ease: "power2.out",
+            });
+          });
+          gsap.to(frame, { y: 0, duration: 0.35, ease: "power2.out" });
+        };
+
+        frame.addEventListener("mouseenter", onEnterFrame);
+        frame.addEventListener("mouseleave", onLeaveFrame);
+
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            visibleRef.current = entry.isIntersecting;
+          },
+          { threshold: 0.2, rootMargin: "80px" },
+        );
+        observer.observe(stage);
+
+        let interval: ReturnType<typeof setInterval> | undefined;
+        if (images.length > 1) {
+          interval = setInterval(() => {
+            if (!visibleRef.current || animatingRef.current) return;
+            animateTo((indexRef.current + 1) % images.length);
+          }, 5500);
+        }
+
+        return () => {
+          frame.removeEventListener("mouseenter", onEnterFrame);
+          frame.removeEventListener("mouseleave", onLeaveFrame);
+          observer.disconnect();
+          if (interval) clearInterval(interval);
+        };
+      } else {
+        gsap.set(frame, { clipPath: "none" });
+      }
     },
-    { scope: containerRef, dependencies: [projectId, images.length, disableScrollReveal] },
+    { scope: stageRef, dependencies: [projectId, images.length, disableScrollReveal, animateTo] },
   );
 
   function goTo(index: number) {
-    indexRef.current = index;
-    setActiveIndex(index);
+    animateTo(index);
   }
 
   if (images.length === 0) {
     return (
       <div
         className={cn(
-          "flex aspect-[4/5] items-center justify-center rounded-3xl bg-gradient-to-br from-gold/20 to-charcoal/5",
+          "flex min-h-[240px] items-center justify-center rounded-2xl bg-gradient-to-br from-accent/20 to-charcoal/5",
           className,
         )}
       >
@@ -124,94 +284,137 @@ export function ProjectSnapshotStack({
     );
   }
 
+  const stackLayers = images.length > 1 ? images.slice(1, 3) : [];
+
   return (
-    <div
-      ref={containerRef}
-      className={cn(
-        "relative mx-auto w-full",
-        isChart ? "max-w-md" : "max-w-sm",
-        className,
-      )}
-    >
-      <div
-        className={cn(
-          "relative mx-auto w-full",
-          isChart ? "aspect-square max-w-[360px]" : "aspect-[4/5] max-w-[320px]",
-          isMobileFrame && "max-w-[240px]",
-        )}
-      >
+    <div ref={stageRef} className={cn("snapshot-stage relative mx-auto w-full max-w-lg", className)}>
+      {/* Deck layers behind the frame */}
+      {stackLayers.map((src, i) => (
         <div
-          className={cn(
-            "absolute inset-0 overflow-hidden shadow-xl shadow-charcoal/15",
-            isMobileFrame
-              ? "rounded-[2.25rem] border-[10px] border-charcoal bg-charcoal ring-1 ring-white/10"
-              : isDarkUi
-                ? "rounded-xl border border-cyan-500/20 bg-[#0a0a0a] shadow-[0_0_30px_rgba(14,165,233,0.15)]"
-                : "rounded-xl border border-charcoal/15 bg-white",
-          )}
+          key={src}
+          ref={(el) => {
+            stackRef.current[i] = el;
+          }}
+          className="snapshot-stack-layer pointer-events-none absolute inset-x-3 top-3 h-[calc(100%-12px)] rounded-2xl border border-charcoal/10 bg-white shadow-lg md:inset-x-4 md:top-4"
+          style={{ zIndex: i }}
+          aria-hidden="true"
         >
-          {isMobileFrame && (
-            <div className="absolute top-0 right-0 left-0 z-20 flex justify-center pt-2">
-              <div className="h-1.5 w-16 rounded-full bg-black/40" />
-            </div>
-          )}
-
-          {!isMobileFrame && !isDarkUi && (
-            <div className="relative z-10 flex items-center gap-1.5 border-b border-charcoal/10 bg-cream px-3 py-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
-              <span className="h-2.5 w-2.5 rounded-full bg-gold/80" />
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
-            </div>
-          )}
-
-          {isDarkUi && (
-            <div className="relative z-10 flex items-center gap-1.5 border-b border-cyan-500/10 bg-[#111] px-3 py-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-red-400/60" />
-              <span className="h-2.5 w-2.5 rounded-full bg-cyan-400/60" />
-              <span className="h-2.5 w-2.5 rounded-full bg-indigo-400/60" />
-            </div>
-          )}
-
-          <div
-            ref={imageWrapRef}
-            className={cn(
-              "relative w-full",
-              isMobileFrame
-                ? "h-full pt-5"
-                : isChart || isDarkUi
-                  ? "h-[calc(100%-2.25rem)]"
-                  : "h-[calc(100%-2.25rem)]",
-              isDarkUi && "bg-black",
-            )}
-          >
+          <div className="relative h-full w-full overflow-hidden rounded-[inherit] p-2">
             <Image
-              src={images[activeIndex]}
-              alt={`${projectId} project preview ${activeIndex + 1}`}
+              src={src}
+              alt=""
               fill
-              className={cn(
-                objectFit === "contain" ? "object-contain p-2" : "object-cover object-top",
-              )}
-              sizes="(max-width: 768px) 280px, 360px"
-              quality={75}
-              loading={activeIndex === 0 ? "eager" : "lazy"}
+              className="object-contain object-center opacity-40"
+              sizes="400px"
+              quality={60}
+              loading="lazy"
             />
           </div>
+        </div>
+      ))}
+
+      {/* Main frame */}
+      <div
+        ref={frameRef}
+        className={cn(
+          "snapshot-frame relative z-10 overflow-hidden shadow-2xl shadow-charcoal/20",
+          isMobileFrame
+            ? "rounded-[2rem] border-[8px] border-charcoal bg-charcoal ring-1 ring-white/10"
+            : isDarkUi
+              ? "rounded-2xl border border-cyan-500/25 bg-[#0a0a0a] shadow-[0_0_40px_rgba(14,165,233,0.12)]"
+              : "rounded-2xl border border-charcoal/10 bg-cream",
+        )}
+      >
+        {isMobileFrame && (
+          <div className="relative z-20 flex justify-center border-b border-black/20 bg-charcoal py-2">
+            <div className="h-1.5 w-14 rounded-full bg-black/50" />
+          </div>
+        )}
+
+        {!isMobileFrame && !isDarkUi && (
+          <div className="relative z-20 flex items-center gap-1.5 border-b border-charcoal/8 bg-white/80 px-3 py-2 backdrop-blur-sm">
+            <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
+            <span className="h-2.5 w-2.5 rounded-full bg-glow/80" />
+            <span className="h-2.5 w-2.5 rounded-full bg-accent/80" />
+            <span className="ml-2 truncate text-[10px] text-charcoal/35">{projectId}.dev</span>
+          </div>
+        )}
+
+        {isDarkUi && (
+          <div className="relative z-20 flex items-center gap-1.5 border-b border-cyan-500/10 bg-[#111] px-3 py-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-red-400/60" />
+            <span className="h-2.5 w-2.5 rounded-full bg-cyan-400/60" />
+            <span className="h-2.5 w-2.5 rounded-full bg-indigo-400/60" />
+          </div>
+        )}
+
+        <div
+          ref={viewportRef}
+          className={cn(
+            "snapshot-viewport relative w-full overflow-hidden",
+            isMobileFrame ? "min-h-[420px] p-3 pt-0" : isChart ? "min-h-[300px] aspect-square" : "min-h-[280px] aspect-[16/10] md:min-h-[320px]",
+            isDarkUi && "bg-black",
+            !isMobileFrame && !isDarkUi && "bg-white",
+          )}
+          style={{ perspective: "900px" }}
+        >
+          {images.map((src, i) => (
+            <div
+              key={src}
+              ref={(el) => {
+                slidesRef.current[i] = el;
+              }}
+              className="snapshot-slide absolute inset-0 flex items-center justify-center p-3 md:p-4"
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              <div className="relative h-full w-full">
+                <Image
+                  src={src}
+                  alt={`${projectId} preview ${i + 1}`}
+                  fill
+                  className="object-contain object-center"
+                  sizes="(max-width: 768px) 90vw, 480px"
+                  quality={80}
+                  priority={i === 0}
+                  loading={i === 0 ? "eager" : "lazy"}
+                />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
       {images.length > 1 && (
-        <div className="mt-4 flex flex-wrap justify-center gap-1.5 px-2">
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-2 px-2">
           {images.map((_, i) => (
             <button
               key={i}
               type="button"
               aria-label={`Show preview ${i + 1}`}
+              aria-current={i === activeIndex ? "true" : undefined}
               onClick={() => goTo(i)}
               className={cn(
-                "h-1.5 rounded-full transition-all duration-300",
-                i === activeIndex ? "w-6 bg-gold" : "w-1.5 bg-charcoal/20 hover:bg-charcoal/40",
+                "group flex items-center gap-1.5 rounded-full px-2 py-1 transition-all duration-300",
+                i === activeIndex ? "bg-white/10" : "hover:bg-white/5",
               )}
-            />
+            >
+              <span
+                className={cn(
+                  "block rounded-full transition-all duration-300",
+                  i === activeIndex
+                    ? "h-2 w-2 bg-accent"
+                    : "h-1.5 w-1.5 bg-white/25 group-hover:bg-white/45",
+                )}
+              />
+              <span
+                className={cn(
+                  "text-[10px] tabular-nums",
+                  i === activeIndex ? "text-accent-soft" : "text-cream/40",
+                )}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+            </button>
           ))}
         </div>
       )}

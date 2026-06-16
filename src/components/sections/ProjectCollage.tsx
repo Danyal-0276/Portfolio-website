@@ -109,8 +109,9 @@ export function ProjectCollage() {
   }
 
   return (
-    <section id="collage" ref={sectionRef} className="section-padding bg-charcoal">
-      <div className="section-container">
+    <section id="collage" ref={sectionRef} className="section-padding section-aurora relative overflow-hidden text-cream">
+      <div className="hero-dot-grid pointer-events-none absolute inset-0 opacity-15" aria-hidden="true" />
+      <div className="section-container relative">
         <SectionHeading
           label="Interactive Collage"
           title="Play with the project snapshots"
@@ -122,7 +123,7 @@ export function ProjectCollage() {
           <button
             type="button"
             onClick={resetLayout}
-            className="rounded-full border border-cream/20 px-5 py-2 text-sm text-cream/70 transition-colors hover:border-gold hover:text-gold"
+            className="rounded-full border border-cream/20 px-5 py-2 text-sm text-cream/70 transition-colors hover:border-accent hover:text-accent"
           >
             Reset layout
           </button>
@@ -130,7 +131,7 @@ export function ProjectCollage() {
 
         <div
           ref={boardRef}
-          className="collage-board relative mx-auto aspect-[3/4] min-h-[420px] w-full max-w-5xl overflow-hidden rounded-3xl border border-cream/10 bg-charcoal-light/20 sm:aspect-[4/3] sm:min-h-0 md:aspect-[16/10]"
+          className="collage-board glass-panel-strong relative mx-auto aspect-[3/4] min-h-[420px] w-full max-w-5xl overflow-hidden sm:aspect-[4/3] sm:min-h-0 md:aspect-[16/10]"
         >
           <div
             className="absolute inset-0 opacity-20"
@@ -181,7 +182,7 @@ export function ProjectCollage() {
                         draggable={false}
                       />
                     ) : (
-                      <div className="flex h-full items-center justify-center bg-gold/20 text-xs text-cream/50">
+                      <div className="flex h-full items-center justify-center bg-accent/20 text-xs text-cream/50">
                         No preview
                       </div>
                     )}
@@ -190,14 +191,14 @@ export function ProjectCollage() {
                     </span>
                   </div>
                   <div className="bg-white p-3 md:p-4">
-                    <h4 className="line-clamp-2 font-serif text-sm leading-snug text-charcoal md:text-base">
+                    <h4 className="font-display line-clamp-2 text-sm leading-snug text-charcoal md:text-base">
                       {project.title}
                     </h4>
                     <a
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-2 inline-block text-xs text-gold-dark hover:underline"
+                      className="mt-2 inline-block text-xs text-accent hover:underline"
                       onPointerDown={(e) => e.stopPropagation()}
                     >
                       GitHub →

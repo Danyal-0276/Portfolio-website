@@ -26,7 +26,7 @@ function NavLinkItem({
         className="nav-link-glow pointer-events-none absolute inset-x-0 top-1/2 h-8 rounded-full"
         style={{
           background:
-            "radial-gradient(ellipse 80% 100% at 50% 50%, rgba(255,107,0,0.12), transparent 70%)",
+            "radial-gradient(ellipse 80% 100% at 50% 50%, rgba(45,212,191,0.14), transparent 70%)",
         }}
         aria-hidden="true"
       />
@@ -55,7 +55,7 @@ function NavActionButton({
   const isPrimary = variant === "primary";
   const className = cn(
     "nav-action-btn relative overflow-hidden rounded-full border px-4 py-2 text-sm whitespace-nowrap 2xl:px-5",
-    isPrimary ? "nav-action-btn-primary border-accent/40 text-cream" : "nav-action-btn-outline border-white/20 text-cream",
+    isPrimary ? "nav-action-btn-primary border-accent/40 text-ink" : "nav-action-btn-outline border-white/20 text-cream",
   );
 
   const inner = (
@@ -191,7 +191,7 @@ export function Navbar() {
     <header ref={navRef} className="fixed top-0 right-0 left-0 z-50">
       <div
         ref={headerRef}
-        className="border-b border-white/10 bg-[#0a0a0a]/80 backdrop-blur-md transition-transform will-change-transform"
+        className="nav-glass transition-transform will-change-transform"
       >
         <nav className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:h-16 sm:gap-4 sm:px-6 lg:px-8 xl:gap-6 xl:px-10">
           <button
@@ -259,7 +259,7 @@ export function Navbar() {
         <div
           ref={menuRef}
           className={cn(
-            "overflow-hidden border-t border-white/10 bg-[#0a0a0a] transition-[max-height,opacity] duration-300 xl:hidden",
+            "overflow-hidden border-t border-white/10 bg-[#0c1016]/90 backdrop-blur-xl transition-[max-height,opacity] duration-300 xl:hidden",
             open ? "max-h-[85vh] opacity-100" : "max-h-0 opacity-0 border-t-transparent",
           )}
         >
@@ -277,7 +277,7 @@ export function Navbar() {
                 href={siteConfig.resumePath}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex flex-1 items-center justify-center rounded-full border border-white/20 px-5 py-2.5 text-sm text-cream transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:text-accent hover:shadow-[0_4px_16px_rgba(255,107,0,0.2)] sm:flex-none"
+                className="inline-flex flex-1 items-center justify-center rounded-full border border-white/20 px-5 py-2.5 text-sm text-cream transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:text-accent hover:shadow-[0_4px_16px_rgba(45,212,191,0.2)] sm:flex-none"
                 data-cursor="view"
               >
                 View Resume
@@ -285,7 +285,7 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={() => handleNavClick("#contact")}
-                className="inline-flex flex-1 items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent-soft hover:shadow-[0_4px_16px_rgba(255,107,0,0.35)] sm:flex-none"
+                className="inline-flex flex-1 items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-ink transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent-soft hover:shadow-[0_4px_16px_rgba(45,212,191,0.35)] sm:flex-none"
                 data-cursor="explore"
               >
                 Get in Touch
@@ -306,10 +306,10 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-charcoal/10 bg-charcoal px-4 py-10 text-cream sm:px-6 md:px-12 lg:px-20 pb-[max(2.5rem,env(safe-area-inset-bottom))]">
+    <footer className="border-t border-white/10 bg-[#0c1016]/50 px-4 py-10 text-cream backdrop-blur-md sm:px-6 md:px-12 lg:px-20 pb-[max(2.5rem,env(safe-area-inset-bottom))]">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 md:flex-row md:items-start">
         <div className="text-center md:text-left">
-          <p className="font-serif text-xl">
+          <p className="font-display text-xl">
             {siteConfig.name}
             <span className="text-accent">.</span>
           </p>

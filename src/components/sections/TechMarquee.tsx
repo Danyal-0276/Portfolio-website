@@ -43,7 +43,7 @@ export function TechMarquee() {
     <section
       ref={sectionRef}
       aria-label="Technologies I work with"
-      className="border-y border-white/10 bg-[#0a0a0a] py-5 md:py-6"
+      className="border-y border-white/10 bg-white/[0.04] py-5 backdrop-blur-md md:py-6"
     >
       <div className="overflow-hidden">
         <div ref={trackRef} className="marquee-track flex w-max items-center gap-14 px-6 md:gap-16">
