@@ -11,35 +11,37 @@ function ProjectPanel({
   project,
   index,
   className,
+  compactSnapshot = false,
 }: {
   project: (typeof projects)[0];
   index: number;
   className?: string;
+  compactSnapshot?: boolean;
 }) {
   return (
     <article className={className}>
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-2">
-        <div className="project-panel-content">
-          <span className="project-reveal project-number mb-4 inline-block font-display text-6xl md:text-8xl">
+      <div className="mx-auto grid w-full min-w-0 max-w-6xl items-center gap-8 lg:grid-cols-2 lg:gap-10">
+        <div className="project-panel-content min-w-0 overflow-hidden">
+          <span className="project-reveal project-number mb-3 inline-block font-display text-4xl sm:text-5xl md:text-8xl">
             {String(index + 1).padStart(2, "0")}
           </span>
-          <p className="project-reveal mb-2 text-sm font-medium tracking-widest text-accent uppercase">
+          <p className="project-reveal mb-2 text-xs font-medium tracking-widest text-accent uppercase sm:text-sm">
             {project.category}
           </p>
-          <h3 className="project-reveal mb-4 font-display text-2xl text-white md:text-4xl lg:text-5xl">
+          <h3 className="project-reveal mb-3 max-w-full font-display text-lg text-balance break-words text-white sm:mb-4 sm:text-2xl md:text-4xl lg:text-5xl">
             {project.title}
           </h3>
           {project.highlight && (
             <p className="project-reveal mb-4 text-sm text-cream/50">{project.highlight}</p>
           )}
-          <p className="project-reveal mb-6 max-w-lg text-base leading-relaxed text-cream/70 md:text-lg">
+          <p className="project-reveal mb-6 max-w-full text-base leading-relaxed break-words text-cream/70 md:max-w-lg md:text-lg">
             {project.description}
           </p>
-          <div className="project-reveal mb-6 flex flex-wrap gap-2 md:mb-8">
+          <div className="project-reveal mb-5 flex max-w-full flex-wrap gap-1.5 sm:mb-6 sm:gap-2 md:mb-8">
             {project.tech.map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-cream/70"
+                className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-cream/70 sm:px-3 sm:text-sm"
               >
                 {t}
               </span>
@@ -49,7 +51,7 @@ function ProjectPanel({
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="project-reveal inline-flex items-center gap-2 rounded-full border border-accent/35 bg-accent/10 px-6 py-3 text-sm font-medium text-accent-soft transition-colors hover:bg-accent hover:text-ink"
+            className="project-reveal inline-flex max-w-full items-center gap-2 rounded-full border border-accent/35 bg-accent/10 px-5 py-2.5 text-xs font-medium text-accent-soft transition-colors hover:bg-accent hover:text-ink sm:px-6 sm:py-3 sm:text-sm"
             data-cursor="view"
           >
             View on GitHub
@@ -59,8 +61,12 @@ function ProjectPanel({
           </a>
         </div>
 
-        <div className="project-snapshot-wrap mt-8 lg:mt-0">
-          <ProjectSnapshotStack projectId={project.id} disableScrollReveal />
+        <div className="project-snapshot-wrap mt-6 min-w-0 w-full max-w-full overflow-hidden sm:mt-8 lg:mt-0">
+          <ProjectSnapshotStack
+            projectId={project.id}
+            disableScrollReveal={!compactSnapshot}
+            compact={compactSnapshot}
+          />
         </div>
       </div>
     </article>
@@ -241,7 +247,7 @@ export function ProjectShowcase() {
   );
 
   return (
-    <section id="projects" ref={sectionRef} className="relative section-aurora text-cream">
+    <section id="projects" ref={sectionRef} className="relative overflow-x-clip section-aurora text-cream">
       <div className="section-padding relative pb-0">
         <div className="section-container">
           <SectionHeading
@@ -253,13 +259,14 @@ export function ProjectShowcase() {
         </div>
       </div>
 
-      <div className="section-container relative space-y-16 pb-16 lg:hidden">
+      <div className="project-showcase-mobile section-container relative w-full max-w-full space-y-12 overflow-x-hidden px-4 pb-16 sm:space-y-16 sm:px-6 md:px-12 lg:hidden">
         {projects.map((project, index) => (
           <ProjectPanel
             key={project.id}
             project={project}
             index={index}
-            className="project-card-mobile glass-panel p-6 md:p-10"
+            compactSnapshot
+            className="project-card-mobile glass-panel w-full min-w-0 max-w-full overflow-hidden p-4 sm:p-6 md:p-10"
           />
         ))}
       </div>
@@ -274,7 +281,7 @@ export function ProjectShowcase() {
               key={project.id}
               project={project}
               index={index}
-              className="showcase-panel flex h-full w-screen shrink-0 flex-col justify-center px-16 xl:px-24"
+              className="showcase-panel flex h-full w-screen shrink-0 flex-col justify-center overflow-hidden px-6 sm:px-10 lg:px-12 xl:px-24"
             />
           ))}
         </div>

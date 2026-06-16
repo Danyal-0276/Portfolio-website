@@ -28,6 +28,11 @@
     background-color: #030508;
   }
 
+  main {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
   @media (pointer: fine) {
     body.has-custom-cursor,
     body.has-custom-cursor * {
@@ -547,9 +552,21 @@
 
   .snapshot-stage {
     perspective: 1200px;
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
+  .project-showcase-mobile {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .project-card-mobile {
+    box-sizing: border-box;
   }
 
   .snapshot-frame {
+    max-width: 100%;
     will-change: transform, clip-path;
   }
 

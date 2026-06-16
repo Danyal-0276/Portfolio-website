@@ -89,7 +89,7 @@ export function FeaturedWork() {
               <p className="mb-4 text-xs tracking-[0.22em] text-cream/40 uppercase">
                 {featuredProject.category}, {featuredProject.tech.slice(0, 3).join(", ")}
               </p>
-              <h3 className="mb-5 text-[clamp(1.75rem,4vw,2.75rem)] leading-tight font-bold tracking-tight text-white">
+              <h3 className="mb-5 max-w-full text-[clamp(1.5rem,4vw,2.75rem)] leading-tight font-bold tracking-tight text-balance break-words text-white">
                 {featuredProject.title}
               </h3>
               <p className="mb-8 max-w-lg text-base leading-relaxed text-cream/60">
