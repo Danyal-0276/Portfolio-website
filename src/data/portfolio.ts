@@ -36,9 +36,9 @@ export interface SkillGroup {
 
 export const siteConfig = {
   name: "Danyal Tanveer",
-  title: "Danyal Tanveer | Full-Stack Web Developer & AI/ML Researcher",
+  title: "Danyal Tanveer | Full-Stack Developer & AI/ML Engineer",
   description:
-    "Full-stack web developer and AI/ML researcher. Building production applications with React, Next.js, and Node.js, and working with deep learning architectures from RNNs and LSTMs to transformers in PyTorch.",
+    "Computer Science graduate and full-stack developer building production web systems with React, Next.js, and Node.js, plus end-to-end ML and NLP pipelines with PyTorch and Hugging Face.",
   url: "https://portfolio-website-git-main-danyal-tanveer-s-projects.vercel.app",
   ogImage: "/images/profile-orange.png",
   logoPath: "/images/logo.png",
@@ -55,19 +55,19 @@ export const siteConfig = {
 export const hero = {
   greeting: "Hello, I'm",
   name: "Danyal Tanveer",
-  roles: ["Full-Stack Web Developer", "AI & ML Researcher"],
-  tagline: "Full Stack Web Developer, AI & ML Researcher",
+  roles: ["Full-Stack Developer", "AI & ML Engineer"],
+  tagline: "Full Stack Developer, AI & ML Engineer",
   motto: "Navigating the unknown, line by line",
-  headline: "Full-Stack Web Developer & AI/ML Researcher",
+  headline: "Full-Stack Developer & AI/ML Engineer",
   subtext:
-    "I'm a full-stack developer and AI/ML researcher & developer.",
-  availability: "Open to fresher roles, internships & collaborations",
+    "I'm a full-stack developer and AI/ML engineer shipping production systems.",
+  availability: "Open to junior software & AI engineering roles",
   intro:
-    "Full-stack developer who builds production web systems, and AI/ML researcher working across classical and modern deep learning architectures.",
+    "CS graduate who builds production web systems and end-to-end ML pipelines — from REST APIs and MongoDB schemas to transformer fine-tuning in PyTorch.",
   roleLineLeft: "FULL STACK",
   roleLineRight: "DEVELOPER",
   roleOutline: "Full Stack Developer",
-  roleLineSecondary: "AI & ML RESEARCHER",
+  roleLineSecondary: "AI & ML ENGINEER",
   roleBadge: "FULL STACK DEVELOPER, LAHORE, PK",
   dragHint: "DRAG TO MOVE",
   portraitSrc: "/images/profile-hero.png",
@@ -75,8 +75,8 @@ export const hero = {
 
 export const statsBand = [
   { value: "9+", label: "Projects shipped" },
-  { value: "3.59", label: "CGPA at UCP" },
-  { value: "100K+", label: "Research samples" },
+  { value: "3.60", label: "CGPA at UCP" },
+  { value: "220K+", label: "Labeled ML samples" },
   { value: "2", label: "Restaurants deployed" },
 ];
 
@@ -97,17 +97,17 @@ export const certifications: Certification[] = [
     issuer: "Google, Coursera",
     date: "Apr 2026",
     description:
-      "Google Career Certificate covering core AI concepts, machine learning workflows, and practical applications for modern software development.",
+      "Google AI Fundamentals via Coursera (rated 4.8/5, 981,700+ learners). Covers core AI concepts, machine learning workflows, and practical applications for modern software development.",
     image: "/certifications/google-ai-fundamentals.png",
     verifyUrl: "https://coursera.org/verify/7C403PQ3QE0D",
   },
   {
     id: "huggingface-agents",
-    title: "Fundamentals of Agents",
+    title: "Fundamentals of Agents: Unit 1",
     issuer: "Hugging Face",
     date: "May 2026",
     description:
-      "Unit 1: Foundations of Agents in the Hugging Face Agents Course, building and understanding AI agent architectures.",
+      "Foundations of Agents in the Hugging Face AI Agents Course — building and understanding AI agent architectures.",
     image: "/certifications/huggingface-agents.png",
   },
 ];
@@ -164,36 +164,33 @@ export const techMarquee = [
 
 export const about = {
   bio: [
-    "I'm a Computer Science student at the University of Central Punjab with a focus on full-stack development and applied machine learning. I care about software that ships to real users and models built on solid engineering fundamentals.",
-    "On the engineering side, I build end-to-end web products: React and Next.js interfaces, REST APIs, JWT authentication, database design, and deployments that stay running in production. During my internship at Tri Tech, I delivered a complete POS platform now used daily in Lahore restaurants.",
-    "On the AI/ML side, my studies go well beyond a single niche. I've covered deep learning in depth, from RNNs, LSTMs, and GANs to transformer-based models, training and evaluating architectures in PyTorch and Hugging Face on large-scale datasets.",
+    "I'm a Computer Science graduate from the University of Central Punjab (CGPA 3.60/4.00) with hands-on experience in full-stack engineering, back-end development, and applied machine learning. I care about software that ships to real users and models built on solid engineering fundamentals.",
+    "On the engineering side, I design and maintain scalable applications with React, Next.js, Node.js/Express, and Django — including REST APIs, JWT authentication, database schema design, debugging, and production deployments. During my internship at Tri Tech, I delivered a complete POS platform now used daily by CAP Cafe and Extraction in Lahore.",
+    "On the AI/ML side, I work across the full ML lifecycle: data preprocessing, transformer fine-tuning (RoBERTa, BERT, DeBERTa, DistilBERT) in PyTorch and Hugging Face, evaluation, and integration into live backend systems — including TRAK, my capstone news credibility platform.",
     "I'm most at home where product work and model work meet: clean APIs, thoughtful UIs, and reproducible ML pipelines I can iterate on with confidence.",
   ],
   education: {
-    degree: "BSc Computer Science",
+    degree: "Bachelor of Science in Computer Science",
     institution: "University of Central Punjab (UCP)",
     period: "Sep 2022 to Jul 2026",
-    cgpa: "3.59 / 4.00",
-    focus: "Deep learning, transformer architectures, and full-stack software engineering",
+    cgpa: "3.60 / 4.00",
+    focus: "Full-stack software engineering, machine learning, and NLP",
     coursework: [
-      "OOP",
+      "Object-Oriented Programming",
       "Data Structures & Algorithms",
       "Database Systems",
+      "Software Engineering",
       "Operating Systems",
       "Computer Networks",
       "Machine Learning",
-      "Deep Learning",
       "NLP",
-      "Software Engineering",
-      "Discrete Mathematics",
-      "Programming Fundamentals",
     ],
   },
   highlights: [
-    { label: "CGPA", value: "3.59" },
+    { label: "CGPA", value: "3.60" },
     { label: "Projects", value: "9+" },
     { label: "Internship", value: "Tri Tech" },
-    { label: "Research", value: "100K+ samples" },
+    { label: "ML data", value: "220K+ samples" },
   ],
 };
 
@@ -203,13 +200,15 @@ export const experience: Experience[] = [
     company: "Tri Tech Technology LLC",
     role: "Full-Stack Developer Intern",
     period: "Jul 2025 to Dec 2025",
-    location: "Lahore, Pakistan",
+    location: "Lahore, Pakistan (On-site)",
     description: [
-      "Built and deployed a complete POS ecosystem for CAP Cafe and Extraction restaurants, covering in-store operations, admin dashboards, and backend APIs.",
-      "Developed the client frontend with Next.js 15 and React 19, integrated with Express + MongoDB backend featuring JWT auth, Swagger docs, and role-based access.",
-      "Collaborated in an Agile workflow, delivering production features used daily by restaurant staff.",
+      "Applied OOP and modular design to architect a scalable POS ecosystem with two connected frontends (POS + Admin Panel) using Next.js, React, and TypeScript.",
+      "Designed and implemented a Node.js/Express backend with MongoDB, writing optimized NoSQL queries for order management, analytics, and client data.",
+      "Built RESTful APIs with JWT authentication, middleware architecture, and structured error handling following Agile development practices.",
+      "Debugged, tested, and deployed the system for two live restaurant clients (CAP Cafe and Extraction), ensuring quality, performance, and reliability.",
+      "Used Git and GitHub for version control, participated in code reviews, and contributed to continuous process improvements.",
     ],
-    tech: ["Next.js", "React", "TypeScript", "Express", "MongoDB", "JWT", "Vercel"],
+    tech: ["Next.js", "React", "TypeScript", "Node.js", "Express", "MongoDB", "JWT", "Tailwind CSS"],
   },
 ];
 
@@ -218,35 +217,48 @@ export const projects: Project[] = [
     id: "trak",
     title: "TRAK: AI News Credibility Platform",
     description:
-      "Mobile-first news intelligence app combining personalized topic tracking with backend AI credibility analysis. Django API deployed on Contabo VPS; JWT auth, role-based navigation, and HuggingFace-powered misinformation scoring.",
+      "Capstone full-stack mobile app for news credibility. Fine-tuned RoBERTa and DeBERTa on 220K+ labeled samples for three-class classification (real, fake, suspicious), with an automated pipeline covering scraping, NLP preprocessing, inference via Django/DRF, JWT auth, summarization, and text-to-speech.",
     category: "Full Stack",
-    tech: ["React Native", "Django", "DRF", "MongoDB", "HuggingFace", "JWT", "Contabo"],
+    tech: [
+      "React Native",
+      "Django",
+      "DRF",
+      "MongoDB",
+      "Python",
+      "PyTorch",
+      "HuggingFace",
+      "JWT",
+    ],
     github: "https://github.com/Danyal-0276/TRAK.git",
-    highlight: "Full-stack mobile + API",
+    highlight: "220K+ samples, RoBERTa/DeBERTa",
+    metrics: [
+      { value: "220K+", label: "Labeled samples" },
+      { value: "3", label: "Credibility classes" },
+    ],
   },
   {
     id: "pos",
     title: "POS Ecosystem",
     description:
-      "Production point-of-sale system deployed for CAP Cafe and Extraction. Three connected apps: in-store POS, admin panel, and centralized Express API with Swagger documentation. Deployed on Vercel and Render.",
+      "Industry project at Tri Tech: complete POS and Admin Panel system deployed across two live restaurant clients. Scalable MongoDB schema and REST APIs for order management, menu/recipe handling, and analytics, with Agile debugging and code-review cycles before each rollout.",
     category: "Full Stack",
-    tech: ["Next.js 15", "React 19", "TypeScript", "Express", "MongoDB", "Vercel", "Render"],
+    tech: ["Next.js", "React", "TypeScript", "Node.js", "Express", "MongoDB", "JWT", "Tailwind CSS"],
     github: "https://github.com/Danyal-0276/POS-client.git",
-    highlight: "Deployed in production",
+    highlight: "Deployed for 2 restaurants",
     metrics: [
-      { value: "3", label: "Connected apps" },
       { value: "2", label: "Live restaurants" },
+      { value: "2", label: "Connected apps" },
     ],
   },
   {
     id: "duolingo",
-    title: "Duolingo Clone (MAD)",
+    title: "Language Learning App",
     description:
-      "Android language-learning app with onboarding, Firebase auth (Google/Facebook), multi-step lesson selection, and bottom-navigation dashboard with five fragment screens.",
+      "Gamified Android language-learning app built with Java OOP class hierarchies, ViewBinding, and RecyclerView. Integrated Firebase Authentication, Realtime Database, Storage, and Analytics with Google and Facebook social login.",
     category: "Mobile",
-    tech: ["Java", "Android SDK", "Firebase", "Material Components", "ViewBinding", "RecyclerView"],
+    tech: ["Java", "Android SDK", "Firebase", "ViewBinding", "RecyclerView", "OOP"],
     github: "https://github.com/Danyal-0276/Doulingo-Clone.git",
-    highlight: "Firebase + OAuth",
+    highlight: "Firebase + social login",
   },
   {
     id: "jarvis",
@@ -260,13 +272,13 @@ export const projects: Project[] = [
   },
   {
     id: "bert",
-    title: "BERT Fake News Benchmark",
+    title: "Fake News Detection: BERT-Family Benchmark",
     description:
-      "Evaluation workflow for 10+ BERT-family models on a curated fake-news classification benchmark. Includes dataset splits, model comparison tables, and reproducible Jupyter notebooks.",
+      "Research project (co-lead) benchmarking BERT, RoBERTa, DistilBERT, XLNet, and ALBERT on a standardized 10K fake-news dataset. Reproducible train/val/test splits with MCC, AUC-ROC, and confusion-matrix reports; preprocessing optimized for 100K+ samples.",
     category: "Machine Learning",
-    tech: ["Python", "PyTorch", "HuggingFace", "pandas", "NumPy", "Jupyter"],
+    tech: ["Python", "PyTorch", "HuggingFace", "Scikit-learn", "pandas", "NumPy"],
     github: "https://github.com/Danyal-0276/Bert-Based-models-evaluation.git",
-    highlight: "10+ transformer models",
+    highlight: "5 transformers, MCC & AUC-ROC",
   },
   {
     id: "nids",
@@ -361,13 +373,16 @@ export const skillGroups: SkillGroup[] = [
     span: "col-span-2 lg:col-span-6",
     skills: [
       "PyTorch",
-      "HuggingFace",
+      "HuggingFace Transformers",
+      "TensorFlow",
       "BERT",
       "RoBERTa",
       "DeBERTa",
       "DistilBERT",
       "XLNet",
       "ALBERT",
+      "AI Agents",
+      "NLP pipelines",
       "Gemini",
       "scikit-learn",
       "LightGBM",
@@ -376,7 +391,6 @@ export const skillGroups: SkillGroup[] = [
       "pandas",
       "Matplotlib",
       "OpenCV",
-      "NLP",
     ],
   },
   {
@@ -459,15 +473,15 @@ export const focusAreas: FocusArea[] = [
   },
   {
     id: "ml",
-    title: "ML & NLP Research",
-    subtitle: "Transformers, Benchmarks",
+    title: "ML & NLP Engineering",
+    subtitle: "Transformers, Pipelines",
     description:
-      "Fake news detection research benchmarking BERT-family models on 100K+ samples, with reproducible pipelines built in PyTorch and HuggingFace.",
+      "End-to-end NLP pipelines: fine-tuning RoBERTa and DeBERTa on 220K+ samples, BERT-family benchmarks with MCC/AUC-ROC reports, and REST API inference for live predictions.",
     services: [
-      "BERT / RoBERTa fine-tuning",
-      "Dataset curation & EDA",
-      "Model comparison workflows",
-      "Jupyter & experiment tracking",
+      "Transformer fine-tuning",
+      "NLP preprocessing pipelines",
+      "Model evaluation & selection",
+      "API-integrated inference",
     ],
     accent: "#5eead4",
   },

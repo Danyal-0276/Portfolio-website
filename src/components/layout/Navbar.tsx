@@ -315,7 +315,7 @@ export function Footer() {
             <span className="text-accent">.</span>
           </p>
           <p className="mt-1 max-w-xs text-sm text-cream/60 sm:max-w-none">
-            Full Stack Web Developer & AI/ML Researcher, Lahore, Pakistan
+            Full Stack Developer & AI/ML Engineer, Lahore, Pakistan
           </p>
         </div>
 
