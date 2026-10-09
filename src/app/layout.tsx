@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/data/portfolio";
 import "./globals.css";
+import "./bold.css";
 
 export const metadata: Metadata = {
   title: siteConfig.title,

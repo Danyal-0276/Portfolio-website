@@ -8,6 +8,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { selectedWork, type Work, type WorkCategory } from "@/data/selected-work";
 
 const filters = ["All work", "Full stack", "AI & ML", "Mobile"] as const;
+const storyNotes: Record<string, { question: string; steps: string[]; motif: string }> = {
+  trak: { question: "What if your feed helped you question what you read?", steps: ["Collect the news", "Test its credibility", "Make it personal"], motif: "QUESTION THE FEED." },
+  feastly: { question: "How do four different people share one smooth delivery?", steps: ["Find your next meal", "Connect the kitchen", "Follow the last mile"], motif: "ORDER. MOVE. DELIVER." },
+  archive: { question: "What if an entire fictional world could answer back?", steps: ["Turn books into vectors", "Retrieve the right context", "Stream a grounded answer"], motif: "ENTER THE ARCHIVE." },
+  pos: { question: "What actually keeps a restaurant moving during the rush?", steps: ["One shared API", "Three connected consoles", "Two real restaurant clients"], motif: "BUILT FOR THE RUSH." },
+  shopora: { question: "What makes the journey from discovery to checkout feel simple?", steps: ["Discover something good", "Keep the cart in sync", "Confirm the payment"], motif: "FIND. WANT. CHECKOUT." },
+  orbit: { question: "Can a music player feel personal without needing a connection?", steps: ["Your local library", "Your own playlists", "Playback that stays with you"], motif: "YOUR MUSIC. YOUR ORBIT." },
+};
 
 export function ProjectGallery({ motion }: { motion: boolean }) {
   const [filter, setFilter] = useState<(typeof filters)[number]>("All work");
@@ -19,7 +27,14 @@ export function ProjectGallery({ motion }: { motion: boolean }) {
   useGSAP(() => {
     const frame = requestAnimationFrame(() => ScrollTrigger.refresh());
     if (motion && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      gsap.from(".work-card", { y: 22, opacity: 0, duration: 0.5, stagger: 0.06, ease: "power2.out", clearProps: "all" });
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 801px) and (prefers-reduced-motion: no-preference)", () => {
+        gsap.utils.toArray<HTMLElement>(".work-card").forEach((chapter, index) => {
+          gsap.fromTo(chapter.querySelector(".preview-window"), { rotation: index % 2 ? 8 : -8, y: 60, scale: .88 }, { rotation: 0, y: -30, scale: 1, ease: "none", scrollTrigger: { trigger: chapter, start: "top bottom", end: "bottom top", scrub: 1 } });
+          gsap.fromTo(chapter.querySelector(".story-motif"), { xPercent: 12 }, { xPercent: -12, ease: "none", scrollTrigger: { trigger: chapter, start: "top bottom", end: "bottom top", scrub: 1 } });
+        });
+      });
+      return () => { cancelAnimationFrame(frame); mm.revert(); };
     }
     return () => cancelAnimationFrame(frame);
   }, { scope: gallery, dependencies: [filter, motion], revertOnUpdate: true });
@@ -41,9 +56,12 @@ export function ProjectGallery({ motion }: { motion: boolean }) {
         <span className="mono work-counter" aria-live="polite">{String(visible.length).padStart(2, "0")} projects</span>
       </div>
       <div className="work-grid" ref={gallery}>
+        <nav className="story-index" aria-label="Jump to a project chapter">{visible.map((work) => <a key={work.id} href={`#chapter-${work.id}`}><span className="mono">0{selectedWork.indexOf(work) + 1}</span>{work.name}<span>↘</span></a>)}</nav>
         {visible.map((work) => (
-          <article className="work-card" key={work.id}>
+          <article className={`work-card chapter-${work.id}`} id={`chapter-${work.id}`} key={work.id}>
+            <div className="story-intro"><span className="mono story-chapter">CHAPTER 0{selectedWork.indexOf(work) + 1} / {work.category} / {work.year}</span><p className="story-question">{storyNotes[work.id].question}</p><button className="work-title" type="button" onClick={() => setSelected(work)}><h3>{work.name}</h3><span aria-hidden="true">↗</span></button><p className="story-description">{work.description}</p><ol className="story-steps">{storyNotes[work.id].steps.map((step, index) => <li key={step}><span className="mono">0{index + 1}</span>{step}</li>)}</ol><div className="work-stack">{work.stack.slice(0, 3).map((tech) => <span key={tech}>{tech}</span>)}</div><button type="button" className="text-link story-open" onClick={() => setSelected(work)}>Open the build notes ↗</button></div>
             <button type="button" className="project-preview" style={{ "--project-bg": work.color } as CSSProperties} onClick={() => setSelected(work)} aria-label={`Explore ${work.name}`}>
+              <span className="story-motif" aria-hidden="true">{storyNotes[work.id].motif}</span>
               <span className="preview-label mono">{work.imageType === "Screenshot" ? "Product screenshot" : "Generated UI mockup"}</span>
               <div className="preview-window">
                 <div className="window-bar" aria-hidden="true"><i /><i /><i /><span>{work.name.toLowerCase().replaceAll(" ", "-")}</span></div>
@@ -51,11 +69,8 @@ export function ProjectGallery({ motion }: { motion: boolean }) {
               </div>
               <span className="preview-open" aria-hidden="true">Explore project <span>↗</span></span>
               <span className="preview-index mono" aria-hidden="true">{String(selectedWork.indexOf(work) + 1).padStart(2, "0")}</span>
+              <span className="story-outcome">{work.outcome}</span>
             </button>
-            <div className="work-meta mono"><span>{work.category}</span><span>{work.year}</span></div>
-            <button className="work-title" type="button" onClick={() => setSelected(work)}><h3>{work.name}</h3><span aria-hidden="true">↗</span></button>
-            <p>{work.description}</p>
-            <div className="work-stack">{work.stack.slice(0, 3).map((tech) => <span key={tech}>{tech}</span>)}</div>
           </article>
         ))}
       </div>

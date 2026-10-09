@@ -48,3 +48,4 @@ public/video-frames/
 # Optional local-only folders (keep source assets in repo root if needed)
 # Snapshots of projects/
 # Readme of my projects/
+/.next-*/

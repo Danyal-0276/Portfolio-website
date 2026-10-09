@@ -10,6 +10,7 @@ import { experiments } from "@/data/selected-work";
 import { ProjectGallery } from "./ProjectGallery";
 import { StackLab } from "./StackLab";
 import { ContactForm } from "./ContactForm";
+import { HeroScene } from "./HeroScene";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 const links = [{ name: "Work", href: "#work" }, { name: "Toolkit", href: "#toolkit" }, { name: "About", href: "#about" }, { name: "Contact", href: "#contact" }];
@@ -51,29 +52,14 @@ export function Portfolio() {
     if (!motion) return;
     const mm = gsap.matchMedia();
     mm.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap.timeline({ defaults: { ease: "power3.out" } })
-        .from(".hero-line > span", { yPercent: 110, rotation: 3, duration: 1.05, stagger: 0.12 }, 0.1)
-        .from(".hero-enter", { y: 24, opacity: 0, duration: 0.8, stagger: 0.1, clearProps: "all" }, 0.45)
-        .from(".portrait-follow", { y: 65, opacity: 0, duration: 1.15, clearProps: "all" }, 0.25)
-        .from(".portrait-disc", { scale: 0.6, rotation: -35, opacity: 0, duration: 1.2, clearProps: "all" }, 0.1);
       gsap.to(".page-progress", { scaleX: 1, ease: "none", scrollTrigger: { trigger: document.documentElement, start: "top top", end: "max", scrub: 0.2 } });
       gsap.utils.toArray<HTMLElement>("[data-reveal]", root.current).forEach((element) => {
         gsap.from(element, { y: 34, opacity: 0, duration: 0.85, ease: "power2.out", clearProps: "all", scrollTrigger: { trigger: element, start: "top 92%", once: true } });
       });
-      gsap.to(".portrait-disc", { rotation: 22, yPercent: 12, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 } });
-      gsap.to(".about-star", { rotation: 140, ease: "none", scrollTrigger: { trigger: ".about-section", start: "top bottom", end: "bottom top", scrub: 1 } });
-    });
-    mm.add("(pointer: fine) and (prefers-reduced-motion: no-preference)", () => {
-      const stage = root.current?.querySelector<HTMLElement>(".portrait-stage");
-      const follow = root.current?.querySelector<HTMLElement>(".portrait-follow");
-      if (!stage || !follow) return;
-      const moveX = gsap.quickTo(follow, "x", { duration: 0.7, ease: "power3.out" });
-      const moveY = gsap.quickTo(follow, "y", { duration: 0.7, ease: "power3.out" });
-      const onMove = (event: PointerEvent) => { const rect = stage.getBoundingClientRect(); moveX(((event.clientX - rect.left) / rect.width - 0.5) * 22); moveY(((event.clientY - rect.top) / rect.height - 0.5) * 16); };
-      const onLeave = () => { moveX(0); moveY(0); };
-      stage.addEventListener("pointermove", onMove);
-      stage.addEventListener("pointerleave", onLeave);
-      return () => { stage.removeEventListener("pointermove", onMove); stage.removeEventListener("pointerleave", onLeave); };
+
+      gsap.fromTo(".campus-image", { yPercent: -8 }, { yPercent: 8, ease: "none", scrollTrigger: { trigger: ".campus-chapter", start: "top bottom", end: "bottom top", scrub: 1 } });
+      gsap.from(".research-result", { rotate: -5, scale: .9, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".research-section", start: "top 75%", once: true } });
+      gsap.utils.toArray<HTMLElement>(".section-heading h2, .contact-heading h2").forEach((heading) => gsap.from(heading, { clipPath: "inset(0 0 100% 0)", y: 35, duration: 1, scrollTrigger: { trigger: heading, start: "top 90%", once: true } }));
     });
     return () => mm.revert();
   }, { scope: root, dependencies: [motion], revertOnUpdate: true });
@@ -83,33 +69,15 @@ export function Portfolio() {
     <header className="site-header">
       <a className="wordmark" href="#home" aria-label="Danyal Tanveer, back to top">danyal<span>.</span></a>
       <nav className={menuOpen ? "main-nav is-open" : "main-nav"} id="main-navigation" aria-label="Main navigation">
-        {links.map((link, index) => <a key={link.href} href={link.href} aria-current={activeSection === link.href ? "location" : undefined} onClick={() => setMenuOpen(false)}><span className="nav-index mono">0{index + 1}</span>{link.name}<span className="nav-dot" /></a>)}
+        {links.map((link, index) => <a key={link.href} href={link.href} aria-current={activeSection === link.href ? "location" : undefined} onClick={() => setMenuOpen(false)}><span className="nav-index mono">0{index + 1}</span><span className="nav-roll"><span>{link.name}</span><span aria-hidden="true">{link.name}</span></span><span className="nav-dot" /></a>)}
       </nav>
       <div className="header-actions"><a className="header-hello" href="mailto:donibutt2112@gmail.com">Let’s talk <span aria-hidden="true">↗</span></a><button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="main-navigation" aria-label={menuOpen ? "Close navigation" : "Open navigation"} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? "Close −" : "Menu +"}</button></div>
     </header>
     <main id="main-content">
-      <section className="hero shell" id="home" aria-labelledby="hero-title">
-        <div className="hero-topline mono hero-enter"><span><span className="status-dot" />Open to software & AI engineering roles</span><span className="hero-location">Based in Lahore, PK / UTC+05:00</span></div>
-        <div className="hero-grid">
-          <div className="hero-copy">
-            <p className="eyebrow hero-enter">Danyal Tanveer — Software & AI engineer</p>
-            <h1 id="hero-title"><span className="hero-line"><span>I build</span></span><span className="hero-line"><span>what’s</span></span><span className="hero-line italic"><span>next<span className="coral-text">.</span></span></span></h1>
-            <div className="hero-description hero-enter"><span className="hero-rule" /><p>Thoughtful interfaces. Intelligent systems.<br />From a first idea to software people use.</p></div>
-            <div className="hero-actions hero-enter"><a className="pill-button dark" href="#work">Explore my work <span aria-hidden="true">↘</span></a><a className="resume-link" href="/resume.pdf" target="_blank" rel="noopener noreferrer">View résumé <span aria-hidden="true">↗</span></a></div>
-          </div>
-          <div className="portrait-stage">
-            <div className="portrait-disc" aria-hidden="true"><div className="disc-ring" /><span className="disc-cross cross-one">+</span><span className="disc-cross cross-two">+</span></div>
-            <span className="portrait-coordinate mono hero-enter" aria-hidden="true">31.5204° N<br />74.3587° E</span>
-            <div className="portrait-follow"><Image className="hero-portrait" src="/images/portrait-2026.png" alt="Danyal Tanveer, software and AI engineer, seated with his laptop" width={1254} height={1254} priority sizes="(max-width: 700px) 95vw, 48vw" /></div>
-            <div className="portrait-label hero-enter"><Star /><span>Engineer by training.<br /><strong>Builder by instinct.</strong></span></div>
-            <span className="portrait-side mono" aria-hidden="true">Always curious. Always building.</span>
-          </div>
-        </div>
-        <div className="hero-foot mono hero-enter"><a href="#work">Scroll to discover <span className="scroll-arrow" aria-hidden="true">↓</span></a><span>Full-stack development × Applied AI</span><span>Portfolio / 2026</span></div>
-      </section>
+      <HeroScene motion={motion} />
       <div className="ticker" aria-hidden="true"><div className="ticker-track">{[0, 1, 2, 3].map((item) => <div className="ticker-group" key={item}><span>Ideas into interfaces</span><Star /><span>Data into intelligence</span><Star /><span>Code into real things</span><Star /></div>)}</div></div>
       <section id="work" className="work-section shell section-space" aria-labelledby="work-title">
-        <div className="section-heading" data-reveal><div><p className="eyebrow"><span>01 /</span> Selected work</p><h2 id="work-title">Less talk.<br /><span className="serif">More built.</span></h2></div><p className="section-intro">A selection of products, platforms, and<br className="desktop-break" /> experiments across the stack.<br /><span className="muted">Built with intention. Learned by doing.</span></p></div>
+        <div className="section-heading" data-reveal><div><p className="eyebrow"><span>01 /</span> Selected work</p><h2 id="work-title">Every build.<br /><span className="serif">A different story.</span></h2></div><p className="section-intro">Six builds. Six different problems.<br />Follow the thread from the first question<br />to the system behind the screen.</p></div>
         <ProjectGallery motion={motion} />
         <div className="work-bottom"><span className="mono">A closer look at how I think, build, and solve.</span><a className="text-link" href={siteConfig.github} target="_blank" rel="noopener noreferrer">More on GitHub <span aria-hidden="true">↗</span></a></div>
       </section>
@@ -119,11 +87,12 @@ export function Portfolio() {
         <div className="foundation-strip mono"><span>The foundations underneath</span><p>Python / TypeScript / JavaScript / Java / C++ / SQL / OOP / Data structures & algorithms</p></div>
       </div></section>
       <section id="about" className="about-section shell section-space" aria-labelledby="about-title">
-        <div className="about-grid"><div className="about-title" data-reveal><p className="eyebrow"><span>03 /</span> The person behind the code</p><h2 id="about-title">Curiosity<br />is the <span className="serif">constant.</span></h2><Star className="about-star" /></div>
+        <div className="about-grid"><div className="about-title" data-reveal><p className="eyebrow"><span>03 /</span> The person behind the code</p><h2 id="about-title">Curiosity<br />is the <span className="serif">constant.</span></h2><div className="about-photo"><Image src="/images/portrait-2026.png" alt="Danyal working with his laptop" width={1254} height={1254} sizes="(max-width: 800px) 85vw, 400px" /><span className="mono">THE PERSON / NOT JUST THE STACK</span></div></div>
           <div className="about-body" data-reveal><p className="about-lead">Hi, I’m Danyal. I’m a computer science graduate who likes turning complicated problems into things that feel simple to use.</p><p>I work where product engineering meets applied AI: responsive frontends, dependable APIs, and machine learning pipelines that make it into a real application.</p><p>That has taken me from shipping restaurant software for live clients to training news credibility models and building a book archive you can talk to. I’m looking for a team where I can contribute, keep asking questions, and keep getting better.</p>
-            <div className="education"><span className="mono">2022 — 2026 / Education</span><h3>BS Computer Science</h3><p>University of Central Punjab, Lahore</p><span className="education-grade">3.60 <span>/ 4.00 CGPA</span></span></div>
+
           </div>
         </div>
+        <div className="campus-chapter" aria-labelledby="education-title"><div className="campus-image"><Image src="/images/ucp-campus-aerial.webp" alt="Aerial view of the University of Central Punjab campus in Lahore" fill sizes="(max-width: 800px) 100vw, 90vw" /></div><div className="campus-shade" /><div className="campus-top mono"><span>THE STARTING POINT / 2022—2026</span><span>LAHORE, PAKISTAN</span></div><div className="campus-content"><span className="campus-stamp">UCP<br /><small>CLASS OF 2026</small></span><h3 id="education-title">Where curiosity<br />found its <em>direction.</em></h3><p>BS Computer Science<br />University of Central Punjab</p><div className="campus-grade"><strong>3.60</strong><span>/ 4.00 CGPA<br />2022 — 2026</span></div></div><a className="campus-credit mono" href="https://ucp.edu.pk/about-ucp/" target="_blank" rel="noopener noreferrer">Campus photograph: UCP ↗</a></div>
         <div className="experience-block" data-reveal><div className="experience-label"><p className="eyebrow">In the real world</p><span className="mono">Jul — Dec 2025</span></div><div className="experience-content"><div className="experience-title"><h3>Full-Stack Developer Intern</h3><span className="experience-badge">On-site / Lahore</span></div><p className="company-name">Tri Tech Technology LLC</p><p>Helped build and deploy a multi-tenant restaurant POS ecosystem: three Next.js frontends, one shared Express API, and the workflows that keep a restaurant moving.</p><div className="experience-facts"><span><strong>4</strong> connected services</span><span><strong>2</strong> restaurant clients</span><span><strong>5</strong> staff roles</span></div><p className="client-note mono">Deployed for CAP Cafe & Extraction</p></div></div>
       </section>
       <section id="research" className="research-section" aria-labelledby="research-title"><div className="shell research-grid">
@@ -132,7 +101,7 @@ export function Portfolio() {
       </div></section>
       <section id="playground" className="playground-section shell section-space" aria-labelledby="playground-title">
         <div className="section-heading compact" data-reveal><div><p className="eyebrow"><span>05 /</span> The playground</p><h2 id="playground-title">Follow the <span className="serif">curiosity.</span></h2></div><p className="section-intro">Side quests, smaller builds,<br />and ideas worth trying.</p></div>
-        <div className="experiment-list">{experiments.map((experiment, index) => <details className="experiment" key={experiment.name}><summary><span className="mono experiment-number">0{index + 1}</span><h3>{experiment.name}</h3><span className="mono experiment-type">{experiment.type}</span><span className="experiment-plus" aria-hidden="true">+</span></summary><div className="experiment-body"><div><p>{experiment.description}</p><a className="text-link" href={experiment.github} target="_blank" rel="noopener noreferrer">Explore repository <span aria-hidden="true">↗</span></a><p className="image-caption mono">{experiment.generated ? "Generated UI mockup; actual interface may differ." : "Actual project screenshot"}</p></div><div className="experiment-image"><Image src={experiment.image} alt={`${experiment.name} ${experiment.generated ? "generated UI mockup" : "screenshot"}`} width={900} height={600} sizes="(max-width: 700px) 85vw, 45vw" /></div></div></details>)}</div>
+        <div className="experiment-list">{experiments.map((experiment, index) => <details className="experiment" key={experiment.name} onToggle={() => ScrollTrigger.refresh()}><summary><span className="mono experiment-number">0{index + 1}</span><h3>{experiment.name}</h3><span className="mono experiment-type">{experiment.type}</span><span className="experiment-plus" aria-hidden="true">+</span></summary><div className="experiment-body"><div><p>{experiment.description}</p><a className="text-link" href={experiment.github} target="_blank" rel="noopener noreferrer">Explore repository <span aria-hidden="true">↗</span></a><p className="image-caption mono">{experiment.generated ? "Generated UI mockup; actual interface may differ." : "Actual project screenshot"}</p></div><div className="experiment-image"><Image src={experiment.image} alt={`${experiment.name} ${experiment.generated ? "generated UI mockup" : "screenshot"}`} width={900} height={600} sizes="(max-width: 700px) 85vw, 45vw" /></div></div></details>)}</div>
         <div className="credentials"><p className="eyebrow">Always a student</p><div><a href="https://coursera.org/verify/7C403PQ3QE0D" target="_blank" rel="noopener noreferrer"><span>Google / Coursera</span><strong>AI Fundamentals</strong><span className="mono">Apr 2026 ↗</span></a><div><span>Hugging Face</span><strong>Fundamentals of Agents · Unit 1</strong><span className="mono">May 2026</span></div><div><span>HackerRank</span><strong>Python (Basic)</strong><span className="mono">Aug 2026</span></div></div></div>
       </section>
       <section id="contact" className="contact-section section-space" aria-labelledby="contact-title"><div className="shell">
