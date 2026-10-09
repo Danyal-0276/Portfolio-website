@@ -39,8 +39,8 @@ export const siteConfig = {
   title: "Danyal Tanveer | Full-Stack Developer & AI/ML Engineer",
   description:
     "Computer Science graduate and full-stack developer building production web systems with React, Next.js, and Node.js, plus end-to-end ML and NLP pipelines with PyTorch and Hugging Face.",
-  url: "https://portfolio-website-git-main-danyal-tanveer-s-projects.vercel.app",
-  ogImage: "/images/profile-orange.png",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://portfolio-website-git-main-danyal-tanveer-s-projects.vercel.app",
+  ogImage: "/images/portrait-2026.png",
   logoPath: "/images/logo.png",
   faviconPath: "/images/favicon-512.png",
   faviconVersion: "5",

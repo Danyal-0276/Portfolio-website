@@ -1,25 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Syne } from "next/font/google";
-import { Navbar } from "@/components/layout/Navbar";
-import { CursorProvider } from "@/components/layout/CursorProvider";
-import { PageLoader } from "@/components/layout/PageLoader";
-import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
-import { AuroraBackground } from "@/components/ui/AuroraBackground";
 import { siteConfig } from "@/data/portfolio";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const syne = Syne({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-syne",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: siteConfig.title,
@@ -30,7 +11,7 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     url: siteConfig.url,
     siteName: siteConfig.name,
-    images: [{ url: siteConfig.ogImage, width: 1122, height: 1402, alt: siteConfig.name }],
+    images: [{ url: siteConfig.ogImage, width: 1254, height: 1254, alt: siteConfig.name }],
     locale: "en_US",
     type: "website",
   },
@@ -81,28 +62,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${syne.variable} is-loading`}>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `document.documentElement.classList.add('is-loading');`,
-          }}
-        />
-      </head>
+    <html lang="en">
       <body>
-        <PageLoader />
-        <a
-          href="#hero"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-ink"
-        >
-          Skip to content
-        </a>
-        <AuroraBackground />
-        <div className="relative z-[1] bg-transparent">
-          <Navbar />
-          <CursorProvider />
-          <SmoothScrollProvider>{children}</SmoothScrollProvider>
-        </div>
+        <a href="#main-content" className="skip-link">Skip to content</a>
+        {children}
       </body>
     </html>
   );

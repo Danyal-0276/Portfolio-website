@@ -10,6 +10,12 @@ export interface ContactEmailPayload {
   message: string;
 }
 
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  })[character]!);
+}
+
 export async function sendContactEmail({ name, email, message }: ContactEmailPayload) {
   if (!resend) {
     throw new Error("Email service is not configured. Set RESEND_API_KEY.");
@@ -26,10 +32,10 @@ export async function sendContactEmail({ name, email, message }: ContactEmailPay
     text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
     html: `
       <h2>New portfolio message</h2>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(email)}</p>
       <p><strong>Message:</strong></p>
-      <p>${message.replace(/\n/g, "<br>")}</p>
+      <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
     `,
   });
 

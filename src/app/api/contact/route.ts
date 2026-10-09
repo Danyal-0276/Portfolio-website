@@ -41,7 +41,12 @@ export async function POST(request: Request) {
       );
     }
 
-    const body = await request.json();
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({ error: "Please submit a valid message." }, { status: 400 });
+    }
     const parsed = contactSchema.safeParse(body);
 
     if (!parsed.success) {
@@ -58,6 +63,6 @@ export async function POST(request: Request) {
     const message =
       err instanceof Error ? err.message : "Failed to send message";
     console.error("Contact form error:", message);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: "Your message couldn’t be sent right now. Please email me directly at donibutt2112@gmail.com." }, { status: 500 });
   }
 }
