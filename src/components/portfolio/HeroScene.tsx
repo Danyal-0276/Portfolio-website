@@ -5,6 +5,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { HangingCard } from "./HangingCard";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -16,14 +17,14 @@ export function HeroScene({ motion }: { motion: boolean }) {
     mm.add("(prefers-reduced-motion: no-preference)", () => {
       gsap.timeline({ defaults: { ease: "power3.out" } })
         .from(".giant-word span", { yPercent: 120, rotate: 8, stagger: .075, duration: 1.1 }, .1)
-        .from(".scene-person", { y: 90, opacity: 0, duration: 1.2 }, .35)
+        .from(".lanyard-stage", { opacity: 0, duration: 1.2 }, .35)
         .from(".scene-object", { scale: .5, opacity: 0, rotate: 0, stagger: .12, duration: .9 }, .65)
         .from(".scene-bottom, .scene-top", { y: 15, opacity: 0, duration: .6 }, .9);
       gsap.utils.toArray<HTMLElement>(".scene-object").forEach((item, index) => {
         gsap.to(item, { y: index % 2 ? -13 : 13, rotation: `+=${index % 2 ? -3 : 3}`, duration: 3 + index * .5, repeat: -1, yoyo: true, ease: "sine.inOut" });
       });
       gsap.to(".giant-word", { xPercent: -9, ease: "none", scrollTrigger: { trigger: scene.current, start: "top top", end: "bottom top", scrub: 1 } });
-      gsap.to(".scene-person", { y: 70, ease: "none", scrollTrigger: { trigger: scene.current, start: "top top", end: "bottom top", scrub: 1 } });
+
     });
     mm.add("(pointer: fine) and (prefers-reduced-motion: no-preference)", () => {
       const target = scene.current;
@@ -51,7 +52,7 @@ export function HeroScene({ motion }: { motion: boolean }) {
         <div className="scene-object orbit-spark" aria-hidden="true">✳</div>
         <a className="scene-object orbit-sticker" href="#toolkit">A curious mind.<br /><strong>A builder’s instinct.</strong><span>↗</span></a>
       </div>
-      <div className="scene-person"><Image src="/images/portrait-seated-v2.png" alt="AI-generated editorial portrait of Danyal Tanveer seated on a chrome chair" width={1024} height={1536} priority sizes="(max-width: 600px) 80vw, 460px" /></div>
+      <HangingCard motion={motion} />
       <span className="scene-name mono">DANYAL TANVEER<br /><strong>SOFTWARE & AI ENGINEER</strong></span>
       <span className="scene-annotation mono" aria-hidden="true">↳ A little curiosity.<br />A lot of building.</span>
     </div>

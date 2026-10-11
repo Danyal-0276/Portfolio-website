@@ -4,11 +4,12 @@ A personal portfolio for a software and AI engineer, built with Next.js 15, Reac
 
 ## Experience
 
-The 2026 redesign uses warm paper, dark ink, and vermilion accents, oversized editorial typography, and the supplied transparent portrait. The page flows through selected work, an interactive engineering toolkit, background and experience, research, smaller experiments, and contact.
+The 2026 redesign uses electric blue, yellow, and ink with an editorial collage hero. The supplied portrait appears on an interactive hanging engineer pass with drag, perspective tilt, spring return, and keyboard controls. The page flows through the hero, About and Education, selected work, Skills, an interactive engineering toolkit, research, smaller experiments, and contact.
 
 - Six featured projects with category filters and accessible native detail dialogs.
+- A searchable Skills section with 63 résumé-based skills across eight disciplines.
 - Three interactive engineering workflows with selectable stages.
-- GSAP entrance animations, scroll reveals, portrait tracking, and progress indicator.
+- GSAP entrance animations, scroll reveals, a hanging ID card, and a progress indicator.
 - Responsive navigation, keyboard controls, reduced-motion support, and a motion toggle.
 - Updated graduate, internship, research, certification, and résumé content.
 - Validated contact API using Resend, with rate limiting and escaped email HTML.
@@ -35,6 +36,9 @@ Copy `.env.example` to `.env.local` and configure Resend for contact delivery. S
 
 - `src/components/portfolio/Portfolio.tsx`: page sections and motion.
 - `src/components/portfolio/ProjectGallery.tsx`: filters and project details.
+- `src/components/portfolio/HangingCard.tsx`: draggable hero badge.
+- `src/components/portfolio/SkillsSection.tsx`: searchable skills.
+- `src/data/resume-skills.ts`: skills extracted from supplied résumés.
 - `src/components/portfolio/StackLab.tsx`: interactive toolkit.
 - `src/data/selected-work.ts`: featured projects, experiments, and skills.
 - `src/data/portfolio.ts`: shared identity, links, and site metadata.

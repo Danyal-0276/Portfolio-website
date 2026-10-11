@@ -8,9 +8,11 @@ h2 { font-weight: 750; text-transform: uppercase; line-height: .98; }
 .wordmark { color: var(--blue); font-size: 34px; font-weight: 900; letter-spacing: -.07em; line-height: 1; }
 .wordmark > span { background: var(--yellow); color: var(--ink); width: 13px; height: 13px; border-radius: 50%; font-size: 0; margin: 4px 0 0 4px; }
 .main-nav { gap: 3px; background: #f2f3f5; padding: 4px; border-radius: 50px; }
-.main-nav a { overflow: hidden; padding: 12px 18px; border-radius: 30px; font-weight: 700; transition: background .25s, color .25s, transform .25s; }
-.main-nav a:hover, .main-nav a[aria-current] { background: var(--blue); color: white; transform: translateY(-2px); }
-.main-nav a:hover .nav-index, .main-nav a[aria-current] .nav-index { color: #ffffff9c; }
+.main-nav a { overflow: hidden; padding: 12px 18px; border-radius: 30px; font-weight: 700; transition: background .12s, color .12s, transform .25s; }
+.main-nav a:hover { background: #e1eaff; color: var(--blue); transform: translateY(-2px); }
+.main-nav a[aria-current] { background: var(--blue); color: white; }
+.main-nav a:hover .nav-index { color: #0062ff99; }
+.main-nav a[aria-current] .nav-index { color: #ffffff9c; }
 .nav-dot { display: none; }
 .nav-roll { position: relative; display: block; height: 15px; overflow: hidden; line-height: 15px; }
 .nav-roll > span { display: block; transition: transform .35s cubic-bezier(.2,.8,.2,1); }
@@ -254,3 +256,70 @@ h2 { font-weight: 750; text-transform: uppercase; line-height: .98; }
   .scene-object, .ticker-track { animation: none !important; }
   .main-nav a, .pipeline-step, .about-photo img, .contact-arrow { transition: none; }
 }
+
+/* Suspended engineer pass: perspective on the card, pendulum pivot on the strap. */
+.lanyard-stage { position: absolute; z-index: 4; width: 320px; height: 560px; left: 50%; top: -10px; transform: translateX(-50%); perspective: 1100px; }
+.lanyard-anchor { position: absolute; left: calc(50% - 9px); top: 0; height: 8px; width: 18px; border-radius: 50%; background: #171920; box-shadow: 0 2px 4px #0003; }
+.lanyard-rig { position: relative; width: 100%; padding-top: 116px; transform-origin: 50% 4px; transform: rotate(-4deg); transform-style: preserve-3d; }
+.lanyard-strap { position: absolute; top: 0; left: calc(50% - 13px); width: 26px; height: 104px; overflow: hidden; background: linear-gradient(90deg,#003bbb,#0062ff 40%,#337fff 60%,#0049cf); border-inline: 2px solid #ffffff30; box-shadow: 4px 3px 8px #00185022; }
+.lanyard-strap span { position: absolute; top: 5px; left: 6px; writing-mode: vertical-rl; white-space: nowrap; color: #fff; font-size: 7px; letter-spacing: .15em; font-weight: 700; }
+.lanyard-clip { position: absolute; top: 96px; left: calc(50% - 10px); width: 20px; height: 37px; background: linear-gradient(90deg,#717783,#f3f4f6 35%,#8f96a2 75%,#c9cdd3); border: 2px solid #6b7280; border-radius: 6px; z-index: 3; box-shadow: 0 3px 4px #0003; }
+.id-card { display: block; position: relative; width: 100%; padding: 24px 15px 15px; text-align: left; border: 1px solid #fff9; border-bottom: 5px solid #e5c100; border-radius: 19px; background: var(--yellow); color: #111217; box-shadow: 13px 22px 35px #1112172b, inset 0 1px 0 #fff9; transform-style: preserve-3d; cursor: grab; touch-action: pan-y; user-select: none; }
+.id-card[data-dragging] { cursor: grabbing; }
+.id-card:focus-visible { outline-offset: 9px; }
+.id-card::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(125deg,#ffffff45,transparent 42%,#ffffff08 60%,#ffffff25); pointer-events: none; }
+.badge-slot { position: absolute; top: 9px; left: calc(50% - 20px); width: 40px; height: 6px; border-radius: 6px; background: #252626; box-shadow: inset 0 2px 2px #0008; }
+.badge-top { display: flex; justify-content: space-between; font-size: 7px; letter-spacing: .04em; margin: 2px 1px 12px; }
+.badge-photo { display: block; height: 216px; position: relative; overflow: hidden; background: #dce6fa; border-radius: 9px; }
+.badge-photo-grid { position: absolute; inset: 0; background-image: linear-gradient(#0062ff12 1px,transparent 1px),linear-gradient(90deg,#0062ff12 1px,transparent 1px); background-size: 26px 26px; }
+.badge-photo img { position: absolute; width: 112%; max-width: none; left: -6%; top: -15px; pointer-events: none; }
+.badge-photo-tag { position: absolute; right: 9px; bottom: 9px; font-size: 7px; background: var(--yellow); padding: 5px; }
+.badge-identity { display: block; padding: 15px 3px 14px; }
+.badge-identity > strong { display: block; position: relative; font-size: 39px; line-height: .94; font-weight: 850; letter-spacing: -.06em; }
+.badge-identity strong > span { position: absolute; right: 2px; top: 0; font-size: 48px; color: var(--blue); }
+.badge-identity > .mono { display: block; font-size: 8px; margin-top: 10px; }
+.badge-bottom { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #1112174d; padding-top: 12px; gap: 10px; }
+.badge-bottom .mono { font-size: 6px; display: flex; align-items: center; gap: 4px; }
+.badge-bottom i { display: block; width: 5px; height: 5px; border-radius: 50%; background: var(--blue); }
+.badge-barcode { width: 65px; height: 20px; background: repeating-linear-gradient(90deg,#111217 0 2px,transparent 2px 4px,#111217 4px 5px,transparent 5px 8px); }
+.badge-hint { display: block; position: absolute; bottom: -8px; width: 100%; text-align: center; font-size: 8px; color: #535c6b; }
+.skills-section { background: #edf2ff; border-block: 1px solid #0062ff12; }
+.skills-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 25px; margin-bottom: 28px; }
+.skills-search { display: flex; align-items: center; gap: 12px; width: min(100%,480px); padding: 15px 18px; background: #fff; border: 1px solid #c7d4f0; border-radius: 8px; }
+.skills-search:focus-within { outline: 2px solid var(--blue); outline-offset: 3px; }
+.skills-search > span { font-size: 24px; color: var(--blue); }
+.skills-search input { width: 100%; min-width: 0; border: 0; background: transparent; outline: none; font-size: 14px; }
+.skills-search button { background: transparent; font-size: 22px; padding: 0 5px; }
+.skills-toolbar > .mono { color: #5b657a; white-space: nowrap; }
+.skills-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.skill-discipline { padding: 26px; border: 1px solid #d5def0; background: #fff; border-radius: 12px; transition: border-color .2s,box-shadow .2s; }
+.skill-discipline:hover { border-color: var(--blue); box-shadow: 0 8px 20px #0062ff09; }
+.skill-card-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; }
+.skill-card-heading > .mono { font-size: 8px; color: #747d8e; }
+.skill-mark { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 8px; background: var(--yellow); color: #111217; font-weight: 700; font-size: 24px; }
+.skill-discipline h3 { font-size: 23px; letter-spacing: -.04em; font-weight: 750; }
+.skill-discipline > p { font-size: 11px; color: #747d8e; margin-top: 7px; }
+.skill-discipline ul { display: flex; flex-wrap: wrap; gap: 7px; margin: 22px 0 0; padding: 0; list-style: none; }
+.skill-discipline li { font-size: 11px; line-height: 1.4; padding: 7px 10px; border: 1px solid #e1e6ef; border-radius: 5px; background: #f7f9fc; }
+.skills-foot { display: flex; justify-content: space-between; gap: 20px; margin-top: 30px; font-size: 9px; }
+.skills-foot a { color: var(--blue); }
+.skills-empty { padding: 50px 0; color: #5b657a; }
+@media (max-width: 1100px) { .main-nav a { padding-inline: 12px; } .skills-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 800px) { .lanyard-stage { width: 280px; height: 520px; top: 0; } .lanyard-rig { padding-top: 106px; } .lanyard-strap { height: 94px; } .lanyard-clip { top: 86px; } .badge-photo { height: 190px; } .badge-identity > strong { font-size: 35px; } .skills-toolbar { align-items: flex-start; flex-direction: column; gap: 16px; } }
+@media (max-width: 600px) { .scene-canvas { height: 540px; } .lanyard-stage { width: 238px; height: 495px; top: 12px; } .lanyard-rig { padding-top: 110px; } .lanyard-strap { height: 98px; } .lanyard-clip { top: 90px; } .id-card { padding: 25px 12px 12px; border-radius: 15px; } .badge-top { font-size: 5.5px; } .badge-photo { height: 163px; } .badge-photo img { top: -10px; } .badge-identity > strong { font-size: 32px; } .badge-identity > .mono { font-size: 6.5px; } .badge-bottom .mono { font-size: 5px; } .badge-barcode { width: 46px; height: 16px; } .badge-hint { bottom: 25px; font-size: 6px; } .skills-grid { grid-template-columns: 1fr; } .skill-discipline { padding: 23px; } .skills-search input { font-size: 16px; } .skills-search input::placeholder { font-size: 12px; } .skills-foot { flex-direction: column; font-size: 8px; } }
+.giant-word { left: 0; width: 100%; justify-content: center; transform: none; }
+.badge-hint { position: relative; bottom: auto; margin-top: 25px; }
+@media (max-width: 600px) { .badge-hint { bottom: auto; margin-top: 20px; } }
+
+/* About: the complete supplied portrait alongside the introduction. */
+.about-grid { grid-template-columns: .95fr 1.05fr; grid-template-areas: "portrait heading" "portrait copy"; column-gap: 7%; row-gap: 28px; align-items: start; }
+.about-photo { grid-area: portrait; margin-top: 0; width: 100%; max-width: none; height: auto; aspect-ratio: 1; align-self: center; border-radius: 0 85px 0 0; }
+.about-photo img { height: 100%; width: 100%; object-fit: contain; object-position: center bottom; }
+.about-photo:hover img { transform: none; }
+.about-title { grid-area: heading; }
+.about-title h2 { font-size: clamp(40px, 4.2vw, 64px); max-width: none; }
+.about-title .eyebrow { margin-bottom: 22px; }
+.about-body { grid-area: copy; }
+.about-body > p:last-child { margin-bottom: 0; }
+@media (max-width: 800px) { .about-grid { column-gap: 5%; row-gap: 22px; } .about-title h2 { font-size: 40px; } .about-photo { border-radius: 0 60px 0 0; } }
+@media (max-width: 600px) { .about-grid { grid-template-columns: 1fr; grid-template-areas: "heading" "portrait" "copy"; gap: 28px; } .about-title h2 { font-size: clamp(36px, 9.8vw, 52px); max-width: none; } .about-photo { width: min(100%,460px); justify-self: center; } }
