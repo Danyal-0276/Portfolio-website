@@ -124,8 +124,8 @@ export function Portfolio() {
     <main id="main-content">
       <HeroScene motion={motion} />
       <div className="ticker" aria-hidden="true"><div className="ticker-track">{[0, 1, 2, 3].map((item) => <div className="ticker-group" key={item}><span>Ideas into interfaces</span><Star /><span>Data into intelligence</span><Star /><span>Code into real things</span><Star /></div>)}</div></div>
-      <section id="about" className="about-section shell section-space" aria-labelledby="about-title">
-        <div className="about-grid">
+      <section id="about" className="about-section section-space" aria-labelledby="about-title">
+        <div className="about-grid shell">
           <div className="about-photo" data-reveal><Image src="/images/portrait-2026.png" alt="Danyal Tanveer seated with his laptop" width={1254} height={1254} sizes="(max-width: 600px) 90vw, (max-width: 800px) 45vw, 42vw" /><span className="mono">THE PERSON / NOT JUST THE STACK</span></div>
           <div className="about-title" data-reveal><p className="eyebrow"><span>01 /</span> The person behind the code</p><h2 id="about-title">Curiosity<br />is the <span className="serif">constant.</span></h2></div>
           <div className="about-body" data-reveal><p className="about-lead">Hi, I’m Danyal. I’m a computer science graduate who likes turning complicated problems into things that feel simple to use.</p><p>I work where product engineering meets applied AI: responsive frontends, dependable APIs, and machine learning pipelines that make it into a real application.</p><p>That has taken me from shipping restaurant software for live clients to training news credibility models and building a book archive you can talk to. I’m looking for a team where I can contribute, keep asking questions, and keep getting better.</p>

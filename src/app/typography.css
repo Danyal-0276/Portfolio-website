@@ -1,0 +1,93 @@
+/* Readable content sizes, with full-bleed education and internship backgrounds. */
+.mono, .eyebrow { font-size: .8125rem; }
+.main-nav a, .header-hello, .menu-toggle { font-size: .9375rem; }
+.nav-index { font-size: .6875rem; }
+.nav-roll { height: 1.25em; line-height: 1.25; }
+.about-body > p, .section-intro, .story-description, .stack-intro > p,
+.research-copy, .experiment-body > div > p:first-child,
+.contact-heading > p:last-child, .project-details li, .dialog-outcome,
+.experience-content > p:not(.company-name):not(.client-note) {
+  font-size: clamp(1rem, .93rem + .25vw, 1.125rem);
+  line-height: 1.75;
+}
+.about-body > p, .story-description { color: #505765; }
+.about-body .about-lead { font-size: clamp(1.3125rem, 1rem + .6vw, 1.625rem); line-height: 1.5; }
+.story-description { max-width: 40ch; }
+.story-index a, .story-steps li, .story-open, .work-stack span, .filter, .stack-tab,
+.skill-discipline > p, .skill-discipline li, .pipeline-detail p,
+.pipeline-node > span:last-child, .stack-content .text-link,
+.experience-badge, .experience-facts > span, .company-name,
+.research-result > p, .result-metrics > span, .credentials strong,
+.credentials > div > *, .text-link, .pill-button, .phone-link,
+.social-links, .resume-downloads > a, .contact-form label, .form-status {
+  font-size: .9375rem; line-height: 1.6;
+}
+.story-chapter, .story-steps span, .story-outcome, .image-caption, .pipeline-hint,
+.skill-card-heading > .mono, .skills-foot, .foundation-strip,
+.experience-label .mono, .client-note, .research-note, .result-top,
+.research-result .result-footnote, .credentials .mono,
+.contact-direct > .mono, .resume-downloads > span, .form-bottom .mono,
+.site-footer > .mono, .motion-toggle, .back-top, .work-bottom > span,
+.experiment-number, .experiment-type, .dialog-top .mono { font-size: .8125rem; line-height: 1.65; }
+.skills-search input, .skills-search input::placeholder,
+.contact-form input, .contact-form textarea { font-size: 1rem; }
+.filter sup, .node-top .mono { font-size: .75rem; }
+.scene-top, .scene-name, .scene-annotation, .scene-scroll, .badge-hint,
+.about-photo span, .preview-label, .work-card .preview-label { font-size: .75rem; }
+.scene-bottom .scene-cta, .scene-bottom .resume-link { font-size: .9375rem; }
+.badge-top, .badge-photo-tag { font-size: .625rem; }
+.badge-identity > .mono { font-size: .75rem; }
+.badge-bottom .mono { font-size: .5625rem; }
+.site-footer { flex-wrap: wrap; }
+.credentials > div > * { grid-template-columns: 125px minmax(0,1fr) 110px; }
+.campus-chapter { margin-inline: 0; }
+.campus-top, .campus-content, .experience-block {
+  padding-inline: max(24px, calc((100% - 1280px) / 2));
+}
+.campus-top { font-size: .8125rem; gap: 20px; }
+.campus-content > p { font-size: 1.125rem; }
+.campus-grade > span { font-size: .875rem; }
+.campus-credit { font-size: .75rem; }
+.campus-stamp { right: max(24px, calc((100% - 1280px) / 2)); }
+.campus-stamp small { font-size: .625rem; }
+.experience-block { margin-top: 0; padding-block: 56px; background: var(--yellow); }
+.experience-label .mono, .experience-content > p:not(.company-name):not(.client-note),
+.experience-facts > span, .client-note { color: #41402a; }
+@media (max-width: 1100px) {
+  .pipeline { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .credentials { grid-template-columns: 1fr; }
+}
+@media (max-width: 1000px) {
+  .main-nav { display: none; position: absolute; top: calc(100% + 8px); left: -1px; right: -1px; background: white; border: 1px solid var(--line); border-radius: 15px; padding: 12px; }
+  .main-nav.is-open { display: flex; flex-direction: column; gap: 0; }
+  .main-nav a { font-size: 1.125rem; padding: 15px; border-radius: 8px; gap: 12px; }
+  .header-actions { display: flex; align-items: center; gap: 16px; }
+  .menu-toggle { display: block; padding: 12px 0; }
+}
+@media (max-width: 800px) {
+  .about-grid { grid-template-columns: 1fr; grid-template-areas: "heading" "portrait" "copy"; gap: 28px; }
+  .about-photo { width: min(100%,460px); justify-self: center; }
+  .about-title h2 { font-size: clamp(36px,7vw,56px); }
+  .experience-block { grid-template-columns: 1fr; }
+  .campus-stamp { top: 230px; }
+}
+@media (max-width: 600px) {
+  .site-header { padding-inline: 16px; }
+  .header-actions { gap: 12px; }
+  .header-hello { padding: 10px 12px; }
+  .scene-canvas { height: 580px; }
+  .lanyard-stage { height: 535px; }
+  .badge-hint { bottom: 14px; }
+  .scene-name { max-width: 55%; }
+  .orbit-sticker { font-size: .6875rem; top: 80%; }
+  .campus-top, .campus-content, .experience-block { padding-inline: 20px; }
+  .campus-chapter { min-height: 640px; }
+  .campus-stamp { top: 325px; }
+  .campus-content > p { max-width: 240px; }
+  .experience-facts { padding: 0; gap: 20px; }
+  .credentials > div > * { grid-template-columns: minmax(0,1fr) 110px; }
+  .skills-foot { flex-direction: column; }
+  .stack-tabs { gap: 8px; }
+  .stack-tab { font-size: .875rem; min-width: 0; }
+  .email-link { font-size: clamp(1rem,5vw,1.375rem); }
+}
