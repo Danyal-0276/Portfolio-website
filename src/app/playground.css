@@ -1,0 +1,64 @@
+.experiment-folders { margin-top: 36px; }
+.playground-note { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; color: #515768; font-size: .8125rem; }
+.playground-note > span:first-child { display: flex; align-items: center; gap: 10px; }
+.playground-note > span:first-child > span { font-size: 24px; color: var(--blue); }
+.experiment-folder { position: relative; background: var(--folder-color); border: 1px solid #11121733; border-radius: 16px; margin-bottom: 14px; box-shadow: 0 3px 0 #1112170c; }
+.folder-heading { margin: 0; }
+.folder-trigger { display: grid; grid-template-columns: 30px 64px minmax(0,1fr) auto; align-items: center; gap: 24px; width: 100%; padding: 28px 32px; text-align: left; background: transparent; border-radius: 16px; }
+.folder-trigger:focus-visible { outline-offset: -6px; }
+.folder-number { font-size: .8125rem; color: #3e4250; }
+.folder-symbol { width: 64px; height: 64px; display: grid; place-items: center; border: 1px solid #1112172a; border-radius: 50%; font-size: 34px; font-weight: 700; background: #ffffff40; }
+.folder-title { display: flex; flex-direction: column; gap: 7px; }
+.folder-category { font-size: .75rem; text-transform: uppercase; color: #414653; }
+.folder-title > span:last-child { font-size: clamp(1.25rem, 2.4vw, 2rem); line-height: 1.15; letter-spacing: -.045em; font-weight: 750; }
+.folder-action { display: flex; align-items: center; gap: 24px; }
+.folder-action > .mono { font-size: .75rem; }
+.folder-plus { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: #111217; color: white; font-size: 30px; font-weight: 400; line-height: 1; }
+.experiment-folder.is-open .folder-plus { rotate: 45deg; background: var(--blue); }
+.folder-drawer { display: grid; grid-template-rows: 0fr; visibility: hidden; }
+.experiment-folder.is-open .folder-drawer { grid-template-rows: 1fr; visibility: visible; }
+.folder-overflow { min-height: 0; overflow: hidden; }
+.folder-body { display: grid; grid-template-columns: .75fr 1.25fr; gap: 40px; align-items: center; margin: 0 32px; padding: 36px 0 40px; border-top: 1px dashed #11121744; }
+.folder-copy { min-width: 0; }
+.folder-stamp { display: inline-block; padding: 7px 10px; border: 1px solid #11121744; font-size: .75rem; rotate: -3deg; }
+.folder-copy h4 { font-size: clamp(2.5rem,4vw,4rem); line-height: .95; letter-spacing: -.065em; font-weight: 850; margin: 26px 0 20px; }
+.folder-copy h4 > span { color: var(--blue); }
+.folder-copy > p:not(.folder-caption) { font-size: clamp(1rem,1.3vw,1.125rem); line-height: 1.75; max-width: 36ch; color: #363d4b; }
+.folder-repo { display: inline-flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 25px; background: #111217; color: white; padding: 14px 18px; border-radius: 8px; font-size: .9375rem; }
+.folder-repo:hover { background: var(--blue); }
+.folder-caption { font-size: .75rem; line-height: 1.6; margin-top: 20px; color: #414653; max-width: 36ch; }
+.folder-preview { min-width: 0; background: #fffdf7; border: 1px solid #11121755; border-radius: 10px; box-shadow: 8px 8px 0 #11121717; overflow: hidden; }
+.folder-browser { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px; font-size: .6875rem; border-bottom: 1px solid #11121725; }
+.folder-browser > span:first-child { white-space: nowrap; color: #737787; letter-spacing: 3px; }
+.folder-browser > span:nth-child(2) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.folder-image { padding: 12px; background: repeating-linear-gradient(0deg,#11121704 0px,#11121704 1px,transparent 1px,transparent 24px); }
+.folder-image img { width: 100%; height: auto; max-height: 440px; object-fit: contain; }
+@media (prefers-reduced-motion: no-preference) {
+  .portfolio:not(.motion-paused) .folder-drawer { transition: grid-template-rows .55s cubic-bezier(.22,1,.36,1), visibility .55s; }
+  .portfolio:not(.motion-paused) .folder-plus { transition: rotate .4s, background .25s; }
+  .portfolio:not(.motion-paused) .folder-symbol { transition: rotate .5s cubic-bezier(.2,.8,.2,1), background .3s; }
+  @media (hover: hover) and (pointer: fine) {
+    .portfolio:not(.motion-paused) .folder-trigger:hover .folder-symbol { rotate: -18deg; background: #ffffffaa; }
+  }
+}
+@media (max-width: 800px) {
+  .folder-trigger { grid-template-columns: 22px 48px minmax(0,1fr) 38px; gap: 14px; padding: 24px; }
+  .folder-symbol { width: 48px; height: 48px; font-size: 27px; }
+  .folder-action > .mono { display: none; }
+  .folder-plus { width: 36px; height: 36px; font-size: 26px; }
+  .folder-body { margin-inline: 24px; grid-template-columns: 1fr; gap: 28px; }
+  .folder-copy > p:not(.folder-caption) { max-width: 55ch; }
+  .folder-copy h4 { font-size: 48px; }
+}
+@media (max-width: 480px) {
+  .folder-trigger { grid-template-columns: 38px minmax(0,1fr) 32px; padding: 22px 16px; gap: 12px; }
+  .folder-number { display: none; }
+  .folder-symbol { width: 38px; height: 38px; font-size: 23px; }
+  .folder-title > span:last-child { font-size: 1.25rem; }
+  .folder-category { font-size: .6875rem; }
+  .folder-plus { width: 32px; height: 32px; }
+  .folder-body { margin-inline: 16px; padding-block: 26px 30px; }
+  .folder-copy h4 { font-size: 44px; }
+  .folder-preview { box-shadow: 4px 4px 0 #11121717; }
+  .playground-note { flex-direction: column; }
+}

@@ -3,6 +3,9 @@ import { siteConfig } from "@/data/portfolio";
 import "./globals.css";
 import "./bold.css";
 import "./typography.css";
+import "./playground.css";
+import "./branding.css";
+import "./certificates.css";
 
 export const metadata: Metadata = {
   title: siteConfig.title,
@@ -64,7 +67,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    // Browser extensions can inject attributes on the root before hydration.
+    // Keep this escape hatch on html only so component mismatches remain visible.
+    <html lang="en" suppressHydrationWarning>
       <body>
         <a href="#main-content" className="skip-link">Skip to content</a>
         {children}

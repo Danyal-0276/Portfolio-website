@@ -304,6 +304,16 @@ h2 { font-weight: 750; text-transform: uppercase; line-height: .98; }
 .skills-foot { display: flex; justify-content: space-between; gap: 20px; margin-top: 30px; font-size: 9px; }
 .skills-foot a { color: var(--blue); }
 .skills-empty { padding: 50px 0; color: #5b657a; }
+@media (prefers-reduced-motion: no-preference) {
+  .portfolio:not(.motion-paused) .skill-discipline { transition: translate .3s, border-color .25s, box-shadow .3s; }
+  .portfolio:not(.motion-paused) .skill-mark { transition: rotate .4s cubic-bezier(.2,.8,.2,1), scale .4s, background .25s, color .25s; }
+  .portfolio:not(.motion-paused) .skill-discipline li { transition: translate .2s, background .2s, color .2s; }
+  @media (hover: hover) and (pointer: fine) {
+    .portfolio:not(.motion-paused) .skill-discipline:hover { translate: 0 -6px; box-shadow: 0 14px 30px #0062ff16; }
+    .portfolio:not(.motion-paused) .skill-discipline:hover .skill-mark { rotate: -10deg; scale: 1.12; background: var(--blue); color: white; }
+    .portfolio:not(.motion-paused) .skill-discipline li:hover { translate: 0 -3px; background: var(--blue); color: white; }
+  }
+}
 @media (max-width: 1100px) { .main-nav a { padding-inline: 12px; } .skills-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media (max-width: 800px) { .lanyard-stage { width: 280px; height: 520px; top: 0; } .lanyard-rig { padding-top: 106px; } .lanyard-strap { height: 94px; } .lanyard-clip { top: 86px; } .badge-photo { height: 190px; } .badge-identity > strong { font-size: 35px; } .skills-toolbar { align-items: flex-start; flex-direction: column; gap: 16px; } }
 @media (max-width: 600px) { .scene-canvas { height: 540px; } .lanyard-stage { width: 238px; height: 495px; top: 12px; } .lanyard-rig { padding-top: 110px; } .lanyard-strap { height: 98px; } .lanyard-clip { top: 90px; } .id-card { padding: 25px 12px 12px; border-radius: 15px; } .badge-top { font-size: 5.5px; } .badge-photo { height: 163px; } .badge-photo img { top: -10px; } .badge-identity > strong { font-size: 32px; } .badge-identity > .mono { font-size: 6.5px; } .badge-bottom .mono { font-size: 5px; } .badge-barcode { width: 46px; height: 16px; } .badge-hint { bottom: 25px; font-size: 6px; } .skills-grid { grid-template-columns: 1fr; } .skill-discipline { padding: 23px; } .skills-search input { font-size: 16px; } .skills-search input::placeholder { font-size: 12px; } .skills-foot { flex-direction: column; font-size: 8px; } }

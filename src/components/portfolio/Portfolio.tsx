@@ -6,7 +6,8 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { siteConfig } from "@/data/portfolio";
-import { experiments } from "@/data/selected-work";
+import { Playground } from "./Playground";
+import { CertificateGallery } from "./CertificateGallery";
 import { ProjectGallery } from "./ProjectGallery";
 import { StackLab } from "./StackLab";
 import { ContactForm } from "./ContactForm";
@@ -115,7 +116,7 @@ export function Portfolio() {
   return <div ref={root} className={motion ? "portfolio" : "portfolio motion-paused"}>
     <div className="page-progress" aria-hidden="true" />
     <header className="site-header">
-      <a className="wordmark" href="#home" aria-label="Danyal Tanveer, back to top">danyal<span>.</span></a>
+      <a className="wordmark" href="#home" aria-label="Danyal Tanveer, back to top"><span className="brand-logo"><Image src={siteConfig.logoPath} alt="Danyal" width={2172} height={724} priority /></span></a>
       <nav className={menuOpen ? "main-nav is-open" : "main-nav"} id="main-navigation" aria-label="Main navigation">
         {links.map((link, index) => <a key={link.href} href={link.href} aria-current={activeSection === link.href ? "location" : undefined} onClick={() => setMenuOpen(false)}><span className="nav-index mono">0{index + 1}</span><span className="nav-roll"><span>{link.name}</span><span aria-hidden="true">{link.name}</span></span><span className="nav-dot" /></a>)}
       </nav>
@@ -140,7 +141,7 @@ export function Portfolio() {
         <ProjectGallery motion={motion} />
         <div className="work-bottom"><span className="mono">A closer look at how I think, build, and solve.</span><a className="text-link" href={siteConfig.github} target="_blank" rel="noopener noreferrer">More on GitHub <span aria-hidden="true">↗</span></a></div>
       </section>
-      <SkillsSection />
+      <SkillsSection motion={motion} />
       <section id="toolkit" className="toolkit-section section-space" aria-labelledby="toolkit-title"><div className="shell">
         <div className="section-heading" data-reveal><div><p className="eyebrow"><span>04 /</span> The toolkit</p><h2 id="toolkit-title">Different layers.<br /><span className="serif">One connected mind.</span></h2></div><p className="section-intro">The tools change. The goal stays simple:<br />build something useful, and build it well.</p></div>
         <StackLab motion={motion} />
@@ -152,14 +153,15 @@ export function Portfolio() {
       </div></section>
       <section id="playground" className="playground-section shell section-space" aria-labelledby="playground-title">
         <div className="section-heading compact" data-reveal><div><p className="eyebrow"><span>06 /</span> The playground</p><h2 id="playground-title">Follow the <span className="serif">curiosity.</span></h2></div><p className="section-intro">Side quests, smaller builds,<br />and ideas worth trying.</p></div>
-        <div className="experiment-list">{experiments.map((experiment, index) => <details className="experiment" key={experiment.name} onToggle={() => ScrollTrigger.refresh()}><summary><span className="mono experiment-number">0{index + 1}</span><h3>{experiment.name}</h3><span className="mono experiment-type">{experiment.type}</span><span className="experiment-plus" aria-hidden="true">+</span></summary><div className="experiment-body"><div><p>{experiment.description}</p><a className="text-link" href={experiment.github} target="_blank" rel="noopener noreferrer">Explore repository <span aria-hidden="true">↗</span></a><p className="image-caption mono">{experiment.generated ? "Generated UI mockup; actual interface may differ." : "Actual project screenshot"}</p></div><div className="experiment-image"><Image src={experiment.image} alt={`${experiment.name} ${experiment.generated ? "generated UI mockup" : "screenshot"}`} width={900} height={600} sizes="(max-width: 700px) 85vw, 45vw" /></div></div></details>)}</div>
-        <div className="credentials"><p className="eyebrow">Always a student</p><div><a href="https://coursera.org/verify/7C403PQ3QE0D" target="_blank" rel="noopener noreferrer"><span>Google / Coursera</span><strong>AI Fundamentals</strong><span className="mono">Apr 2026 ↗</span></a><div><span>Hugging Face</span><strong>Fundamentals of Agents · Unit 1</strong><span className="mono">May 2026</span></div><div><span>HackerRank</span><strong>Python (Basic)</strong><span className="mono">Aug 2026</span></div></div></div>
+        <Playground motion={motion} />
+        <CertificateGallery /></div>
       </section>
       <section id="contact" className="contact-section section-space" aria-labelledby="contact-title"><div className="shell">
         <div className="contact-heading" data-reveal><p className="eyebrow"><span>07 /</span> Let’s make something</p><h2 id="contact-title">Have a good<br /><span className="serif">problem?</span><a href="mailto:donibutt2112@gmail.com" className="contact-arrow" aria-label="Email Danyal"><span aria-hidden="true">↗</span></a></h2><p>I’m open to junior software and AI engineering roles,<br className="desktop-break" /> collaborations, and conversations that lead somewhere.</p></div>
         <div className="contact-grid"><div className="contact-direct"><span className="mono">Start with hello</span><a className="email-link" href={`mailto:${siteConfig.email}`}>{siteConfig.email}<span aria-hidden="true">↗</span></a><a className="phone-link" href="tel:+923707076164">+92 370 7076164</a><div className="social-links"><a href={siteConfig.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href={siteConfig.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div><div className="resume-downloads"><span className="mono">Pick your résumé</span><a href="/resumes/danyal-full-stack.pdf" target="_blank" rel="noopener noreferrer">Full-stack ↗</a><a href="/resumes/danyal-ai-ml.pdf" target="_blank" rel="noopener noreferrer">AI / ML ↗</a></div></div><ContactForm /></div>
-        <footer className="site-footer"><a className="wordmark" href="#home">danyal<span>.</span></a><span className="mono">© 2026 Danyal Tanveer / Made with curiosity</span><button type="button" className="motion-toggle mono" aria-pressed={motion} onClick={() => setMotion(!motion)}><span className={motion ? "motion-indicator on" : "motion-indicator"} />Motion {motion ? "on" : "off"}</button><a className="back-top mono" href="#home">Back to top ↑</a></footer>
+        <footer className="site-footer"><a className="wordmark" href="#home"><span className="brand-logo"><Image src={siteConfig.logoPath} alt="Danyal" width={2172} height={724} priority /></span></a><span className="mono">© 2026 Danyal Tanveer / Made with curiosity</span><button type="button" className="motion-toggle mono" aria-pressed={motion} onClick={() => setMotion(!motion)}><span className={motion ? "motion-indicator on" : "motion-indicator"} />Motion {motion ? "on" : "off"}</button><a className="back-top mono" href="#home">Back to top ↑</a></footer>
       </div></section>
     </main>
   </div>;
 }
+

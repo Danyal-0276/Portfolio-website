@@ -4,11 +4,13 @@ A personal portfolio for a software and AI engineer, built with Next.js 15, Reac
 
 ## Experience
 
-The 2026 redesign uses electric blue, yellow, and ink with an editorial collage hero. The supplied portrait appears on an interactive hanging engineer pass with drag, perspective tilt, spring return, and keyboard controls. The page flows through the hero, About and Education, selected work, Skills, an interactive engineering toolkit, research, smaller experiments, and contact.
+The 2026 redesign uses electric blue, yellow, and ink with an editorial collage hero. The supplied portrait appears on an interactive hanging engineer pass with free two-dimensional dragging, a flexible strap, momentum, spring return, and arrow-key controls. The page flows through the hero, About and Education, selected work, Skills, an interactive engineering toolkit, research, smaller experiments, and contact.
 
 - Six featured projects with category filters and accessible native detail dialogs.
 - A searchable Skills section with 63 résumé-based skills across eight disciplines.
 - Three interactive engineering workflows with selectable stages.
+- Colorful Playground folders with animated opening, keyboard controls, and framed project previews.
+- Staggered Skills reveals and interactive category icons.
 - GSAP entrance animations, scroll reveals, a hanging ID card, and a progress indicator.
 - Responsive navigation, keyboard controls, reduced-motion support, and a motion toggle.
 - Updated graduate, internship, research, certification, and résumé content.
@@ -36,7 +38,10 @@ Copy `.env.example` to `.env.local` and configure Resend for contact delivery. S
 
 - `src/components/portfolio/Portfolio.tsx`: page sections and motion.
 - `src/components/portfolio/ProjectGallery.tsx`: filters and project details.
-- `src/components/portfolio/HangingCard.tsx`: draggable hero badge.
+- `src/components/portfolio/HangingCard.tsx`: draggable hero badge and spring simulation.
+- `src/components/portfolio/Playground.tsx`: animated experiment folders.
+- `src/app/playground.css`: folder colors and opening transitions.
+- `src/app/branding.css`: supplied wordmark and card interaction styles.
 - `src/components/portfolio/SkillsSection.tsx`: searchable skills.
 - `src/data/resume-skills.ts`: skills extracted from supplied résumés.
 - `src/components/portfolio/StackLab.tsx`: interactive toolkit.

@@ -1,0 +1,34 @@
+/* Display the original transparent wordmark without its surrounding empty canvas. */
+.site-header .wordmark { align-self: stretch; align-items: center; line-height: 0; padding-block: 0; }
+.wordmark > .brand-logo { display: block; position: relative; width: 160px; height: 30px; margin: 0; border-radius: 0; background: none; overflow: hidden; }
+.brand-logo img { position: absolute; width: 106.84%; height: 190.53%; max-width: none; left: -3.74%; top: -54.47%; }
+.site-footer .brand-logo { filter: invert(1); }
+.scene-canvas { min-height: 620px; }
+.lanyard-stage { pointer-events: none; height: 610px; }
+.lanyard-rig { transform-origin: 50% 116px; }
+.lanyard-cord { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.lanyard-cord-path { fill: none; stroke: var(--blue); stroke-width: 20px; stroke-linecap: round; }
+.lanyard-cord-highlight { fill: none; stroke: #ffffff70; stroke-width: 2px; stroke-dasharray: 7 6; }
+.lanyard-cord-static { stroke: var(--blue); stroke-width: 20px; opacity: 0; }
+.motion-paused .lanyard-cord-static { opacity: 1; }
+.motion-paused .lanyard-cord-path, .motion-paused .lanyard-cord-highlight { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .lanyard-cord-static { opacity: 1; }
+  .lanyard-cord-path, .lanyard-cord-highlight { opacity: 0; }
+}
+.id-card { pointer-events: auto; touch-action: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.id-card > * { pointer-events: none; }
+.id-card img { -webkit-user-drag: none; }
+.id-card[data-dragging] { box-shadow: 18px 28px 45px #11121738, inset 0 1px 0 #fff9; }
+@media (max-width: 800px) {
+  .scene-canvas { min-height: 570px; }
+  .lanyard-stage { height: 560px; }
+  .lanyard-rig { transform-origin: 50% 106px; }
+}
+@media (max-width: 600px) {
+  .wordmark > .brand-logo { width: 120px; height: 22.43px; }
+  .lanyard-rig { transform-origin: 50% 110px; }
+  .scene-canvas { min-height: 580px; }
+  .lanyard-stage { height: 535px; }
+  .badge-hint { font-size: .6875rem; }
+}
