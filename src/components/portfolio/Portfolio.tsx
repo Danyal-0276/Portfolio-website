@@ -154,7 +154,7 @@ export function Portfolio() {
       <section id="playground" className="playground-section shell section-space" aria-labelledby="playground-title">
         <div className="section-heading compact" data-reveal><div><p className="eyebrow"><span>06 /</span> The playground</p><h2 id="playground-title">Follow the <span className="serif">curiosity.</span></h2></div><p className="section-intro">Side quests, smaller builds,<br />and ideas worth trying.</p></div>
         <Playground motion={motion} />
-        <CertificateGallery /></div>
+        <CertificateGallery motion={motion} />
       </section>
       <section id="contact" className="contact-section section-space" aria-labelledby="contact-title"><div className="shell">
         <div className="contact-heading" data-reveal><p className="eyebrow"><span>07 /</span> Let’s make something</p><h2 id="contact-title">Have a good<br /><span className="serif">problem?</span><a href="mailto:donibutt2112@gmail.com" className="contact-arrow" aria-label="Email Danyal"><span aria-hidden="true">↗</span></a></h2><p>I’m open to junior software and AI engineering roles,<br className="desktop-break" /> collaborations, and conversations that lead somewhere.</p></div>

@@ -1,0 +1,58 @@
+.certificate-section { margin-top: 90px; padding-top: 48px; border-top: 1px solid var(--line); }
+.certificate-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 30px; }
+.certificate-heading h3 { font-size: clamp(30px, 3.2vw, 48px); line-height: 1.1; letter-spacing: -.04em; margin: 12px 0 0; }
+.certificate-heading h3 span { color: var(--blue); }
+.certificate-heading > p { color: var(--muted); font-size: 16px; max-width: 260px; }
+.certificate-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.certificate-card { min-width: 0; }
+.certificate-preview { position: relative; display: flex; align-items: center; width: 100%; aspect-ratio: 1.35; padding: 16px; background: #eeeee8; border: 1px solid #ddded8; border-radius: 12px; cursor: zoom-in; overflow: hidden; }
+.certificate-preview img { width: 100%; height: 100%; object-fit: contain; box-shadow: 0 5px 18px #11121712; transition: transform .35s ease; }
+.certificate-expand { position: absolute; bottom: 12px; right: 12px; background: var(--blue); color: white; border-radius: 6px; padding: 9px 12px; font-size: 14px; opacity: 0; translate: 0 6px; transition: opacity .25s, translate .25s; }
+.certificate-preview:hover img { transform: rotate(-1deg) scale(1.02); }
+.certificate-preview:hover .certificate-expand, .certificate-preview:focus-visible .certificate-expand { opacity: 1; translate: 0 0; }
+.certificate-preview:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+.certificate-caption { padding: 16px 0; }
+.certificate-caption p { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 15px; margin: 0 0 8px; }
+.certificate-caption .mono { font-size: 13px; }
+.certificate-caption h4 { font-size: 19px; line-height: 1.4; letter-spacing: -.02em; margin: 0; }
+.certificate-dialog { position: fixed; inset: 0; margin: auto; width: min(1100px, 95vw); max-height: 92dvh; padding: 20px; border: 0; border-radius: 14px; background: var(--paper, #f7f7f2); color: var(--ink); overflow: auto; }
+.certificate-dialog::backdrop { background: #111217c9; backdrop-filter: blur(6px); }
+html:has(.certificate-dialog[open]) { overflow: hidden; }
+.certificate-dialog-bar, .certificate-dialog-footer { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.certificate-dialog-bar { margin-bottom: 16px; }
+.certificate-dialog-bar h3 { font-size: 20px; line-height: 1.4; margin: 0; }
+.certificate-dialog-bar button { flex-shrink: 0; border: 1px solid var(--ink); border-radius: 6px; padding: 10px 16px; background: var(--yellow); color: var(--ink); cursor: pointer; font-size: 16px; }
+.certificate-dialog > img { display: block; width: 100%; height: auto; max-height: 70dvh; object-fit: contain; }
+.certificate-dialog-footer { padding-top: 16px; font-size: 15px; flex-wrap: wrap; }
+.certificate-dialog-footer a { color: var(--blue); text-decoration: underline; }
+@media (max-width: 1000px) { .certificate-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) {
+  .certificate-heading { display: block; }
+  .certificate-heading > p { margin-top: 16px; max-width: none; }
+  .certificate-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .certificate-expand { opacity: 1; translate: none; }
+  .certificate-dialog { padding: 14px; }
+  .certificate-dialog-bar h3 { font-size: 17px; }
+}
+@media (prefers-reduced-motion: reduce) { .certificate-preview img, .certificate-expand { transition: none; } }
+.motion-paused .certificate-preview img, .motion-paused .certificate-expand { transition: none; }
+
+/* Hover uses individual transforms so it stays independent of the entrance tween. */
+.certificate-preview { transition: translate .3s ease, box-shadow .3s ease, border-color .3s ease; }
+.certificate-preview::after { content: ""; position: absolute; inset: -60%; background: linear-gradient(115deg, transparent 42%, #ffffffa6 50%, transparent 58%); translate: -70% 0; rotate: -8deg; pointer-events: none; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .certificate-preview:hover { translate: 0 -7px; border-color: var(--blue); box-shadow: 0 15px 30px #0062ff17; }
+  .certificate-preview:hover::after { animation: certificate-shine .85s ease both; }
+}
+.certificate-dialog[open] { animation: certificate-open .35s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes certificate-shine { to { translate: 70% 0; } }
+@keyframes certificate-open { from { opacity: 0; transform: translateY(18px) scale(.97); } to { opacity: 1; transform: none; } }
+.motion-paused .certificate-preview { transition: none; }
+.motion-paused .certificate-preview:hover { translate: none; }
+.motion-paused .certificate-preview:hover img { transform: none; }
+.motion-paused .certificate-preview::after, .motion-paused .certificate-dialog[open] { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .certificate-preview { transition: none; }
+  .certificate-preview:hover img { transform: none; }
+  .certificate-dialog[open] { animation: none; }
+}
