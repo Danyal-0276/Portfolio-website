@@ -140,12 +140,13 @@ export function HangingCard({ motion }: { motion: boolean }) {
     <svg className="lanyard-cord" aria-hidden="true"><line className="lanyard-cord-static" x1="50%" x2="50%" y1="4" y2="98" /><path className="lanyard-cord-path" d="M 160 4 L 160 98" /><path className="lanyard-cord-highlight" d="M 160 4 L 160 98" /></svg>
     <div className="lanyard-rig">
       <div className="lanyard-clip" aria-hidden="true" />
-      <button type="button" className="id-card" draggable={false} aria-label={motion ? "Danyal’s engineer ID card. Drag in any direction, release to swing, or use the arrow keys." : "Danyal’s engineer ID card. Motion is off."} aria-describedby="badge-hint">
+      <button type="button" className="id-card" draggable={false} aria-describedby="badge-hint" aria-disabled={!motion} tabIndex={motion ? 0 : -1}>
+        <span className="sr-only">{motion ? "Danyal’s engineer ID card" : "Danyal’s engineer ID card. Motion is off."}</span>
         <span className="badge-slot" aria-hidden="true" />
-        <span className="badge-top mono"><span>THE BUILDER’S PASS</span><span>2026 / DT</span></span>
-        <span className="badge-photo"><span className="badge-photo-grid" /><Image src="/images/portrait-2026.png" alt="Danyal Tanveer" width={1254} height={1254} priority sizes="(max-width: 600px) 220px, 310px" /><span className="badge-photo-tag mono">LAHORE / PK</span></span>
-        <span className="badge-identity"><strong>Danyal<br />Tanveer<span>↗</span></strong><span className="mono">SOFTWARE & AI ENGINEER</span></span>
-        <span className="badge-bottom"><span className="mono"><i />OPEN TO OPPORTUNITIES</span><span className="badge-barcode" aria-hidden="true" /></span>
+        <span className="badge-top mono" aria-hidden="true"><span>THE BUILDER’S PASS</span><span>2026 / DT</span></span>
+        <span className="badge-photo" aria-hidden="true"><span className="badge-photo-grid" /><Image src="/images/portrait-2026.png" alt="" width={1254} height={1254} priority sizes="(max-width: 600px) 220px, 310px" /><span className="badge-photo-tag mono">LAHORE / PK</span></span>
+        <span className="badge-identity" aria-hidden="true"><strong>Danyal<br />Tanveer<span>↗</span></strong><span className="mono">SOFTWARE & AI ENGINEER</span></span>
+        <span className="badge-bottom" aria-hidden="true"><span className="mono"><i />OPEN TO OPPORTUNITIES</span><span className="badge-barcode" /></span>
       </button>
     </div>
     <span className="badge-hint mono" id="badge-hint">{motion ? "↔ GRAB, MOVE & LET GO. TRY ANY DIRECTION." : "THE PERSON BEHIND THE CODE."}</span>

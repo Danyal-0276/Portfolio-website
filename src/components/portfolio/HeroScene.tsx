@@ -16,7 +16,7 @@ export function HeroScene({ motion }: { motion: boolean }) {
     const mm = gsap.matchMedia();
     mm.add("(prefers-reduced-motion: no-preference)", () => {
       gsap.timeline({ defaults: { ease: "power3.out" } })
-        .from(".giant-word span", { yPercent: 120, rotate: 8, stagger: .075, duration: 1.1 }, .1)
+        .from(".giant-word .giant-letter", { yPercent: 120, rotate: 8, stagger: .075, duration: 1.1 }, .1)
         .from(".lanyard-stage", { opacity: 0, duration: 1.2 }, .35)
         .from(".scene-object", { scale: .5, opacity: 0, rotate: 0, stagger: .12, duration: .9 }, .65)
         .from(".scene-bottom, .scene-top", { y: 15, opacity: 0, duration: .6 }, .9);
@@ -43,11 +43,11 @@ export function HeroScene({ motion }: { motion: boolean }) {
     <div className="scene-top shell mono"><span><i className="status-dot" />Open to software & AI engineering roles</span><span>Lahore, Pakistan / 2026</span></div>
     <div className="scene-canvas">
       <div className="scene-grid" aria-hidden="true" />
-      <h1 id="hero-title" className="giant-word" aria-label="Danyal Tanveer. I turn ideas into working software.">{"BUILDER".split("").map((letter, index) => <span aria-hidden="true" key={index}>{letter}</span>)}</h1>
+      <h1 id="hero-title" className="giant-word"><span className="sr-only">Danyal Tanveer — Full-Stack Developer and AI/ML Engineer</span>{"BUILDER".split("").map((letter, index) => <span className="giant-letter" aria-hidden="true" key={index}>{letter}</span>)}</h1>
       <span className="scene-outline" aria-hidden="true">WITH INTENT.</span>
       <div className="scene-orbit">
-        <a href="#work" className="scene-object orbit-phone" aria-label="Explore TRAK news platform"><div className="object-bar mono">TRAK / NEWS + AI</div><Image src="/projects/trak-2.png" alt="TRAK news application interface" width={240} height={400} sizes="160px" /></a>
-        <a href="#work" className="scene-object orbit-browser" aria-label="Explore Feastly food delivery platform"><div className="object-bar mono"><i /><i /><i />feastly.app</div><Image src="/projects/feastly-ui.png" alt="Feastly generated website UI mockup" width={360} height={240} sizes="260px" /></a>
+        <a href="#work" className="scene-object orbit-phone"><div className="object-bar mono">TRAK / NEWS + AI</div><Image src="/projects/trak-2.png" alt="TRAK news application interface" width={240} height={400} sizes="160px" /></a>
+        <a href="#work" className="scene-object orbit-browser"><div className="object-bar mono"><i /><i /><i />feastly.app</div><Image src="/projects/feastly-ui.png" alt="Feastly generated website UI mockup" width={360} height={240} sizes="260px" /></a>
         <div className="scene-object orbit-code" aria-hidden="true"><span className="mono">FROM IDEA TO SHIPPED</span><strong>&lt;/&gt;</strong><span className="mono">FULL STACK × APPLIED AI</span></div>
         <div className="scene-object orbit-spark" aria-hidden="true">✳</div>
         <a className="scene-object orbit-sticker" href="#toolkit">A curious mind.<br /><strong>A builder’s instinct.</strong><span>↗</span></a>

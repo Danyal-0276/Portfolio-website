@@ -42,7 +42,7 @@ export function CertificateGallery({ motion }: { motion: boolean }) {
     return () => media.revert();
   }, { scope: root, dependencies: [motion], revertOnUpdate: true });
 
-  return <div ref={root} className="certificate-section" aria-labelledby="certificate-title">
+  return <section ref={root} className="certificate-section" aria-labelledby="certificate-title">
     <div className="certificate-heading"><div><p className="eyebrow">Always a student</p><h3 id="certificate-title">Learning, <span>with proof.</span></h3></div><p>Select a certificate to take a closer look.</p></div>
     <div className="certificate-grid">
       {certificates.map((item, index) => <article className="certificate-card" key={item.image}>
@@ -58,5 +58,5 @@ export function CertificateGallery({ motion }: { motion: boolean }) {
       <Image src={certificate.image} alt={`${certificate.title} certificate awarded to Danyal Tanveer`} width={certificate.width} height={certificate.height} sizes="95vw" />
       <div className="certificate-dialog-footer"><span>{certificate.issuer} · {certificate.date}</span>{certificate.verify && <a href={certificate.verify} target="_blank" rel="noopener noreferrer">Verify credential ↗</a>}</div>
     </dialog>
-  </div>;
+  </section>;
 }

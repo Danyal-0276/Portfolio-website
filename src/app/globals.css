@@ -2,6 +2,7 @@
 @theme { --color-cream: #f3f0e9; --color-ink: #23231f; --color-accent: #e65332; --color-accent-soft: #ee775b; --color-white: #fff; --font-sans: Arial, Helvetica, sans-serif; --font-display: Arial, Helvetica, sans-serif; }
 :root { --paper: #f3f0e9; --ink: #23231f; --coral: #e65332; --muted: #706f67; --line: #d7d4cc; --dark: #252722; }
 * { box-sizing: border-box; }
+.sr-only { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
 html { scroll-behavior: smooth; scroll-padding-top: 100px; }
 html.motion-off { scroll-behavior: auto; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; }

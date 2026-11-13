@@ -1,0 +1,169 @@
+DANYAL TANVEER PORTFOLIO — SEO AND WEBSITE AUDIT
+Audit date: 2026-11-13
+Production URL: https://danyal.portfilio.live/
+
+EXECUTIVE SUMMARY
+
+The site has a strong visual identity, useful original project content, semantic sections,
+descriptive image alternatives, responsive images, HTTPS, and a clean single-page URL structure.
+The live Lighthouse audit scored SEO 100, Best Practices 100, and Accessibility 93. However,
+the live deployment advertises a protected Vercel preview hostname in Open Graph metadata,
+sitemap.xml, and robots.txt. It also has no canonical link or structured data. Those domain
+signals should be corrected before submitting the new domain to search engines.
+
+IMPORTANT DOMAIN NOTE
+
+The exact hostname is "danyal.portfilio.live" (with "portfilio" in that spelling). This report
+and the implementation intentionally use the hostname exactly as supplied. HTTPS works, and
+plain HTTP permanently redirects to HTTPS. DNS currently resolves through Vercel. A www host
+does not resolve and is unnecessary because danyal.portfilio.live is already a subdomain.
+
+Vercel also assigns the valid production alias portfolio-website-six-orcin-28.vercel.app. Having
+both entries marked "Valid Configuration" is normal: they point to the same deployment. The
+custom domain is the canonical address, and this repository permanently redirects requests from
+the Vercel production alias to the custom domain to prevent duplicate-domain signals.
+
+LIVE AUDIT FINDINGS BEFORE THIS CHANGE
+
+Critical
+- sitemap.xml listed the old Vercel preview URL instead of the production domain.
+- robots.txt pointed crawlers to the old Vercel sitemap URL.
+- og:url and og:image used the old Vercel preview hostname.
+- No rel=canonical link was present.
+
+High priority
+- No Person, ProfilePage, WebSite, or project structured data was present.
+- The social preview used a square portrait rather than a purpose-built 1200x630 card.
+- The visually dominant H1 said only "BUILDER" in the document text; the descriptive name and
+  role existed only as an ARIA label.
+
+Quality and accessibility
+- Lighthouse Accessibility was 93/100.
+- One labelled certificate container used aria-labelledby on a generic div without a role.
+- Several controls overrode visible labels with non-matching aria-label values.
+- Electric-blue small text narrowly missed WCAG AA contrast on three pastel backgrounds.
+- The browser console showed no errors during the audit.
+
+IMPLEMENTED IN THIS REPOSITORY
+
+- Canonical production URL: https://danyal.portfilio.live/
+- Canonical link, authorship, creator, publisher, robots, and social metadata.
+- sitemap.xml with one accurate canonical URL. One URL is correct for the current one-page site.
+- robots.txt that permits the public site, blocks /api/, and advertises the canonical sitemap.
+- Person, ProfilePage, WebSite, and selected-project SoftwareSourceCode JSON-LD.
+- Generated 1200x630 Open Graph/Twitter image at /opengraph-image.
+- Web manifest with 192px and 512px icons.
+- Stable last-modified date instead of changing the sitemap timestamp on every request.
+- Server-only SITE_URL configuration. The obsolete NEXT_PUBLIC_SITE_URL is no longer used.
+- Optional GOOGLE_SITE_VERIFICATION metadata support.
+- Automated post-deployment SEO check: npm run check:seo.
+- Permanent host redirect from portfolio-website-six-orcin-28.vercel.app to the custom domain.
+- Security response headers for framing, MIME sniffing, referrers, browser permissions, and
+  base/form restrictions.
+- Accessibility fixes for the certificate section, menu, draggable card, project preview
+  controls, descriptive H1, and low-contrast small text.
+- README links and deployment instructions updated to the production domain.
+
+LOCAL PRODUCTION VALIDATION AFTER THE CHANGES
+
+- npm run lint: passed.
+- npx tsc --noEmit: passed.
+- npm run build: passed; all metadata routes were generated successfully.
+- npm run check:seo: 11/11 checks passed against the optimized local production server.
+- Lighthouse: Accessibility 100, Best Practices 100, SEO 100, with no listed failures.
+- Browser console: no errors.
+- Vercel-alias host test: returned 308 Permanent Redirect and preserved both path and query.
+
+These are pre-deployment checks. Repeat the URL checks and Lighthouse audit on the public custom
+domain after Vercel finishes the new production deployment.
+
+DEPLOYMENT CHECKLIST — REQUIRED
+
+1. In Vercel Project Settings > Domains, confirm danyal.portfilio.live is attached to the
+   Production environment. The supplied screenshot already shows a valid production setup.
+2. In Vercel Project Settings > Environment Variables, add:
+     SITE_URL=https://danyal.portfilio.live
+   The code has the same safe default, but setting it explicitly documents production intent.
+3. Remove the old NEXT_PUBLIC_SITE_URL variable if it exists; the updated code does not use it.
+4. Redeploy the production branch.
+5. Verify these public URLs after deployment:
+     https://danyal.portfilio.live/
+     https://danyal.portfilio.live/robots.txt
+     https://danyal.portfilio.live/sitemap.xml
+     https://danyal.portfilio.live/manifest.webmanifest
+     https://danyal.portfilio.live/opengraph-image
+6. Run:
+     npm run check:seo
+7. Confirm the canonical, og:url, sitemap <loc>, and robots Sitemap line all use only
+   danyal.portfilio.live.
+8. Confirm portfolio-website-six-orcin-28.vercel.app returns a permanent redirect to the same
+   path on danyal.portfilio.live. Keep both Vercel domain entries; the redirect handles SEO.
+
+GOOGLE AND BING SETUP
+
+1. Create a Google Search Console URL-prefix property for:
+     https://danyal.portfilio.live/
+2. Choose the HTML tag verification method, copy only the content token, save it in Vercel as:
+     GOOGLE_SITE_VERIFICATION=your-token
+3. Redeploy, complete verification, and submit:
+     https://danyal.portfilio.live/sitemap.xml
+4. Use URL Inspection to request indexing of the home page once. Repeated requests do not help.
+5. Create or import the property in Bing Webmaster Tools and submit the same sitemap.
+6. Check indexing, page experience, Core Web Vitals, and crawl errors monthly.
+
+CONTENT RECOMMENDATIONS — HIGHEST FUTURE SEO RETURN
+
+1. Add a permanent page for each substantial project, for example /work/trak and
+   /work/restaurant-os. Include the problem, constraints, personal contribution, architecture,
+   decisions, measurable outcome, screenshots, and repository/live links. Add every page to the
+   sitemap and give it unique title, description, canonical, Open Graph data, and JSON-LD.
+2. Replace modal-only build notes with indexable case-study pages. Modals can remain as previews.
+3. Publish occasional technical notes about work already demonstrated: transformer evaluation,
+   multi-tenant authorization, RAG retrieval decisions, Stripe webhook reliability, and
+   offline-first React Native storage. Prioritize quality over posting frequency.
+4. Link to the portfolio from GitHub, LinkedIn, résumé PDFs, email signature, and project READMEs
+   using the same canonical URL. Consistent entity links are more valuable than keyword stuffing.
+5. Add measurable outcomes where truthful: latency, test coverage, users, model dataset size,
+   deployment count, accuracy comparisons, or time saved. Explain personal ownership on team work.
+6. Keep the research status accurate. When the paper receives a public DOI or preprint URL, add a
+   dedicated publication link and ScholarlyArticle structured data.
+
+PRODUCT AND TRUST RECOMMENDATIONS
+
+- Buy a personal apex domain when practical (for example a .dev, .me, or .com you directly own).
+  A free provider subdomain works, but an owned domain is more portable and supports branded email.
+- Use a verified-domain sender for the contact form. Test successful and failed delivery after
+  every email-provider or DNS change.
+- Add privacy-friendly analytics or Vercel Web Analytics and measure useful actions: project opens,
+  résumé downloads, GitHub/LinkedIn exits, and successful contact submissions.
+- Add a short privacy notice if analytics or additional personal-data collection is introduced.
+- Move rate limiting for the contact endpoint from memory to a shared store before traffic grows.
+- Keep dependencies updated monthly and enable GitHub Dependabot/security alerts.
+
+PERFORMANCE RECOMMENDATIONS
+
+- Run mobile PageSpeed Insights after deployment and monitor field Core Web Vitals in Search
+  Console; local desktop measurements are not substitutes for real-user data.
+- The page is visually rich and long. Continue lazy-loading below-the-fold images and avoid making
+  every image high priority. The wordmark and hero portrait are the only current priority images.
+- Re-test animation work on mid-range mobile hardware. Prefer transforms/opacity and preserve the
+  existing reduced-motion mode.
+- If the homepage grows, move full project details to separate routes to reduce initial JavaScript,
+  DOM size, and image discovery work.
+
+SEO PRACTICES TO AVOID
+
+- Do not add a meta-keywords tag; modern search engines ignore it.
+- Do not create many thin pages that repeat the same portfolio copy.
+- Do not put fragment URLs such as #work in the XML sitemap.
+- Do not change lastmod on every request unless content actually changed.
+- Do not purchase backlinks or repeat job-title keywords unnaturally.
+- Do not expose report.txt publicly for SEO. This repository-level report is documentation;
+  robots.txt is the crawler-facing standard.
+
+RE-AUDIT SCHEDULE
+
+- Immediately after the production deployment.
+- After adding project routes or analytics.
+- Monthly for Search Console issues and Core Web Vitals.
+- Quarterly for content accuracy, broken links, dependency health, and accessibility.

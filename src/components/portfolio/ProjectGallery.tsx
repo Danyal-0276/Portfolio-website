@@ -60,16 +60,17 @@ export function ProjectGallery({ motion }: { motion: boolean }) {
         {visible.map((work) => (
           <article className={`work-card chapter-${work.id}`} id={`chapter-${work.id}`} key={work.id}>
             <div className="story-intro"><span className="mono story-chapter">CHAPTER 0{selectedWork.indexOf(work) + 1} / {work.category} / {work.year}</span><p className="story-question">{storyNotes[work.id].question}</p><button className="work-title" type="button" onClick={() => setSelected(work)}><h3>{work.name}</h3><span aria-hidden="true">↗</span></button><p className="story-description">{work.description}</p><ol className="story-steps">{storyNotes[work.id].steps.map((step, index) => <li key={step}><span className="mono">0{index + 1}</span>{step}</li>)}</ol><div className="work-stack">{work.stack.slice(0, 3).map((tech) => <span key={tech}>{tech}</span>)}</div><button type="button" className="text-link story-open" onClick={() => setSelected(work)}>Open the build notes ↗</button></div>
-            <button type="button" className="project-preview" style={{ "--project-bg": work.color } as CSSProperties} onClick={() => setSelected(work)} aria-label={`Explore ${work.name}`}>
+            <button type="button" className="project-preview" style={{ "--project-bg": work.color } as CSSProperties} onClick={() => setSelected(work)} aria-haspopup="dialog">
+              <span className="sr-only">Explore {work.name} project details</span>
               <span className="story-motif" aria-hidden="true">{storyNotes[work.id].motif}</span>
-              <span className="preview-label mono">{work.imageType === "Screenshot" ? "Product screenshot" : "Generated UI mockup"}</span>
-              <div className="preview-window">
+              <span className="preview-label mono" aria-hidden="true">{work.imageType === "Screenshot" ? "Product screenshot" : "Generated UI mockup"}</span>
+              <div className="preview-window" aria-hidden="true">
                 <div className="window-bar" aria-hidden="true"><i /><i /><i /><span>{work.name.toLowerCase().replaceAll(" ", "-")}</span></div>
                 <div className="preview-image"><Image src={work.image} alt={`${work.name} ${work.imageType.toLowerCase()}`} fill sizes="(max-width: 700px) 90vw, 43vw" /></div>
               </div>
               <span className="preview-open" aria-hidden="true">Explore project <span>↗</span></span>
               <span className="preview-index mono" aria-hidden="true">{String(selectedWork.indexOf(work) + 1).padStart(2, "0")}</span>
-              <span className="story-outcome">{work.outcome}</span>
+              <span className="story-outcome" aria-hidden="true">{work.outcome}</span>
             </button>
           </article>
         ))}

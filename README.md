@@ -13,7 +13,7 @@ An interactive portfolio connecting the person, the projects, and the engineerin
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Hosting-Vercel-111217?style=for-the-badge&logo=vercel)
 
-[Visit the portfolio](https://portfolio-website-git-main-danyal-tanveer-s-projects.vercel.app) · [GitHub](https://github.com/Danyal-0276) · [LinkedIn](https://linkedin.com/in/danyal-tanveer-30b887320) · [Get in touch](mailto:donibutt2112@gmail.com)
+[Visit the portfolio](https://danyal.portfilio.live/) · [GitHub](https://github.com/Danyal-0276) · [LinkedIn](https://linkedin.com/in/danyal-tanveer-30b887320) · [Get in touch](mailto:donibutt2112@gmail.com)
 
 </div>
 
@@ -65,6 +65,7 @@ The visual direction combines electric blue, yellow, bold typography, and an edi
 - Escaped email HTML and basic in-memory request limiting.
 - Direct email and social links alongside the form.
 - Open Graph metadata, Twitter cards, sitemap, robots configuration, and favicons.
+- Canonical URLs, ProfilePage/Person/project JSON-LD, a generated social card, and a web manifest.
 
 ## Featured projects
 
@@ -121,7 +122,8 @@ Configure these values:
 - **`RESEND_API_KEY`** — Resend API key used by the server to send contact messages.
 - **`CONTACT_TO_EMAIL`** — Inbox that receives contact submissions.
 - **`CONTACT_FROM_EMAIL`** — Sender address; use a verified sender domain for production delivery.
-- **`NEXT_PUBLIC_SITE_URL`** — Canonical public URL used for metadata and the sitemap.
+- **`SITE_URL`** — Server-only canonical production URL used for metadata, the sitemap, and robots rules.
+- **`GOOGLE_SITE_VERIFICATION`** — Optional token from the Google Search Console HTML-tag verification method.
 
 The portfolio can render without email credentials, but the contact form needs a configured email service to send messages. Direct email links remain available. Keep `.env.local` and API keys out of Git.
 
@@ -151,6 +153,9 @@ npm run build
 
 # Serve the production build locally
 npm run start
+
+# Verify canonical metadata and SEO endpoints (server must be running)
+npm run check:seo -- http://localhost:3000
 ```
 
 ## Deployment
@@ -158,8 +163,9 @@ npm run start
 1. Import this GitHub repository into Vercel and select the **Next.js** framework preset.
 2. Use the repository root as the project directory and `npm run build` as the build command.
 3. Add the environment variables above to the appropriate Vercel environment.
-4. Set `NEXT_PUBLIC_SITE_URL` to the intended production domain, then deploy the latest complete commit from `main`.
+4. Set `SITE_URL` to `https://danyal.portfilio.live`, then deploy the latest complete commit from `main`.
 5. Verify the project previews, résumé downloads, certificate viewer, navigation, and contact delivery after deployment.
+6. Run `npm run check:seo` against the deployed URL, then submit `/sitemap.xml` in Google Search Console.
 
 Commit new components, imported stylesheets, and public assets together. A deployment builds only committed files; locally present but untracked files will not be available to Vercel.
 
@@ -171,7 +177,11 @@ The contact route currently uses an **in-memory rate limiter**. Its state is not
 src/
 ├── app/
 │   ├── api/contact/route.ts       # Contact endpoint and validation
-│   ├── layout.tsx                # Metadata and global style imports
+│   ├── layout.tsx                 # Metadata and global style imports
+│   ├── manifest.ts               # Web app manifest
+│   ├── opengraph-image.tsx       # 1200×630 generated social preview
+│   ├── robots.ts                 # Crawler access and sitemap discovery
+│   ├── sitemap.ts                # Canonical XML sitemap
 │   ├── page.tsx                  # Portfolio entry point
 │   ├── globals.css               # Base styles and responsive layouts
 │   ├── bold.css                  # Visual direction and component styling
@@ -180,6 +190,7 @@ src/
 │   ├── playground.css            # Experiment folders and transitions
 │   └── certificates.css          # Certificate gallery and viewer
 ├── components/portfolio/         # Sections and interactive components
+├── components/seo/               # Structured data
 ├── data/                         # Identity, projects, workflows, and skills
 └── lib/email.ts                  # Resend delivery and email formatting
 public/
@@ -228,6 +239,6 @@ Original materials are retained in `Images`, `Resumes`, `Snapshots of projects`,
 
 **Designed and built by Danyal Tanveer**
 
-[Portfolio](https://portfolio-website-git-main-danyal-tanveer-s-projects.vercel.app) · [GitHub](https://github.com/Danyal-0276) · [LinkedIn](https://linkedin.com/in/danyal-tanveer-30b887320)
+[Portfolio](https://danyal.portfilio.live/) · [GitHub](https://github.com/Danyal-0276) · [LinkedIn](https://linkedin.com/in/danyal-tanveer-30b887320)
 
 </div>

@@ -120,7 +120,7 @@ export function Portfolio() {
       <nav className={menuOpen ? "main-nav is-open" : "main-nav"} id="main-navigation" aria-label="Main navigation">
         {links.map((link, index) => <a key={link.href} href={link.href} aria-current={activeSection === link.href ? "location" : undefined} onClick={() => setMenuOpen(false)}><span className="nav-index mono">0{index + 1}</span><span className="nav-roll"><span>{link.name}</span><span aria-hidden="true">{link.name}</span></span><span className="nav-dot" /></a>)}
       </nav>
-      <div className="header-actions"><a className="header-hello" href="mailto:donibutt2112@gmail.com">Let’s talk <span aria-hidden="true">↗</span></a><button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="main-navigation" aria-label={menuOpen ? "Close navigation" : "Open navigation"} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? "Close −" : "Menu +"}</button></div>
+      <div className="header-actions"><a className="header-hello" href="mailto:donibutt2112@gmail.com">Let’s talk <span aria-hidden="true">↗</span></a><button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="main-navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? "Close −" : "Menu +"}</button></div>
     </header>
     <main id="main-content">
       <HeroScene motion={motion} />
