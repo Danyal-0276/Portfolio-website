@@ -57,8 +57,10 @@ function previewLabel(work: Work) {
 export function ProjectGallery({ motion }: { motion: boolean }) {
   const [filter, setFilter] = useState<(typeof filters)[number]>("All work");
   const [selected, setSelected] = useState<Work | null>(null);
+  const [storyScroll, setStoryScroll] = useState({ value: 0, scrollable: true });
   const gallery = useRef<HTMLDivElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
+  const storyIndex = useRef<HTMLElement>(null);
   const visible = selectedWork.filter((work) => filter === "All work" || work.category === (filter as WorkCategory));
 
   useGSAP(() => {
@@ -84,6 +86,46 @@ export function ProjectGallery({ motion }: { motion: boolean }) {
     return () => { document.body.style.overflow = previousOverflow; };
   }, [selected]);
 
+  useEffect(() => {
+    const index = storyIndex.current;
+    if (!index) return;
+
+    index.scrollLeft = 0;
+    const update = () => {
+      const max = Math.max(0, index.scrollWidth - index.clientWidth);
+      setStoryScroll({
+        value: max ? Math.round((index.scrollLeft / max) * 1000) : 0,
+        scrollable: max > 1,
+      });
+    };
+    const frame = requestAnimationFrame(update);
+    const resize = new ResizeObserver(update);
+    resize.observe(index);
+    index.addEventListener("scroll", update, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      resize.disconnect();
+      index.removeEventListener("scroll", update);
+    };
+  }, [filter]);
+
+  const setStoryPosition = (value: number) => {
+    const index = storyIndex.current;
+    if (!index) return;
+    const max = Math.max(0, index.scrollWidth - index.clientWidth);
+    index.scrollLeft = (value / 1000) * max;
+  };
+
+  const nudgeStoryIndex = (direction: -1 | 1) => {
+    const index = storyIndex.current;
+    if (!index) return;
+    index.scrollBy({ left: direction * Math.max(260, index.clientWidth * 0.7), behavior: motion ? "smooth" : "auto" });
+  };
+
+  const storyPosition = visible.length > 1
+    ? Math.round((storyScroll.value / 1000) * (visible.length - 1)) + 1
+    : 1;
+
   return (
     <>
       <div className="work-toolbar">
@@ -93,7 +135,15 @@ export function ProjectGallery({ motion }: { motion: boolean }) {
         <span className="mono work-counter" aria-live="polite">{String(visible.length).padStart(2, "0")} projects</span>
       </div>
       <div className="work-grid" ref={gallery}>
-        <nav className="story-index" aria-label="Jump to a project chapter">{visible.map((work) => <a key={work.id} href={`#chapter-${work.id}`}><span className="mono">{String(selectedWork.indexOf(work) + 1).padStart(2, "0")}</span>{work.name}<span>↘</span></a>)}</nav>
+        <div className="story-index-shell">
+          <nav ref={storyIndex} className="story-index" aria-label="Jump to a project chapter">{visible.map((work) => <a key={work.id} href={`#chapter-${work.id}`}><span className="mono">{String(selectedWork.indexOf(work) + 1).padStart(2, "0")}</span>{work.name}<span>↘</span></a>)}</nav>
+          {storyScroll.scrollable && <div className="story-slider">
+            <button type="button" className="story-slider-button" onClick={() => nudgeStoryIndex(-1)} disabled={storyScroll.value <= 1} aria-label="Scroll project index left"><span aria-hidden="true">←</span></button>
+            <label className="story-slider-control"><span className="mono">Drag to explore</span><input type="range" min="0" max="1000" step="1" value={storyScroll.value} onChange={(event) => setStoryPosition(Number(event.target.value))} style={{ "--story-range-progress": `${storyScroll.value / 10}%` } as CSSProperties} aria-label="Project index scroll position" /></label>
+            <span className="story-slider-count mono" aria-live="polite">{String(storyPosition).padStart(2, "0")} / {String(visible.length).padStart(2, "0")}</span>
+            <button type="button" className="story-slider-button" onClick={() => nudgeStoryIndex(1)} disabled={storyScroll.value >= 999} aria-label="Scroll project index right"><span aria-hidden="true">→</span></button>
+          </div>}
+        </div>
         {visible.map((work) => (
           <article className={`work-card chapter-${work.id}`} id={`chapter-${work.id}`} key={work.id}>
             <div className="story-intro"><span className="mono story-chapter">CHAPTER {String(selectedWork.indexOf(work) + 1).padStart(2, "0")} / {work.category} / {work.year}</span><p className="story-question">{storyNotes[work.id].question}</p><button className="work-title" type="button" onClick={() => setSelected(work)}><h3>{work.name}</h3><span aria-hidden="true">↗</span></button><p className="story-description">{work.description}</p><ol className="story-steps">{storyNotes[work.id].steps.map((step, index) => <li key={step}><span className="mono">0{index + 1}</span>{step}</li>)}</ol><div className="work-stack">{work.stack.slice(0, 3).map((tech) => <span key={tech}>{tech}</span>)}</div><button type="button" className="text-link story-open" onClick={() => setSelected(work)}>Open the build notes ↗</button></div>
@@ -123,7 +173,7 @@ export function ProjectGallery({ motion }: { motion: boolean }) {
           <p className="dialog-outcome">{selected.outcome}</p>
           <ul className="project-details">{selected.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>
           <div className="work-stack">{selected.stack.map((tech) => <span key={tech}>{tech}</span>)}</div>
-          <div className="dialog-links"><a className="pill-button dark" href={selected.github} target="_blank" rel="noopener noreferrer">View source <span>↗</span></a>{selected.live && <a className="pill-button outline" href={selected.live} target="_blank" rel="noopener noreferrer">Visit project <span>↗</span></a>}</div>
+          <div className="dialog-links">{selected.github && <a className="pill-button dark" href={selected.github} target="_blank" rel="noopener noreferrer">View source <span>↗</span></a>}{selected.live && <a className={selected.github ? "pill-button outline" : "pill-button dark"} href={selected.live} target="_blank" rel="noopener noreferrer">Visit project <span>↗</span></a>}</div>
         </div>}
       </dialog>
     </>

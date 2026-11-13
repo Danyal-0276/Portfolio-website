@@ -15,7 +15,7 @@ export interface Work {
   stack: string[];
   outcome: string;
   details: string[];
-  github: string;
+  github?: string;
   live?: string;
 }
 
@@ -90,7 +90,7 @@ export const selectedWork: Work[] = [
     stack: ["Next.js", "Django / DRF", "PostgreSQL", "TypeScript", "Supabase"],
     outcome: "19/19 backend tests · Atomic reservation checkout",
     details: ["Built a responsive Next.js storefront with an interactive shoe-angle hero, searchable brand and size discovery, real product photography, a shopping bag, and guest checkout.", "Designed Django/PostgreSQL reservation logic with row locking and idempotency keys so concurrent attempts cannot sell the same one-off pair twice.", "Delivered a role-governed seller portal for inventory, orders, store settings, and staff lifecycle management, with separate super-admin and staff permissions.", "Added photo validation and deduplication, rate-limited public and seller endpoints, security headers, and tested catalog and order workflows."],
-    github: "https://github.com/Danyal-0276/thrift-for-gnz", live: "https://thrift-for-gnz.vercel.app/",
+    live: "https://thrift-for-gnz.vercel.app/",
   },
   {
     id: "huzaifa-portfolio", name: "Huzaifa Portfolio", eyebrow: "A clearer signal for business development work.", category: "Client work", year: "2026",
@@ -99,7 +99,7 @@ export const selectedWork: Work[] = [
     stack: ["Next.js", "React", "TypeScript", "GSAP", "Anime.js"],
     outcome: "B2B positioning · Responsive inquiry journey",
     details: ["Turned Muhammad Huzaifa Ali’s CV and business-development experience into a focused portfolio for international lead-generation opportunities.", "Structured the story around services, experience, an animated research-to-outreach workflow, tools, education, and direct contact paths.", "Built responsive interface motion with GSAP and Anime.js while preserving clear navigation and readable content across screen sizes.", "Configured canonical metadata, social previews, sitemap, robots, and a web manifest for a production-ready Vercel deployment."],
-    github: "https://github.com/Danyal-0276/Huzaifa-s-Portfolio", live: "https://huzaifa-portfolio-silk.vercel.app/",
+    live: "https://huzaifa-portfolio-silk.vercel.app/",
   },
   {
     id: "maham-portfolio", name: "Maham Portfolio", eyebrow: "Language, leadership, and new chapters.", category: "Client work", year: "2026",
@@ -108,7 +108,7 @@ export const selectedWork: Work[] = [
     stack: ["Next.js", "TypeScript", "Tailwind CSS", "GSAP", "Radix UI"],
     outcome: "5 story chapters · Motion-safe visual archive",
     details: ["Designed a single-page narrative for Maham Tanveer spanning education, professional experience, student leadership, certificates, and photography.", "Built GSAP SplitText, ScrollTrigger, parallax, SVG, timeline, and Flip gallery motion with reduced-motion and keyboard-accessible alternatives.", "Created a pausable certificate timeline, enlarged credential previews, filtered masonry gallery, and responsive story navigation.", "Added optimized local typography and images, typed biography data, direct contact paths, and an email-draft fallback when the optional form service is unavailable."],
-    github: "https://github.com/Danyal-0276/Maham-Tanveer-Portfolio", live: "https://maham-tanveer-portfolio.vercel.app/",
+    live: "https://maham-tanveer-portfolio.vercel.app/",
   },
 ];
 

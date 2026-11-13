@@ -76,9 +76,9 @@ The visual direction combines electric blue, yellow, bold typography, and an edi
 - **[Shopora](https://github.com/Danyal-0276/shopora)** — Commerce storefront with persistent carts, authenticated orders, and Stripe test checkout.
 - **[Orbit](https://github.com/Danyal-0276/Music-Player-app)** — Offline-first Android music player with a local library and background playback.
 - **[SmishGuard](https://github.com/Danyal-0276/Smish-Gaurd)** — Explainable Android SMS-phishing system with native inbox integration, encrypted local processing, a protected Django API, and trained-model reports.
-- **[THRIFT for GNZ](https://github.com/Danyal-0276/thrift-for-gnz)** — Client sneaker storefront and role-governed seller platform with atomic reservation checkout.
-- **[Huzaifa Portfolio](https://github.com/Danyal-0276/Huzaifa-s-Portfolio)** — Business-development portfolio focused on B2B positioning, outreach process, and direct inquiry paths.
-- **[Maham Portfolio](https://github.com/Danyal-0276/Maham-Tanveer-Portfolio)** — Editorial digital biography spanning education, leadership, certificates, and a visual archive.
+- **[THRIFT for GNZ](https://thrift-for-gnz.vercel.app/)** — Client sneaker storefront and role-governed seller platform with atomic reservation checkout.
+- **[Huzaifa Portfolio](https://huzaifa-portfolio-silk.vercel.app/)** — Business-development portfolio focused on B2B positioning, outreach process, and direct inquiry paths.
+- **[Maham Portfolio](https://maham-tanveer-portfolio.vercel.app/)** — Editorial digital biography spanning education, leadership, certificates, and a visual archive.
 
 The Playground also includes multiplayer browser games, J.A.R.V.I.S., network intrusion detection, marketplace scraping, and a native Android language-learning app.
 
