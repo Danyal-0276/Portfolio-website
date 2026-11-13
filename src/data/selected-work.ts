@@ -1,4 +1,4 @@
-export type WorkCategory = "Full stack" | "AI & ML" | "Mobile";
+export type WorkCategory = "Full stack" | "AI & ML" | "Mobile" | "Client work";
 
 export interface Work {
   id: string;
@@ -10,6 +10,7 @@ export interface Work {
   image: string;
   imageType: "Screenshot" | "Generated UI mockup" | "Video preview";
   video?: string;
+  videoCaption?: string;
   color: string;
   stack: string[];
   outcome: string;
@@ -76,11 +77,38 @@ export const selectedWork: Work[] = [
   {
     id: "smishguard", name: "SmishGuard", eyebrow: "Understand the text. Choose a safer next step.", category: "Mobile", year: "2026",
     description: "An explainable Android SMS-phishing system combining private on-device screening with consented trained-model reports.",
-    image: "/projects/smishguard-poster.jpg", imageType: "Video preview", video: "/projects/smishguard-preview.mp4", color: "#dbe9ff",
+    image: "/projects/smishguard-poster.jpg", imageType: "Video preview", video: "/projects/smishguard-preview.mp4", videoCaption: "Edited 20-second product walkthrough · No audio · Sender identifiers and message content excluded", color: "#dbe9ff",
     stack: ["React Native", "Kotlin", "Django / DRF", "PostgreSQL", "scikit-learn"],
     outcome: "96.12% test accuracy · 88.68% phishing recall",
     details: ["Built an Expo/React Native Android experience for permission-based inbox import, conversation reports, manual checks, safety lessons, and clear risk explanations.", "Implemented a Kotlin SMS module with incoming-message handling, encrypted local copies, offline observations, and a persistent network-constrained model queue.", "Protected Django and PostgreSQL services with per-installation credentials, least-privilege roles, bounded requests, transient SMS processing, and no staff inbox access.", "Evaluated a calibrated TF-IDF classifier on a frozen 1,160-message historical test set: 96.12% accuracy, 88.68% phishing recall, and a 3.13% false-positive rate."],
     github: "https://github.com/Danyal-0276/Smish-Gaurd",
+  },
+  {
+    id: "thrift-gnz", name: "THRIFT for GNZ", eyebrow: "One-of-a-kind pairs. One dependable order flow.", category: "Client work", year: "2026",
+    description: "A premium sneaker storefront and seller operations platform designed around one-of-a-kind thrift inventory.",
+    image: "/projects/thrift-for-gnz-preview.webp", imageType: "Video preview", video: "/projects/thrift-for-gnz-walkthrough.mp4", videoCaption: "Edited 41-second customer storefront walkthrough · No audio · Seller credentials and admin screens excluded", color: "#ede4f5",
+    stack: ["Next.js", "Django / DRF", "PostgreSQL", "TypeScript", "Supabase"],
+    outcome: "19/19 backend tests · Atomic reservation checkout",
+    details: ["Built a responsive Next.js storefront with an interactive shoe-angle hero, searchable brand and size discovery, real product photography, a shopping bag, and guest checkout.", "Designed Django/PostgreSQL reservation logic with row locking and idempotency keys so concurrent attempts cannot sell the same one-off pair twice.", "Delivered a role-governed seller portal for inventory, orders, store settings, and staff lifecycle management, with separate super-admin and staff permissions.", "Added photo validation and deduplication, rate-limited public and seller endpoints, security headers, and tested catalog and order workflows."],
+    github: "https://github.com/Danyal-0276/thrift-for-gnz", live: "https://thrift-for-gnz.vercel.app/",
+  },
+  {
+    id: "huzaifa-portfolio", name: "Huzaifa Portfolio", eyebrow: "A clearer signal for business development work.", category: "Client work", year: "2026",
+    description: "A bold personal website positioning a B2B lead-generation specialist through services, process, experience, and direct outreach.",
+    image: "/projects/huzaifa-portfolio-preview.webp", imageType: "Screenshot", color: "#f8d5c8",
+    stack: ["Next.js", "React", "TypeScript", "GSAP", "Anime.js"],
+    outcome: "B2B positioning · Responsive inquiry journey",
+    details: ["Turned Muhammad Huzaifa Ali’s CV and business-development experience into a focused portfolio for international lead-generation opportunities.", "Structured the story around services, experience, an animated research-to-outreach workflow, tools, education, and direct contact paths.", "Built responsive interface motion with GSAP and Anime.js while preserving clear navigation and readable content across screen sizes.", "Configured canonical metadata, social previews, sitemap, robots, and a web manifest for a production-ready Vercel deployment."],
+    github: "https://github.com/Danyal-0276/Huzaifa-s-Portfolio", live: "https://huzaifa-portfolio-silk.vercel.app/",
+  },
+  {
+    id: "maham-portfolio", name: "Maham Portfolio", eyebrow: "Language, leadership, and new chapters.", category: "Client work", year: "2026",
+    description: "An editorial digital biography connecting an educator’s academic journey, leadership, certificates, and visual archive.",
+    image: "/projects/maham-portfolio-preview.webp", imageType: "Screenshot", color: "#d8c9b8",
+    stack: ["Next.js", "TypeScript", "Tailwind CSS", "GSAP", "Radix UI"],
+    outcome: "5 story chapters · Motion-safe visual archive",
+    details: ["Designed a single-page narrative for Maham Tanveer spanning education, professional experience, student leadership, certificates, and photography.", "Built GSAP SplitText, ScrollTrigger, parallax, SVG, timeline, and Flip gallery motion with reduced-motion and keyboard-accessible alternatives.", "Created a pausable certificate timeline, enlarged credential previews, filtered masonry gallery, and responsive story navigation.", "Added optimized local typography and images, typed biography data, direct contact paths, and an email-draft fallback when the optional form service is unavailable."],
+    github: "https://github.com/Danyal-0276/Maham-Tanveer-Portfolio", live: "https://maham-tanveer-portfolio.vercel.app/",
   },
 ];
 

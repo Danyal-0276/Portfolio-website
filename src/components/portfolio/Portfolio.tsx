@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { siteConfig } from "@/data/portfolio";
+import { selectedWork } from "@/data/selected-work";
 import { Playground } from "./Playground";
 import { CertificateGallery } from "./CertificateGallery";
 import { ProjectGallery } from "./ProjectGallery";
@@ -137,7 +138,7 @@ export function Portfolio() {
         <div className="experience-block" data-reveal><div className="experience-label"><p className="eyebrow">In the real world</p><span className="mono">Jul — Dec 2025</span></div><div className="experience-content"><div className="experience-title"><h3>Full-Stack Developer Intern</h3><span className="experience-badge">On-site / Lahore</span></div><p className="company-name">Tri Tech Technology LLC</p><p>Helped build and deploy a multi-tenant restaurant POS ecosystem: three Next.js frontends, one shared Express API, and the workflows that keep a restaurant moving.</p><div className="experience-facts"><span><strong>4</strong> connected services</span><span><strong>2</strong> restaurant clients</span><span><strong>5</strong> staff roles</span></div><p className="client-note mono">Deployed for CAP Cafe & Extraction</p></div></div>
       </section>
       <section id="work" className="work-section shell section-space" aria-labelledby="work-title">
-        <div className="section-heading" data-reveal><div><p className="eyebrow"><span>02 /</span> Selected work</p><h2 id="work-title">Every build.<br /><span className="serif">A different story.</span></h2></div><p className="section-intro">Seven builds. Seven different problems.<br />Follow the thread from the first question<br />to the system behind the screen.</p></div>
+        <div className="section-heading" data-reveal><div><p className="eyebrow"><span>02 /</span> Selected work</p><h2 id="work-title">Every build.<br /><span className="serif">A different story.</span></h2></div><p className="section-intro">{selectedWork.length} builds. {selectedWork.length} different problems.<br />Follow the thread from the first question<br />to the system behind the screen.</p></div>
         <ProjectGallery motion={motion} />
         <div className="work-bottom"><span className="mono">A closer look at how I think, build, and solve.</span><a className="text-link" href={siteConfig.github} target="_blank" rel="noopener noreferrer">More on GitHub <span aria-hidden="true">↗</span></a></div>
       </section>

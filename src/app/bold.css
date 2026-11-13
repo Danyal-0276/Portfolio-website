@@ -654,6 +654,52 @@ h2 {
 .chapter-smishguard .story-motif {
   color: #0062ff24;
 }
+.chapter-thrift-gnz {
+  background: #f3edf8;
+}
+.chapter-thrift-gnz .project-preview::before {
+  background: #43205e;
+  border-radius: 16% 58% 24% 62%;
+  transform: rotate(4deg);
+}
+.chapter-thrift-gnz .story-motif {
+  color: #43205e22;
+}
+.chapter-huzaifa-portfolio {
+  background: #fff0e8;
+}
+.chapter-huzaifa-portfolio .project-preview::before {
+  background: #e84b20;
+  border-radius: 4px;
+  transform: rotate(-4deg);
+}
+.chapter-huzaifa-portfolio .story-motif {
+  color: #e84b2024;
+}
+.chapter-maham-portfolio {
+  background: #21150f;
+  color: #fffaf1;
+}
+.chapter-maham-portfolio .story-description,
+.chapter-maham-portfolio .story-question {
+  color: #d8cabe;
+}
+.chapter-maham-portfolio .story-chapter,
+.chapter-maham-portfolio .story-steps span,
+.chapter-maham-portfolio .work-title > span {
+  color: #f5c542;
+}
+.chapter-maham-portfolio .story-steps li,
+.chapter-maham-portfolio .work-stack span {
+  border-color: #ffffff26;
+}
+.chapter-maham-portfolio .project-preview::before {
+  background: #4b3429;
+  border-radius: 50% 8% 45% 12%;
+}
+.chapter-maham-portfolio .story-motif {
+  color: #f5c54220;
+}
 .work-bottom {
   padding-block: 32px;
 }

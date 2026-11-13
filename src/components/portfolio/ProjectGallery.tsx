@@ -7,7 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { selectedWork, type Work, type WorkCategory } from "@/data/selected-work";
 
-const filters = ["All work", "Full stack", "AI & ML", "Mobile"] as const;
+const filters = ["All work", "Client work", "Full stack", "AI & ML", "Mobile"] as const;
 const storyNotes: Record<string, { question: string; steps: string[]; motif: string }> = {
   trak: { question: "What if your feed helped you question what you read?", steps: ["Collect the news", "Test its credibility", "Make it personal"], motif: "QUESTION THE FEED." },
   feastly: { question: "How do four different people share one smooth delivery?", steps: ["Find your next meal", "Connect the kitchen", "Follow the last mile"], motif: "ORDER. MOVE. DELIVER." },
@@ -16,6 +16,9 @@ const storyNotes: Record<string, { question: string; steps: string[]; motif: str
   shopora: { question: "What makes the journey from discovery to checkout feel simple?", steps: ["Discover something good", "Keep the cart in sync", "Confirm the payment"], motif: "FIND. WANT. CHECKOUT." },
   orbit: { question: "Can a music player feel personal without needing a connection?", steps: ["Your local library", "Your own playlists", "Playback that stays with you"], motif: "YOUR MUSIC. YOUR ORBIT." },
   smishguard: { question: "Can an SMS warning explain enough to help someone act safely?", steps: ["Read with permission", "Check locally and online", "Explain the safer next step"], motif: "SPOT THE SIGNAL." },
+  "thrift-gnz": { question: "How do you sell one-off pairs without selling the same shoe twice?", steps: ["Show every angle", "Reserve stock atomically", "Give sellers clear control"], motif: "ONE PAIR. ONE ORDER." },
+  "huzaifa-portfolio": { question: "How can a portfolio turn outreach experience into a clear conversation?", steps: ["Lead with positioning", "Show the outreach process", "Make contact effortless"], motif: "FIND. REACH. CONVERT." },
+  "maham-portfolio": { question: "How do years of education, leadership, and photographs become one story?", steps: ["Frame the journey", "Connect each chapter", "Let the archive move"], motif: "A STORY IN MOTION." },
 };
 
 function ProjectVideoPreview({ work, motion }: { work: Work; motion: boolean }) {
@@ -90,10 +93,10 @@ export function ProjectGallery({ motion }: { motion: boolean }) {
         <span className="mono work-counter" aria-live="polite">{String(visible.length).padStart(2, "0")} projects</span>
       </div>
       <div className="work-grid" ref={gallery}>
-        <nav className="story-index" aria-label="Jump to a project chapter">{visible.map((work) => <a key={work.id} href={`#chapter-${work.id}`}><span className="mono">0{selectedWork.indexOf(work) + 1}</span>{work.name}<span>↘</span></a>)}</nav>
+        <nav className="story-index" aria-label="Jump to a project chapter">{visible.map((work) => <a key={work.id} href={`#chapter-${work.id}`}><span className="mono">{String(selectedWork.indexOf(work) + 1).padStart(2, "0")}</span>{work.name}<span>↘</span></a>)}</nav>
         {visible.map((work) => (
           <article className={`work-card chapter-${work.id}`} id={`chapter-${work.id}`} key={work.id}>
-            <div className="story-intro"><span className="mono story-chapter">CHAPTER 0{selectedWork.indexOf(work) + 1} / {work.category} / {work.year}</span><p className="story-question">{storyNotes[work.id].question}</p><button className="work-title" type="button" onClick={() => setSelected(work)}><h3>{work.name}</h3><span aria-hidden="true">↗</span></button><p className="story-description">{work.description}</p><ol className="story-steps">{storyNotes[work.id].steps.map((step, index) => <li key={step}><span className="mono">0{index + 1}</span>{step}</li>)}</ol><div className="work-stack">{work.stack.slice(0, 3).map((tech) => <span key={tech}>{tech}</span>)}</div><button type="button" className="text-link story-open" onClick={() => setSelected(work)}>Open the build notes ↗</button></div>
+            <div className="story-intro"><span className="mono story-chapter">CHAPTER {String(selectedWork.indexOf(work) + 1).padStart(2, "0")} / {work.category} / {work.year}</span><p className="story-question">{storyNotes[work.id].question}</p><button className="work-title" type="button" onClick={() => setSelected(work)}><h3>{work.name}</h3><span aria-hidden="true">↗</span></button><p className="story-description">{work.description}</p><ol className="story-steps">{storyNotes[work.id].steps.map((step, index) => <li key={step}><span className="mono">0{index + 1}</span>{step}</li>)}</ol><div className="work-stack">{work.stack.slice(0, 3).map((tech) => <span key={tech}>{tech}</span>)}</div><button type="button" className="text-link story-open" onClick={() => setSelected(work)}>Open the build notes ↗</button></div>
             <button type="button" className="project-preview" style={{ "--project-bg": work.color } as CSSProperties} onClick={() => setSelected(work)} aria-haspopup="dialog">
               <span className="sr-only">Explore {work.name} project details</span>
               <span className="story-motif" aria-hidden="true">{storyNotes[work.id].motif}</span>
@@ -116,7 +119,7 @@ export function ProjectGallery({ motion }: { motion: boolean }) {
           <h2 id="project-dialog-title">{selected.name}</h2>
           <p className="dialog-tagline">{selected.eyebrow}</p>
           {selected.video ? <div className="dialog-video"><video controls playsInline preload="metadata" poster={selected.image} aria-label={`${selected.name} product walkthrough`}><source src={selected.video} type="video/mp4" />Your browser does not support HTML video.</video></div> : <div className="dialog-image"><Image src={selected.image} alt={`${selected.name} ${selected.imageType.toLowerCase()}`} width={1536} height={1024} sizes="(max-width: 750px) 90vw, 760px" /></div>}
-          <p className="image-caption mono">{selected.video ? "Edited 20-second product walkthrough · No audio · Sender identifiers and message content excluded" : selected.imageType === "Screenshot" ? "Actual project screenshot" : "AI-generated UI mockup based on project features; actual interface may differ."}</p>
+          <p className="image-caption mono">{selected.video ? selected.videoCaption : selected.imageType === "Screenshot" ? "Actual project screenshot" : "AI-generated UI mockup based on project features; actual interface may differ."}</p>
           <p className="dialog-outcome">{selected.outcome}</p>
           <ul className="project-details">{selected.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>
           <div className="work-stack">{selected.stack.map((tech) => <span key={tech}>{tech}</span>)}</div>
