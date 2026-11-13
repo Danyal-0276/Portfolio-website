@@ -8,7 +8,8 @@ export interface Work {
   year: string;
   description: string;
   image: string;
-  imageType: "Screenshot" | "Generated UI mockup";
+  imageType: "Screenshot" | "Generated UI mockup" | "Video preview";
+  video?: string;
   color: string;
   stack: string[];
   outcome: string;
@@ -71,6 +72,15 @@ export const selectedWork: Work[] = [
     outcome: "Offline-first · Background playback",
     details: ["Scans on-device audio and caches metadata locally in SQLite.", "Supports notification and lock-screen playback controls, playlists, favorites, and library search.", "Built light, dark, and system themes with configurable accents. Requires an Android development build."],
     github: "https://github.com/Danyal-0276/Music-Player-app",
+  },
+  {
+    id: "smishguard", name: "SmishGuard", eyebrow: "Understand the text. Choose a safer next step.", category: "Mobile", year: "2026",
+    description: "An explainable Android SMS-phishing system combining private on-device screening with consented trained-model reports.",
+    image: "/projects/smishguard-poster.jpg", imageType: "Video preview", video: "/projects/smishguard-preview.mp4", color: "#dbe9ff",
+    stack: ["React Native", "Kotlin", "Django / DRF", "PostgreSQL", "scikit-learn"],
+    outcome: "96.12% test accuracy · 88.68% phishing recall",
+    details: ["Built an Expo/React Native Android experience for permission-based inbox import, conversation reports, manual checks, safety lessons, and clear risk explanations.", "Implemented a Kotlin SMS module with incoming-message handling, encrypted local copies, offline observations, and a persistent network-constrained model queue.", "Protected Django and PostgreSQL services with per-installation credentials, least-privilege roles, bounded requests, transient SMS processing, and no staff inbox access.", "Evaluated a calibrated TF-IDF classifier on a frozen 1,160-message historical test set: 96.12% accuracy, 88.68% phishing recall, and a 3.13% false-positive rate."],
+    github: "https://github.com/Danyal-0276/Smish-Gaurd",
   },
 ];
 

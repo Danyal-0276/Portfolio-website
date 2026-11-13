@@ -110,6 +110,9 @@ h2 { font-size: clamp(45px, 5.4vw, 76px); line-height: 1.04; font-weight: 500; l
 .window-bar > span { font-family: "Courier New", monospace; font-size: 7px; color: #85847b; margin-inline: auto; padding-right: 14px; }
 .preview-image { position: relative; flex: 1; min-height: 0; background: #eeece8; }
 .preview-image img { object-fit: contain; }
+.preview-image.video-preview { display: grid; place-items: center; overflow: hidden; isolation: isolate; background: #dce9ff; }
+.video-preview .video-preview-backdrop { object-fit: cover !important; filter: blur(18px); opacity: .22; transform: scale(1.16); z-index: 0; }
+.video-preview video { position: absolute; inset: 0; z-index: 1; display: block; height: 100%; width: 100%; object-fit: contain; background: transparent; filter: drop-shadow(0 14px 24px #11121735); }
 .preview-open { display: flex; position: absolute; align-items: center; gap: 18px; background: var(--paper); font-size: 10px; padding: 11px 16px; border-radius: 24px; left: 50%; top: 50%; opacity: 0; transform: translate(-50%, -35%); transition: opacity .25s, transform .25s; white-space: nowrap; }
 .preview-open span { font-size: 18px; }
 .project-preview:hover .preview-open, .project-preview:focus-visible .preview-open { opacity: 1; transform: translate(-50%, -50%); }
@@ -267,6 +270,8 @@ h2 { font-size: clamp(45px, 5.4vw, 76px); line-height: 1.04; font-weight: 500; l
 .dialog-tagline { font-family: Georgia, serif; font-style: italic; font-size: 23px; margin-top: 13px; color: var(--muted); }
 .dialog-image { margin-top: 28px; background: #e5e2da; padding: 16px; }
 .dialog-image img { width: 100%; height: auto; max-height: 450px; object-fit: contain; }
+.dialog-video { margin-top: 28px; min-height: 420px; max-height: 68dvh; display: grid; place-items: center; overflow: hidden; background: #111217; padding: 18px; }
+.dialog-video video { display: block; width: auto; max-width: 100%; height: auto; max-height: calc(68dvh - 36px); background: #000; }
 .image-caption { color: var(--muted); font-size: 9px; line-height: 1.6; margin-top: 12px; }
 .dialog-outcome { border-block: 1px solid var(--line); margin-top: 24px; padding-block: 17px; font-size: 13px; }
 .project-details { padding-left: 17px; margin-block: 22px; }

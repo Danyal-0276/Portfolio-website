@@ -38,10 +38,10 @@ The visual direction combines electric blue, yellow, bold typography, and an edi
 
 ### Work with context
 
-- Six featured projects across full-stack development, AI/ML, and mobile.
+- Seven featured projects across full-stack development, AI/ML, and mobile.
 - Category filters and native dialogs with project descriptions, technologies, outcomes, and repository links.
 - A Playground of five smaller builds, presented as colorful folders with animated opening transitions.
-- Clear labels distinguishing original screenshots from generated interface mockups.
+- Clear labels distinguishing original screenshots, generated interface mockups, and the edited product-video preview.
 
 ### More than a project gallery
 
@@ -75,6 +75,7 @@ The visual direction combines electric blue, yellow, bold typography, and an edi
 - **[Restaurant OS](https://github.com/Danyal-0276/POS-backend)** — Multi-tenant restaurant POS ecosystem built during my internship and deployed for two restaurant clients.
 - **[Shopora](https://github.com/Danyal-0276/shopora)** — Commerce storefront with persistent carts, authenticated orders, and Stripe test checkout.
 - **[Orbit](https://github.com/Danyal-0276/Music-Player-app)** — Offline-first Android music player with a local library and background playback.
+- **[SmishGuard](https://github.com/Danyal-0276/Smish-Gaurd)** — Explainable Android SMS-phishing system with native inbox integration, encrypted local processing, a protected Django API, and trained-model reports.
 
 The Playground also includes multiplayer browser games, J.A.R.V.I.S., network intrusion detection, marketplace scraping, and a native Android language-learning app.
 

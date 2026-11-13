@@ -15,7 +15,41 @@ const storyNotes: Record<string, { question: string; steps: string[]; motif: str
   pos: { question: "What actually keeps a restaurant moving during the rush?", steps: ["One shared API", "Three connected consoles", "Two real restaurant clients"], motif: "BUILT FOR THE RUSH." },
   shopora: { question: "What makes the journey from discovery to checkout feel simple?", steps: ["Discover something good", "Keep the cart in sync", "Confirm the payment"], motif: "FIND. WANT. CHECKOUT." },
   orbit: { question: "Can a music player feel personal without needing a connection?", steps: ["Your local library", "Your own playlists", "Playback that stays with you"], motif: "YOUR MUSIC. YOUR ORBIT." },
+  smishguard: { question: "Can an SMS warning explain enough to help someone act safely?", steps: ["Read with permission", "Check locally and online", "Explain the safer next step"], motif: "SPOT THE SIGNAL." },
 };
+
+function ProjectVideoPreview({ work, motion }: { work: Work; motion: boolean }) {
+  const video = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const element = video.current;
+    if (!element || !work.video) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!motion || reducedMotion) {
+      element.pause();
+      return;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) void element.play().catch(() => undefined);
+      else element.pause();
+    }, { threshold: 0.55 });
+
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      element.pause();
+    };
+  }, [motion, work.video]);
+
+  return <video ref={video} muted loop playsInline preload="none" poster={work.image} tabIndex={-1}><source src={work.video} type="video/mp4" /></video>;
+}
+
+function previewLabel(work: Work) {
+  if (work.video) return "Product video";
+  return work.imageType === "Screenshot" ? "Product screenshot" : "Generated UI mockup";
+}
 
 export function ProjectGallery({ motion }: { motion: boolean }) {
   const [filter, setFilter] = useState<(typeof filters)[number]>("All work");
@@ -63,10 +97,10 @@ export function ProjectGallery({ motion }: { motion: boolean }) {
             <button type="button" className="project-preview" style={{ "--project-bg": work.color } as CSSProperties} onClick={() => setSelected(work)} aria-haspopup="dialog">
               <span className="sr-only">Explore {work.name} project details</span>
               <span className="story-motif" aria-hidden="true">{storyNotes[work.id].motif}</span>
-              <span className="preview-label mono" aria-hidden="true">{work.imageType === "Screenshot" ? "Product screenshot" : "Generated UI mockup"}</span>
+              <span className="preview-label mono" aria-hidden="true">{previewLabel(work)}</span>
               <div className="preview-window" aria-hidden="true">
                 <div className="window-bar" aria-hidden="true"><i /><i /><i /><span>{work.name.toLowerCase().replaceAll(" ", "-")}</span></div>
-                <div className="preview-image"><Image src={work.image} alt={`${work.name} ${work.imageType.toLowerCase()}`} fill sizes="(max-width: 700px) 90vw, 43vw" /></div>
+                <div className={work.video ? "preview-image video-preview" : "preview-image"}>{work.video ? <><Image className="video-preview-backdrop" src={work.image} alt="" fill sizes="(max-width: 700px) 90vw, 43vw" /><ProjectVideoPreview work={work} motion={motion} /></> : <Image src={work.image} alt={`${work.name} ${work.imageType.toLowerCase()}`} fill sizes="(max-width: 700px) 90vw, 43vw" />}</div>
               </div>
               <span className="preview-open" aria-hidden="true">Explore project <span>↗</span></span>
               <span className="preview-index mono" aria-hidden="true">{String(selectedWork.indexOf(work) + 1).padStart(2, "0")}</span>
@@ -81,8 +115,8 @@ export function ProjectGallery({ motion }: { motion: boolean }) {
           <p className="eyebrow">{selected.category}</p>
           <h2 id="project-dialog-title">{selected.name}</h2>
           <p className="dialog-tagline">{selected.eyebrow}</p>
-          <div className="dialog-image"><Image src={selected.image} alt={`${selected.name} ${selected.imageType.toLowerCase()}`} width={1536} height={1024} sizes="(max-width: 750px) 90vw, 760px" /></div>
-          <p className="image-caption mono">{selected.imageType === "Screenshot" ? "Actual project screenshot" : "AI-generated UI mockup based on project features; actual interface may differ."}</p>
+          {selected.video ? <div className="dialog-video"><video controls playsInline preload="metadata" poster={selected.image} aria-label={`${selected.name} product walkthrough`}><source src={selected.video} type="video/mp4" />Your browser does not support HTML video.</video></div> : <div className="dialog-image"><Image src={selected.image} alt={`${selected.name} ${selected.imageType.toLowerCase()}`} width={1536} height={1024} sizes="(max-width: 750px) 90vw, 760px" /></div>}
+          <p className="image-caption mono">{selected.video ? "Edited 20-second product walkthrough · No audio · Sender identifiers and message content excluded" : selected.imageType === "Screenshot" ? "Actual project screenshot" : "AI-generated UI mockup based on project features; actual interface may differ."}</p>
           <p className="dialog-outcome">{selected.outcome}</p>
           <ul className="project-details">{selected.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>
           <div className="work-stack">{selected.stack.map((tech) => <span key={tech}>{tech}</span>)}</div>

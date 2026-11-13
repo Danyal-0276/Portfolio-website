@@ -111,6 +111,9 @@ h2 { font-weight: 750; text-transform: uppercase; line-height: .98; }
 .chapter-orbit { background: #fee1dc; }
 .chapter-orbit .project-preview::before { background: #f5a99e; }
 .chapter-orbit .story-motif { color: #ae41332b; }
+.chapter-smishguard { background: #e8f1ff; }
+.chapter-smishguard .project-preview::before { background: #0062ff; border-radius: 38% 62% 48% 52%; transform: rotate(-5deg); }
+.chapter-smishguard .story-motif { color: #0062ff24; }
 .work-bottom { padding-block: 32px; }
 .toolkit-section { background-color: var(--dark); background-image: radial-gradient(#ffffff13 .7px, transparent .7px); background-size: 18px 18px; }
 .toolkit-section .serif { color: var(--yellow); }
