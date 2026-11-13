@@ -152,6 +152,9 @@ npm run lint
 # Check TypeScript types
 npx tsc --noEmit
 
+# Verify every deployed public asset is referenced
+npm run check:assets
+
 # Create a production build
 npm run build
 
@@ -180,28 +183,27 @@ The contact route currently uses an **in-memory rate limiter**. Its state is not
 ```text
 src/
 ├── app/
+│   ├── _components/               # Page composition, layout, and SEO
+│   ├── _hooks/                    # Motion and navigation behavior
+│   ├── _sections/                 # One folder per homepage section
+│   ├── _styles/                   # Shared foundations, theme, and typography
 │   ├── api/contact/route.ts       # Contact endpoint and validation
 │   ├── layout.tsx                 # Metadata and global style imports
 │   ├── manifest.ts               # Web app manifest
 │   ├── opengraph-image.tsx       # 1200×630 generated social preview
 │   ├── robots.ts                 # Crawler access and sitemap discovery
 │   ├── sitemap.ts                # Canonical XML sitemap
-│   ├── page.tsx                  # Portfolio entry point
-│   ├── globals.css               # Base styles and responsive layouts
-│   ├── bold.css                  # Visual direction and component styling
-│   ├── typography.css            # Readable typography and layout refinements
-│   ├── branding.css              # Wordmark and hanging card styles
-│   ├── playground.css            # Experiment folders and transitions
-│   └── certificates.css          # Certificate gallery and viewer
-├── components/portfolio/         # Sections and interactive components
-├── components/seo/               # Structured data
+│   └── page.tsx                  # Portfolio entry point
 ├── data/                         # Identity, projects, workflows, and skills
 └── lib/email.ts                  # Resend delivery and email formatting
 public/
-├── images/                       # Portraits, wordmark, campus, and favicons
-├── projects/                     # Project screenshots and supporting visuals
+├── images/                       # Active portraits, wordmark, campus, and favicons
+├── projects/                     # Referenced project screenshots and videos only
 ├── certifications/               # Certificate images
 └── resumes/                      # Downloadable résumés
+archive/                           # Preserved source material not shipped by the site
+docs/audits/                       # Repository audit records
+scripts/                           # Asset and SEO validation
 ```
 
 ## Customization
@@ -209,12 +211,12 @@ public/
 - **Identity, social links, and metadata:** [`src/data/portfolio.ts`](src/data/portfolio.ts).
 - **Featured projects, experiments, and toolkit workflows:** [`src/data/selected-work.ts`](src/data/selected-work.ts).
 - **Skill groups and search content:** [`src/data/resume-skills.ts`](src/data/resume-skills.ts).
-- **Section order, About, education, internship, and navigation:** [`Portfolio.tsx`](src/components/portfolio/Portfolio.tsx).
-- **Hero composition:** [`HeroScene.tsx`](src/components/portfolio/HeroScene.tsx).
-- **Card physics and drag behavior:** [`HangingCard.tsx`](src/components/portfolio/HangingCard.tsx).
-- **Project filters and detail dialogs:** [`ProjectGallery.tsx`](src/components/portfolio/ProjectGallery.tsx).
-- **Experiment folders:** [`Playground.tsx`](src/components/portfolio/Playground.tsx).
-- **Certificates and verification links:** [`CertificateGallery.tsx`](src/components/portfolio/CertificateGallery.tsx).
+- **Page composition:** [`Portfolio.tsx`](src/app/_components/portfolio/Portfolio.tsx).
+- **Section order and content:** [`src/app/_sections`](src/app/_sections).
+- **Hero composition and card physics:** [`src/app/_sections/hero`](src/app/_sections/hero).
+- **Project filters and detail dialogs:** [`ProjectGallery.tsx`](src/app/_sections/work/ProjectGallery.tsx).
+- **Experiment folders and certificates:** [`src/app/_sections/playground`](src/app/_sections/playground).
+- **Shared page behavior:** [`src/app/_hooks`](src/app/_hooks).
 - **Contact delivery:** [`src/lib/email.ts`](src/lib/email.ts) and [`src/app/api/contact/route.ts`](src/app/api/contact/route.ts).
 
 When adding animation, preserve keyboard interaction, the global motion toggle, and reduced-motion behavior. Keep project images and résumé links aligned with the corresponding content.
@@ -223,9 +225,9 @@ When adding animation, preserve keyboard interaction, the global motion toggle, 
 
 Project descriptions draw on my résumés and repositories. Research is presented as a submitted preprint, with publication pending.
 
-The Feastly, Shopora, Orbit, and multiplayer-game images are generated visuals based on documented features; the Throne of Glass Archive now uses screenshots from its live deployment. Other project visuals use supplied screenshots and assets. Certificate previews are based on the supplied credentials.
+The Feastly, Shopora, Orbit, and multiplayer-game images are generated visuals based on documented features; the Throne of Glass Archive uses screenshots from its live deployment. Other project visuals use supplied screenshots and assets. Certificate previews are based on the supplied credentials.
 
-Original materials are retained in `Images`, `Resumes`, `Snapshots of projects`, `Readme of my projects`, and `Website ideas` for future content updates.
+Future-use source material is retained and classified under [`archive/`](archive/README.md). It is deliberately kept outside `public/` so raw documents and alternate visuals are not deployed.
 
 <details>
 <summary><strong>About generated folders</strong></summary>
@@ -233,7 +235,7 @@ Original materials are retained in `Images`, `Resumes`, `Snapshots of projects`,
 - `.next/` contains generated Next.js development and production output. It is ignored by Git and recreated by the development or build command.
 - `node_modules/` contains installed dependencies and is recreated with `npm ci`.
 - `.next-*` directories are ignored temporary preview outputs; they are not application source.
-- `.agents/` contains local project tooling instructions.
+- `.agents/` and `skills-lock.json` contain tracked development guidance for the project’s GSAP work; they are not runtime application code.
 
 </details>
 

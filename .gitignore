@@ -47,7 +47,5 @@ public/video-frames/
 !public/projects/smishguard-preview.mp4
 !public/projects/thrift-for-gnz-walkthrough.mp4
 
-# Optional local-only folders (keep source assets in repo root if needed)
-# Snapshots of projects/
-# Readme of my projects/
+# Alternate local preview directories
 /.next-*/
