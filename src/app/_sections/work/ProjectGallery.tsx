@@ -60,6 +60,16 @@ function imageCaption(work: Work) {
   return work.screenshots && work.screenshots.length > 1 ? "Actual project screenshots" : "Actual project screenshot";
 }
 
+function ProjectDialogMedia({ work }: { work: Work }) {
+  if (work.video) {
+    return <div className="dialog-video"><video controls playsInline preload="metadata" poster={work.image} aria-label={`${work.name} product walkthrough`}><source src={work.video} type="video/mp4" />Your browser does not support HTML video.</video></div>;
+  }
+  if (work.screenshots) {
+    return <div className="dialog-gallery" aria-label={`${work.name} screenshots`}>{work.screenshots.map((screenshot) => <div className="dialog-image" key={screenshot.src}><Image src={screenshot.src} alt={screenshot.alt} width={1901} height={853} sizes="(max-width: 750px) 90vw, 900px" /></div>)}</div>;
+  }
+  return <div className="dialog-image"><Image src={work.image} alt={`${work.name} ${work.imageType.toLowerCase()}`} width={1536} height={1024} sizes="(max-width: 750px) 90vw, 900px" /></div>;
+}
+
 export function ProjectGallery({ motion }: { motion: boolean }) {
   const [filter, setFilter] = useState<(typeof filters)[number]>("All work");
   const [selected, setSelected] = useState<Work | null>(null);
@@ -131,6 +141,7 @@ export function ProjectGallery({ motion }: { motion: boolean }) {
   const storyPosition = visible.length > 1
     ? Math.round((storyScroll.value / 1000) * (visible.length - 1)) + 1
     : 1;
+  const selectedNumber = selected ? String(selectedWork.indexOf(selected) + 1).padStart(2, "0") : "";
 
   return (
     <>
@@ -169,18 +180,28 @@ export function ProjectGallery({ motion }: { motion: boolean }) {
         ))}
       </div>
       <dialog ref={dialog} className="project-dialog" aria-labelledby="project-dialog-title" onClose={() => setSelected(null)} onClick={(event) => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
-        {selected && <div className="dialog-content">
-          <div className="dialog-top"><span className="mono">Project notes / {selected.year}</span><button type="button" className="dialog-close" aria-label="Close project details" onClick={() => dialog.current?.close()}>×</button></div>
-          <p className="eyebrow">{selected.category}</p>
-          <h2 id="project-dialog-title">{selected.name}</h2>
-          <p className="dialog-tagline">{selected.eyebrow}</p>
-          {selected.video ? <div className="dialog-video"><video controls playsInline preload="metadata" poster={selected.image} aria-label={`${selected.name} product walkthrough`}><source src={selected.video} type="video/mp4" />Your browser does not support HTML video.</video></div> : selected.screenshots ? <div className="dialog-gallery" aria-label={`${selected.name} screenshots`}>{selected.screenshots.map((screenshot) => <div className="dialog-image" key={screenshot.src}><Image src={screenshot.src} alt={screenshot.alt} width={1901} height={853} sizes="(max-width: 750px) 90vw, 760px" /></div>)}</div> : <div className="dialog-image"><Image src={selected.image} alt={`${selected.name} ${selected.imageType.toLowerCase()}`} width={1536} height={1024} sizes="(max-width: 750px) 90vw, 760px" /></div>}
-          {imageCaption(selected) && <p className="image-caption mono">{imageCaption(selected)}</p>}
-          <p className="dialog-outcome">{selected.outcome}</p>
-          <ul className="project-details">{selected.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>
-          <div className="work-stack">{selected.stack.map((tech) => <span key={tech}>{tech}</span>)}</div>
-          <div className="dialog-links">{selected.github && <a className="pill-button dark" href={selected.github} target="_blank" rel="noopener noreferrer">View source <span>↗</span></a>}{selected.live && <a className={selected.github ? "pill-button outline" : "pill-button dark"} href={selected.live} target="_blank" rel="noopener noreferrer">Visit project <span>↗</span></a>}</div>
-        </div>}
+        {selected && <article className="dialog-content" style={{ "--dialog-accent": selected.color } as CSSProperties}>
+          <div className="dialog-top"><span className="mono"><i className="dialog-status" />Project dossier / {selectedNumber}</span><button type="button" className="dialog-close" aria-label="Close project details" onClick={() => dialog.current?.close()}>×</button></div>
+          <header className="dialog-hero">
+            <div><p className="eyebrow">{selected.category}</p><h2 id="project-dialog-title">{selected.name}</h2><p className="dialog-tagline">{selected.eyebrow}</p></div>
+            <div className="dialog-stamp" aria-hidden="true"><span>PROJECT</span><strong>{selectedNumber}</strong><span>{selected.year}</span></div>
+          </header>
+          <section className="dialog-showcase" aria-label="Project preview">
+            <ProjectDialogMedia work={selected} />
+            {imageCaption(selected) && <p className="image-caption mono">{imageCaption(selected)}</p>}
+          </section>
+          <div className="dialog-grid">
+            <aside className="dialog-facts">
+              <span className="dialog-label mono">Outcome</span><p className="dialog-outcome">{selected.outcome}</p>
+              <span className="dialog-label dialog-stack-label mono">Built with</span><div className="work-stack">{selected.stack.map((tech) => <span key={tech}>{tech}</span>)}</div>
+            </aside>
+            <section className="dialog-build" aria-labelledby="dialog-build-title">
+              <h3 className="dialog-label mono" id="dialog-build-title">Build notes</h3>
+              <ol className="project-details">{selected.details.map((detail, index) => <li key={detail}><span className="dialog-note-number mono">{String(index + 1).padStart(2, "0")}</span><p>{detail}</p></li>)}</ol>
+            </section>
+          </div>
+          <footer className="dialog-footer"><span className="mono">Continue exploring</span><div className="dialog-links">{selected.github && <a className="dialog-link secondary" href={selected.github} target="_blank" rel="noopener noreferrer">View source <span>↗</span></a>}{selected.live && <a className="dialog-link primary" href={selected.live} target="_blank" rel="noopener noreferrer">Visit project <span>↗</span></a>}</div></footer>
+        </article>}
       </dialog>
     </>
   );

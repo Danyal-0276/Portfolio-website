@@ -4,18 +4,24 @@ import { useEffect, useRef, useState, type RefObject } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { NAV_LINKS } from "../_components/portfolio/navigation";
 
-export function useActiveSection<T extends HTMLElement>(root: RefObject<T | null>) {
+export function useActiveSection<T extends HTMLElement>(
+  root: RefObject<T | null>,
+) {
   const [activeSection, setActiveSection] = useState("");
   const pendingNavigation = useRef<string | null>(null);
 
   useEffect(() => {
-    const sections = Array.from(root.current?.querySelectorAll<HTMLElement>("main > section[id]") ?? []);
+    const sections = Array.from(
+      root.current?.querySelectorAll<HTMLElement>("main > section[id]") ?? [],
+    );
     const header = root.current?.querySelector<HTMLElement>(".site-header");
     let frame = 0;
     const update = () => {
       frame = 0;
       const marker = (header?.getBoundingClientRect().bottom ?? 90) + 40;
-      const pending = sections.find((section) => `#${section.id}` === pendingNavigation.current);
+      const pending = sections.find(
+        (section) => `#${section.id}` === pendingNavigation.current,
+      );
       if (pending) {
         const bounds = pending.getBoundingClientRect();
         if (bounds.top > marker || bounds.bottom <= marker) return;
@@ -25,9 +31,14 @@ export function useActiveSection<T extends HTMLElement>(root: RefObject<T | null
         const bounds = section.getBoundingClientRect();
         return bounds.top <= marker && bounds.bottom > marker;
       });
-      const atBottom = window.scrollY > 0 && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      const atBottom =
+        window.scrollY > 0 &&
+        window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 2;
       const href = atBottom ? "#contact" : current ? `#${current.id}` : "";
-      setActiveSection(NAV_LINKS.some((link) => link.href === href) ? href : "");
+      setActiveSection(
+        NAV_LINKS.some((link) => link.href === href) ? href : "",
+      );
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -37,13 +48,28 @@ export function useActiveSection<T extends HTMLElement>(root: RefObject<T | null
       schedule();
     };
     const handleKey = (event: KeyboardEvent) => {
-      if (["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "].includes(event.key)) interrupt();
+      if (
+        [
+          "ArrowUp",
+          "ArrowDown",
+          "PageUp",
+          "PageDown",
+          "Home",
+          "End",
+          " ",
+        ].includes(event.key)
+      )
+        interrupt();
     };
     const handleAnchor = (event: MouseEvent) => {
-      const anchor = (event.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
+      const anchor = (event.target as Element).closest<HTMLAnchorElement>(
+        'a[href^="#"]',
+      );
       if (!anchor) return;
       const href = anchor.getAttribute("href") ?? "";
-      pendingNavigation.current = NAV_LINKS.some((link) => link.href === href) ? href : null;
+      pendingNavigation.current = NAV_LINKS.some((link) => link.href === href)
+        ? href
+        : null;
       setActiveSection(pendingNavigation.current ?? "");
       schedule();
     };

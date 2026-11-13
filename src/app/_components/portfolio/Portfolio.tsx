@@ -22,7 +22,10 @@ export function Portfolio() {
   usePortfolioAnimations(root, motion);
 
   return (
-    <div ref={root} className={motion ? "portfolio" : "portfolio motion-paused"}>
+    <div
+      ref={root}
+      className={motion ? "portfolio" : "portfolio motion-paused"}
+    >
       <div className="page-progress" aria-hidden="true" />
       <SiteHeader activeSection={activeSection} />
       <main id="main-content">
@@ -34,7 +37,10 @@ export function Portfolio() {
         <ToolkitSection motion={motion} />
         <ResearchSection />
         <PlaygroundSection motion={motion} />
-        <ContactSection motion={motion} onToggleMotion={() => setMotion((enabled) => !enabled)} />
+        <ContactSection
+          motion={motion}
+          onToggleMotion={() => setMotion((enabled) => !enabled)}
+        />
       </main>
     </div>
   );

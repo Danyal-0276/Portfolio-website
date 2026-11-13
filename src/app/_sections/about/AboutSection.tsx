@@ -2,14 +2,128 @@ import Image from "next/image";
 
 export function AboutSection() {
   return (
-    <section id="about" className="about-section section-space" aria-labelledby="about-title">
+    <section
+      id="about"
+      className="about-section section-space"
+      aria-labelledby="about-title"
+    >
       <div className="about-grid shell">
-        <div className="about-photo" data-reveal><Image src="/images/portrait-2026.png" alt="Danyal Tanveer seated with his laptop" width={1254} height={1254} sizes="(max-width: 600px) 90vw, (max-width: 800px) 45vw, 42vw" /><span className="mono">THE PERSON / NOT JUST THE STACK</span></div>
-        <div className="about-title" data-reveal><p className="eyebrow"><span>01 /</span> The person behind the code</p><h2 id="about-title">Curiosity<br />is the <span className="serif">constant.</span></h2></div>
-        <div className="about-body" data-reveal><p className="about-lead">Hi, I’m Danyal. I’m a computer science graduate who likes turning complicated problems into things that feel simple to use.</p><p>I work where product engineering meets applied AI: responsive frontends, dependable APIs, and machine learning pipelines that make it into a real application.</p><p>That has taken me from shipping restaurant software for live clients to training news credibility models and building a book archive you can talk to. I’m looking for a team where I can contribute, keep asking questions, and keep getting better.</p></div>
+        <div className="about-photo" data-reveal>
+          <Image
+            src="/images/portrait-2026.png"
+            alt="Danyal Tanveer seated with his laptop"
+            width={1254}
+            height={1254}
+            sizes="(max-width: 600px) 90vw, (max-width: 800px) 45vw, 42vw"
+          />
+          <span className="mono">THE PERSON / NOT JUST THE STACK</span>
+        </div>
+        <div className="about-title" data-reveal>
+          <p className="eyebrow">
+            <span>01 /</span> The person behind the code
+          </p>
+          <h2 id="about-title">
+            Curiosity
+            <br />
+            is the <span className="serif">constant.</span>
+          </h2>
+        </div>
+        <div className="about-body" data-reveal>
+          <p className="about-lead">
+            Hi, I’m Danyal. I’m a computer science graduate who likes turning
+            complicated problems into things that feel simple to use.
+          </p>
+          <p>
+            I work where product engineering meets applied AI: responsive
+            frontends, dependable APIs, and machine learning pipelines that make
+            it into a real application.
+          </p>
+          <p>
+            That has taken me from shipping restaurant software for live clients
+            to training news credibility models and building a book archive you
+            can talk to. I’m looking for a team where I can contribute, keep
+            asking questions, and keep getting better.
+          </p>
+        </div>
       </div>
-      <div className="campus-chapter" aria-labelledby="education-title"><div className="campus-image"><Image src="/images/ucp-campus-aerial.webp" alt="Aerial view of the University of Central Punjab campus in Lahore" fill sizes="(max-width: 800px) 100vw, 90vw" /></div><div className="campus-shade" /><div className="campus-top mono"><span>THE STARTING POINT / 2022—2026</span><span>LAHORE, PAKISTAN</span></div><div className="campus-content"><span className="campus-stamp">UCP<br /><small>CLASS OF 2026</small></span><h3 id="education-title">Where curiosity<br />found its <em>direction.</em></h3><p>BS Computer Science<br />University of Central Punjab</p><div className="campus-grade"><strong>3.60</strong><span>/ 4.00 CGPA<br />2022 — 2026</span></div></div><a className="campus-credit mono" href="https://ucp.edu.pk/about-ucp/" target="_blank" rel="noopener noreferrer">Campus photograph: UCP ↗</a></div>
-      <div className="experience-block" data-reveal><div className="experience-label"><p className="eyebrow">In the real world</p><span className="mono">Jul — Dec 2025</span></div><div className="experience-content"><div className="experience-title"><h3>Full-Stack Developer Intern</h3><span className="experience-badge">On-site / Lahore</span></div><p className="company-name">Tri Tech Technology LLC</p><p>Helped build and deploy a multi-tenant restaurant POS ecosystem: three Next.js frontends, one shared Express API, and the workflows that keep a restaurant moving.</p><div className="experience-facts"><span><strong>4</strong> connected services</span><span><strong>2</strong> restaurant clients</span><span><strong>5</strong> staff roles</span></div><p className="client-note mono">Deployed for CAP Cafe & Extraction</p></div></div>
+      <div className="campus-chapter" aria-labelledby="education-title">
+        <div className="campus-image">
+          <Image
+            src="/images/ucp-campus-aerial.webp"
+            alt="Aerial view of the University of Central Punjab campus in Lahore"
+            fill
+            sizes="(max-width: 800px) 100vw, 90vw"
+          />
+        </div>
+        <div className="campus-shade" />
+        <div className="campus-top mono">
+          <span>THE STARTING POINT / 2022—2026</span>
+          <span>LAHORE, PAKISTAN</span>
+        </div>
+        <div className="campus-content">
+          <span className="campus-stamp">
+            UCP
+            <br />
+            <small>CLASS OF 2026</small>
+          </span>
+          <h3 id="education-title">
+            Where curiosity
+            <br />
+            found its <em>direction.</em>
+          </h3>
+          <p>
+            BS Computer Science
+            <br />
+            University of Central Punjab
+          </p>
+          <div className="campus-grade">
+            <strong>3.60</strong>
+            <span>
+              / 4.00 CGPA
+              <br />
+              2022 — 2026
+            </span>
+          </div>
+        </div>
+        <a
+          className="campus-credit mono"
+          href="https://ucp.edu.pk/about-ucp/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Campus photograph: UCP ↗
+        </a>
+      </div>
+      <div className="experience-block" data-reveal>
+        <div className="experience-label">
+          <p className="eyebrow">In the real world</p>
+          <span className="mono">Jul — Dec 2025</span>
+        </div>
+        <div className="experience-content">
+          <div className="experience-title">
+            <h3>Full-Stack Developer Intern</h3>
+            <span className="experience-badge">On-site / Lahore</span>
+          </div>
+          <p className="company-name">Tri Tech Technology LLC</p>
+          <p>
+            Helped build and deploy a multi-tenant restaurant POS ecosystem:
+            three Next.js frontends, one shared Express API, and the workflows
+            that keep a restaurant moving.
+          </p>
+          <div className="experience-facts">
+            <span>
+              <strong>4</strong> connected services
+            </span>
+            <span>
+              <strong>2</strong> restaurant clients
+            </span>
+            <span>
+              <strong>5</strong> staff roles
+            </span>
+          </div>
+          <p className="client-note mono">Deployed for CAP Cafe & Extraction</p>
+        </div>
+      </div>
     </section>
   );
 }
