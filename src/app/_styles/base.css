@@ -504,7 +504,7 @@ h2 {
   border-radius: 999px;
   left: 50%;
   top: 50%;
-  opacity: 0.94;
+  opacity: 1;
   transform: translate(-50%, -50%);
   transition:
     opacity 0.25s,
@@ -529,6 +529,12 @@ h2 {
   box-shadow:
     6px 6px 0 var(--yellow),
     0 18px 42px #11121745;
+}
+@media (hover: hover) and (pointer: fine) {
+  .preview-open {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.84);
+  }
 }
 .preview-index {
   position: absolute;
@@ -1262,8 +1268,35 @@ h2 {
   width: min(1040px, calc(100vw - 32px));
   max-height: calc(100dvh - 32px);
   padding: 0;
+  overflow-y: auto;
   overscroll-behavior: contain;
+  scrollbar-color: var(--yellow) #111217;
+  scrollbar-width: thin;
   box-shadow: 0 34px 100px #05060765;
+}
+.project-dialog::-webkit-scrollbar {
+  width: 12px;
+}
+.project-dialog::-webkit-scrollbar-track {
+  background: #111217;
+  border-left: 1px solid #ffffff20;
+}
+.project-dialog::-webkit-scrollbar-thumb {
+  min-height: 64px;
+  border: 3px solid #111217;
+  border-radius: 999px;
+  background: var(--yellow);
+}
+.project-dialog::-webkit-scrollbar-thumb:hover {
+  background: var(--blue);
+}
+.project-dialog::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.project-dialog::-webkit-scrollbar-corner {
+  background: #111217;
 }
 .project-dialog[open] {
   animation: dossier-enter 0.45s cubic-bezier(0.2, 0.75, 0.2, 1) both;
