@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { JsonLd } from "@/components/seo/JsonLd";
+import { JsonLd } from "./_components/seo/JsonLd";
 import { siteConfig } from "@/data/portfolio";
-import "./globals.css";
-import "./bold.css";
-import "./typography.css";
-import "./playground.css";
-import "./branding.css";
-import "./certificates.css";
+import "./_styles/base.css";
+import "./_styles/theme.css";
+import "./_styles/typography.css";
+import "./_sections/playground/playground.css";
+import "./_sections/hero/hero.css";
+import "./_sections/playground/certificates.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
