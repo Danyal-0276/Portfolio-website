@@ -4,17 +4,35 @@ import process from "node:process";
 
 const root = process.cwd();
 const publicDirectory = path.join(root, "public");
-const searchableEntries = ["src", "scripts", "README.md", "next.config.ts", ".env.example"];
-const textExtensions = new Set([".css", ".js", ".json", ".jsx", ".md", ".mjs", ".ts", ".tsx", ".txt"]);
+const searchableEntries = [
+  "src",
+  "scripts",
+  "README.md",
+  "next.config.ts",
+  ".env.example",
+];
+const textExtensions = new Set([
+  ".css",
+  ".js",
+  ".json",
+  ".jsx",
+  ".md",
+  ".mjs",
+  ".ts",
+  ".tsx",
+  ".txt",
+]);
 
 function collectFiles(entry) {
   const absolute = path.join(root, entry);
   if (!fs.existsSync(absolute)) return [];
   const stat = fs.statSync(absolute);
   if (stat.isFile()) return [absolute];
-  return fs.readdirSync(absolute, { withFileTypes: true }).flatMap((child) =>
-    collectFiles(path.relative(root, path.join(absolute, child.name))),
-  );
+  return fs
+    .readdirSync(absolute, { withFileTypes: true })
+    .flatMap((child) =>
+      collectFiles(path.relative(root, path.join(absolute, child.name))),
+    );
 }
 
 const searchableText = searchableEntries

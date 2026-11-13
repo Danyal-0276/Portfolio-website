@@ -2258,15 +2258,6 @@ h2 {
     flex-basis: auto;
     line-height: 1.6;
   }
-  .dialog-content {
-    padding: 15px 20px 25px;
-  }
-  .dialog-image {
-    padding: 8px;
-  }
-  .dialog-tagline {
-    font-size: 20px;
-  }
 }
 @media (max-width: 370px) {
   .shell {
