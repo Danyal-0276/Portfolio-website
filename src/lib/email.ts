@@ -11,18 +11,31 @@ export interface ContactEmailPayload {
 }
 
 function escapeHtml(value: string): string {
-  return value.replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-  })[character]!);
+  return value.replace(
+    /[&<>"']/g,
+    (character) =>
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+      })[character]!,
+  );
 }
 
-export async function sendContactEmail({ name, email, message }: ContactEmailPayload) {
+export async function sendContactEmail({
+  name,
+  email,
+  message,
+}: ContactEmailPayload) {
   if (!resend) {
     throw new Error("Email service is not configured. Set RESEND_API_KEY.");
   }
 
   const to = process.env.CONTACT_TO_EMAIL ?? "donibutt2112@gmail.com";
-  const from = process.env.CONTACT_FROM_EMAIL ?? "Portfolio <onboarding@resend.dev>";
+  const from =
+    process.env.CONTACT_FROM_EMAIL ?? "Portfolio <onboarding@resend.dev>";
 
   const { error } = await resend.emails.send({
     from,
