@@ -51,7 +51,13 @@ function ProjectVideoPreview({ work, motion }: { work: Work; motion: boolean }) 
 
 function previewLabel(work: Work) {
   if (work.video) return "Product video";
-  return work.imageType === "Screenshot" ? "Product screenshot" : "Generated UI mockup";
+  return work.imageType === "Screenshot" ? "Product screenshot" : null;
+}
+
+function imageCaption(work: Work) {
+  if (work.video) return work.videoCaption;
+  if (work.imageType !== "Screenshot") return null;
+  return work.screenshots && work.screenshots.length > 1 ? "Actual project screenshots" : "Actual project screenshot";
 }
 
 export function ProjectGallery({ motion }: { motion: boolean }) {
@@ -150,7 +156,7 @@ export function ProjectGallery({ motion }: { motion: boolean }) {
             <button type="button" className="project-preview" style={{ "--project-bg": work.color } as CSSProperties} onClick={() => setSelected(work)} aria-haspopup="dialog">
               <span className="sr-only">Explore {work.name} project details</span>
               <span className="story-motif" aria-hidden="true">{storyNotes[work.id].motif}</span>
-              <span className="preview-label mono" aria-hidden="true">{previewLabel(work)}</span>
+              {previewLabel(work) && <span className="preview-label mono" aria-hidden="true">{previewLabel(work)}</span>}
               <div className="preview-window" aria-hidden="true">
                 <div className="window-bar" aria-hidden="true"><i /><i /><i /><span>{work.name.toLowerCase().replaceAll(" ", "-")}</span></div>
                 <div className={work.video ? "preview-image video-preview" : "preview-image"}>{work.video ? <><Image className="video-preview-backdrop" src={work.image} alt="" fill sizes="(max-width: 700px) 90vw, 43vw" /><ProjectVideoPreview work={work} motion={motion} /></> : <Image src={work.image} alt={`${work.name} ${work.imageType.toLowerCase()}`} fill sizes="(max-width: 700px) 90vw, 43vw" />}</div>
@@ -168,8 +174,8 @@ export function ProjectGallery({ motion }: { motion: boolean }) {
           <p className="eyebrow">{selected.category}</p>
           <h2 id="project-dialog-title">{selected.name}</h2>
           <p className="dialog-tagline">{selected.eyebrow}</p>
-          {selected.video ? <div className="dialog-video"><video controls playsInline preload="metadata" poster={selected.image} aria-label={`${selected.name} product walkthrough`}><source src={selected.video} type="video/mp4" />Your browser does not support HTML video.</video></div> : <div className="dialog-image"><Image src={selected.image} alt={`${selected.name} ${selected.imageType.toLowerCase()}`} width={1536} height={1024} sizes="(max-width: 750px) 90vw, 760px" /></div>}
-          <p className="image-caption mono">{selected.video ? selected.videoCaption : selected.imageType === "Screenshot" ? "Actual project screenshot" : "AI-generated UI mockup based on project features; actual interface may differ."}</p>
+          {selected.video ? <div className="dialog-video"><video controls playsInline preload="metadata" poster={selected.image} aria-label={`${selected.name} product walkthrough`}><source src={selected.video} type="video/mp4" />Your browser does not support HTML video.</video></div> : selected.screenshots ? <div className="dialog-gallery" aria-label={`${selected.name} screenshots`}>{selected.screenshots.map((screenshot) => <div className="dialog-image" key={screenshot.src}><Image src={screenshot.src} alt={screenshot.alt} width={1901} height={853} sizes="(max-width: 750px) 90vw, 760px" /></div>)}</div> : <div className="dialog-image"><Image src={selected.image} alt={`${selected.name} ${selected.imageType.toLowerCase()}`} width={1536} height={1024} sizes="(max-width: 750px) 90vw, 760px" /></div>}
+          {imageCaption(selected) && <p className="image-caption mono">{imageCaption(selected)}</p>}
           <p className="dialog-outcome">{selected.outcome}</p>
           <ul className="project-details">{selected.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>
           <div className="work-stack">{selected.stack.map((tech) => <span key={tech}>{tech}</span>)}</div>

@@ -71,7 +71,7 @@ The visual direction combines electric blue, yellow, bold typography, and an edi
 
 - **[TRAK](https://github.com/Danyal-0276/TRAK)** — News credibility platform combining transformer models, a Django REST API, and a React Native experience.
 - **[Feastly](https://github.com/Danyal-0276/feastly)** — Food delivery system with customer, restaurant, rider, and administrator portals.
-- **[Throne of Glass Archive](https://github.com/Danyal-0276/throne-of-glass-rag)** — An unofficial educational fan project with a streaming RAG assistant and spoiler-aware retrieval.
+- **[Throne of Glass Archive](https://throne-of-glass-rag.vercel.app/)** — An unofficial educational fan project with a streaming RAG assistant and spoiler-aware retrieval.
 - **[Restaurant OS](https://github.com/Danyal-0276/POS-backend)** — Multi-tenant restaurant POS ecosystem built during my internship and deployed for two restaurant clients.
 - **[Shopora](https://github.com/Danyal-0276/shopora)** — Commerce storefront with persistent carts, authenticated orders, and Stripe test checkout.
 - **[Orbit](https://github.com/Danyal-0276/Music-Player-app)** — Offline-first Android music player with a local library and background playback.
@@ -199,7 +199,7 @@ src/
 └── lib/email.ts                  # Resend delivery and email formatting
 public/
 ├── images/                       # Portraits, wordmark, campus, and favicons
-├── projects/                     # Project screenshots and UI mockups
+├── projects/                     # Project screenshots and supporting visuals
 ├── certifications/               # Certificate images
 └── resumes/                      # Downloadable résumés
 ```
@@ -223,7 +223,7 @@ When adding animation, preserve keyboard interaction, the global motion toggle, 
 
 Project descriptions draw on my résumés and repositories. Research is presented as a submitted preprint, with publication pending.
 
-The Feastly, Throne of Glass Archive, Shopora, Orbit, and multiplayer-game images are **generated UI mockups based on documented features**. They are labeled in the portfolio and are not presented as screenshots of deployed products. Other project visuals use supplied screenshots and assets. Certificate previews are based on the supplied credentials.
+The Feastly, Shopora, Orbit, and multiplayer-game images are generated visuals based on documented features; the Throne of Glass Archive now uses screenshots from its live deployment. Other project visuals use supplied screenshots and assets. Certificate previews are based on the supplied credentials.
 
 Original materials are retained in `Images`, `Resumes`, `Snapshots of projects`, `Readme of my projects`, and `Website ideas` for future content updates.
 

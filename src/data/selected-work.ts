@@ -9,6 +9,7 @@ export interface Work {
   description: string;
   image: string;
   imageType: "Screenshot" | "Generated UI mockup" | "Video preview";
+  screenshots?: { src: string; alt: string }[];
   video?: string;
   videoCaption?: string;
   color: string;
@@ -41,11 +42,15 @@ export const selectedWork: Work[] = [
   {
     id: "archive", name: "Throne of Glass Archive", eyebrow: "A conversation with a whole world.", category: "AI & ML", year: "2026",
     description: "A fantasy archive with a from-scratch RAG chatbot, streaming answers, and spoiler-aware retrieval.",
-    image: "/projects/archive-ui.png", imageType: "Generated UI mockup", color: "#263e34",
+    image: "/projects/throne-of-glass-home.webp", imageType: "Screenshot", color: "#263e34",
+    screenshots: [
+      { src: "/projects/throne-of-glass-home.webp", alt: "Throne of Glass Archive story landing page" },
+      { src: "/projects/throne-of-glass-characters.webp", alt: "Throne of Glass Archive character directory" },
+    ],
     stack: ["FastAPI", "pgvector", "BGE embeddings", "Groq", "Next.js"],
     outcome: "Dense RAG · Source-grounded responses",
     details: ["Implemented sentence-aware PDF chunking, BGE embeddings, and PostgreSQL / pgvector similarity search.", "Built SSE streaming with FastAPI and Groq, with source cards in a Next.js interface.", "Added book-based spoiler filtering and character alias expansion. Unofficial educational fan project."],
-    github: "https://github.com/Danyal-0276/throne-of-glass-rag",
+    github: "https://github.com/Danyal-0276/throne-of-glass-rag", live: "https://throne-of-glass-rag.vercel.app/",
   },
   {
     id: "pos", name: "Restaurant OS", eyebrow: "Built for the real dinner rush.", category: "Full stack", year: "2025",

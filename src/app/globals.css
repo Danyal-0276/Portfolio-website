@@ -1545,6 +1545,14 @@ h2 {
   background: #e5e2da;
   padding: 16px;
 }
+.dialog-gallery {
+  display: grid;
+  gap: 14px;
+  margin-top: 28px;
+}
+.dialog-gallery .dialog-image {
+  margin-top: 0;
+}
 .dialog-image img {
   width: 100%;
   height: auto;
