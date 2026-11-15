@@ -23,7 +23,7 @@ An interactive portfolio connecting the person, the projects, and the engineerin
 
 This is my personal portfolio as a computer science graduate, full-stack developer, and AI/ML engineer based in Lahore, Pakistan. It brings together my projects, internship experience, research, skills, and certifications in one responsive experience.
 
-The visual direction combines electric blue, yellow, bold typography, and an editorial layout. Motion is part of the interaction: visitors can drag an engineer pass, explore project details, open experiment folders, and follow engineering workflows from interface to delivery.
+The visual direction combines electric blue, yellow, bold typography, and an editorial layout. A blue curtain introduces a minimal portrait-led hero. Visitors can then explore project details, open experiment folders, and follow engineering workflows from interface to delivery.
 
 **Explore:** [Features](#features) · [Featured projects](#featured-projects) · [Technology](#technology) · [Local setup](#local-setup) · [Deployment](#deployment) · [Customization](#customization)
 
@@ -31,8 +31,9 @@ The visual direction combines electric blue, yellow, bold typography, and an edi
 
 ### An interactive first impression
 
-- Draggable hanging engineer pass with a flexible strap, momentum, and spring return.
-- Two-dimensional movement, pointer capture, and keyboard controls.
+- Letter-by-letter name reveal on a blue curtain; the name fades out as the curtain lifts.
+- Minimal framed hero with a centered draggable portrait card, bold headline, project link, and résumé download.
+- Intro plays once per tab session, with replay, skip, Escape, focus handling, and reduced-motion support.
 - Animated ticker, scroll progress indicator, and section-aware navigation.
 - Responsive layouts for desktop, tablet, and mobile.
 
@@ -86,7 +87,7 @@ The Playground also includes multiplayer browser games, J.A.R.V.I.S., network in
 
 - **Application:** Next.js 15 App Router, React 19, TypeScript 5.
 - **Styling:** Tailwind CSS 4 and custom responsive CSS.
-- **Animation:** GSAP 3, ScrollTrigger, and `@gsap/react`; a custom spring simulation drives the hanging card.
+- **Animation:** GSAP 3, ScrollTrigger, and `@gsap/react`; a scoped timeline coordinates the opening curtain and hero reveal.
 - **Forms and email:** Zod and Resend through a Next.js route handler.
 - **Quality checks:** ESLint and TypeScript.
 - **Hosting:** Vercel, with GitHub as the source repository.
@@ -213,7 +214,7 @@ scripts/                           # Asset and SEO validation
 - **Skill groups and search content:** [`src/data/resume-skills.ts`](src/data/resume-skills.ts).
 - **Page composition:** [`Portfolio.tsx`](src/app/_components/portfolio/Portfolio.tsx).
 - **Section order and content:** [`src/app/_sections`](src/app/_sections).
-- **Hero composition and card physics:** [`src/app/_sections/hero`](src/app/_sections/hero).
+- **Hero composition and opening curtain:** [`src/app/_sections/hero`](src/app/_sections/hero).
 - **Project filters and detail dialogs:** [`ProjectGallery.tsx`](src/app/_sections/work/ProjectGallery.tsx).
 - **Experiment folders and certificates:** [`src/app/_sections/playground`](src/app/_sections/playground).
 - **Shared page behavior:** [`src/app/_hooks`](src/app/_hooks).
@@ -225,7 +226,7 @@ When adding animation, preserve keyboard interaction, the global motion toggle, 
 
 Project descriptions draw on my résumés and repositories. Research is presented as a submitted preprint, with publication pending.
 
-The Feastly, Shopora, Orbit, and multiplayer-game images are generated visuals based on documented features; the Throne of Glass Archive uses screenshots from its live deployment. Other project visuals use supplied screenshots and assets. Certificate previews are based on the supplied credentials.
+The Feastly, Shopora, Orbit, and multiplayer-game images are generated visuals based on documented features; the Throne of Glass Archive uses screenshots from its live deployment. The transparent hero portrait is AI-generated using Danyal’s supplied photograph as an identity reference; the original portrait remains in the About section. Other project visuals use supplied screenshots and assets. Certificate previews are based on the supplied credentials.
 
 Future-use source material is retained and classified under [`archive/`](archive/README.md). It is deliberately kept outside `public/` so raw documents and alternate visuals are not deployed.
 

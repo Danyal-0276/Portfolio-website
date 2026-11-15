@@ -288,10 +288,10 @@ export function HangingCard({ motion }: { motion: boolean }) {
           <span className="badge-photo" aria-hidden="true">
             <span className="badge-photo-grid" />
             <Image
-              src="/images/portrait-2026.png"
+              src="/images/hero-portrait.webp"
               alt=""
-              width={1254}
-              height={1254}
+              width={960}
+              height={1277}
               priority
               sizes="(max-width: 600px) 220px, 310px"
             />
@@ -299,9 +299,9 @@ export function HangingCard({ motion }: { motion: boolean }) {
           </span>
           <span className="badge-identity" aria-hidden="true">
             <strong>
-              Danyal
+              BUILD. LEARN.
               <br />
-              Tanveer<span>↗</span>
+              REPEAT.<span>↗</span>
             </strong>
             <span className="mono">SOFTWARE & AI ENGINEER</span>
           </span>

@@ -1,125 +1,132 @@
-/* Display the original transparent wordmark without its surrounding empty canvas. */
-.site-header .wordmark {
-  align-self: stretch;
-  align-items: center;
-  line-height: 0;
-  padding-block: 0;
+/* Keep the original wordmark crop in the shared header and footer. */
+.site-header .wordmark { align-self: stretch; align-items: center; line-height: 0; padding-block: 0; }
+.wordmark > .brand-logo { display: block; position: relative; width: 160px; height: 30px; margin: 0; border-radius: 0; background: none; overflow: hidden; }
+.brand-logo img { position: absolute; width: 106.84%; height: 190.53%; max-width: none; left: -3.74%; top: -54.47%; }
+.site-footer .brand-logo { filter: invert(1); }
+
+.minimal-hero { padding: 26px 20px 32px; background: var(--paper); }
+.minimal-hero-inner { max-width: 1400px; margin-inline: auto; }
+.minimal-hero-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 0 14px 18px; color: var(--muted); font-size: 0.625rem; }
+.minimal-hero-top > span:first-child { display: inline-flex; align-items: center; gap: 9px; }
+.hero-availability-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+.hero-board { position: relative; isolation: isolate; background: #edf1fb; border: 8px solid white; border-radius: 30px; }
+.hero-board-top { display: flex; align-items: flex-start; justify-content: space-between; position: relative; z-index: 5; pointer-events: none; }
+.hero-board-label { display: block; position: relative; padding: 18px 24px 20px 52px; background: white; border-radius: 0 0 24px 0; font-size: 0.625rem; line-height: 1.6; color: var(--muted); }
+.hero-board-label > span { position: absolute; left: 16px; top: 17px; color: var(--blue); font-size: 29px; line-height: 1; }
+.hero-disciplines { display: flex; gap: 6px; background: white; padding: 7px 2px 12px 14px; border-radius: 0 0 0 24px; font-size: 0.625rem; }
+.hero-disciplines > span { padding: 8px 14px; border: 1px solid #cbd4e7; border-radius: 24px; color: var(--blue); }
+.hero-board-body { display: grid; grid-template-columns: minmax(0, 1fr) 300px minmax(0, 1fr); gap: 16px; padding: 0 32px; min-height: 490px; align-items: end; }
+.hero-headline { padding-bottom: 36px; position: relative; z-index: 2; }
+.hero-role { color: var(--muted); font-size: 0.5625rem; letter-spacing: 0.04em; line-height: 1.6; }
+.hero-headline h1 { margin-top: 20px; font-family: Arial, Helvetica, sans-serif; font-weight: 900; font-size: clamp(2.5rem, 4.5vw, 4.25rem); line-height: 0.98; letter-spacing: -0.075em; }
+.hero-headline h1 > span { color: var(--blue); }
+.hero-headline h1:focus { outline: none; }
+.hero-links { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 28px; }
+.hero-links .scene-cta { font-size: 0.8125rem; padding: 16px 22px; gap: 24px; }
+.hero-links .resume-link { font-size: 0.75rem; white-space: nowrap; }
+.hero-note { justify-self: end; padding-bottom: 44px; width: min(100%, 205px); }
+.hero-note > .mono { font-size: 0.5625rem; color: var(--blue); line-height: 1.6; }
+.hero-note p { margin-top: 18px; font-size: 0.9375rem; line-height: 1.75; color: var(--muted); }
+.hero-note a { display: inline-block; font-size: 0.6875rem; line-height: 1.6; margin-top: 20px; border-bottom: 1px solid #bac6dd; padding-bottom: 5px; }
+.hero-note a:hover { color: var(--blue); }
+.hero-card-position { position: relative; align-self: start; margin-top: -76px; z-index: 4; }
+.hero-board .lanyard-stage { position: relative; width: 280px; height: 545px; top: 0; left: auto; margin-inline: auto; transform: none; pointer-events: none; }
+.hero-board .lanyard-rig { padding-top: 106px; transform-origin: 50% 106px; }
+.hero-board .lanyard-clip { top: 86px; }
+.lanyard-cord { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.lanyard-cord-path { fill: none; stroke: var(--blue); stroke-width: 17px; stroke-linecap: round; }
+.lanyard-cord-highlight { fill: none; stroke: #ffffff70; stroke-width: 2px; stroke-dasharray: 7 6; }
+.lanyard-cord-static { stroke: var(--blue); stroke-width: 17px; opacity: 0; }
+.motion-paused .lanyard-cord-static { opacity: 1; }
+.motion-paused .lanyard-cord-path, .motion-paused .lanyard-cord-highlight { opacity: 0; }
+.hero-board .id-card { pointer-events: auto; touch-action: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.hero-board .id-card > * { pointer-events: none; }
+.hero-board .id-card img { -webkit-user-drag: none; }
+.hero-board .badge-photo { height: 236px; }
+.hero-board .badge-photo-grid { background: none; }
+.hero-board .badge-photo img { height: 100%; width: auto; max-width: none; left: 50%; top: auto; bottom: 0; transform: translateX(-50%); }
+.hero-board .badge-identity { padding-block: 13px; }
+.hero-board .badge-identity > strong { font-size: 25px; }
+.hero-board .badge-identity strong > span { font-size: 34px; }
+.hero-board .badge-identity > .mono { font-size: 7px; margin-top: 7px; }
+.hero-board .badge-hint { margin-top: 22px; font-size: 0.5rem; letter-spacing: 0.015em; }
+.minimal-hero-bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 28px; border-top: 1px solid #d6deee; font-size: 0.5625rem; color: var(--muted); }
+.minimal-hero-bottom a, .minimal-hero-bottom button { display: inline-flex; align-items: center; gap: 14px; }
+.minimal-hero-bottom button { padding: 0; background: none; font: inherit; letter-spacing: inherit; }
+.minimal-hero-bottom a:hover, .minimal-hero-bottom button:hover { color: var(--blue); }
+.minimal-hero-bottom button:disabled { display: none; }
+
+.intro-overlay { position: fixed; inset: 0; z-index: 250; isolation: isolate; }
+.intro-curtain { position: absolute; inset: 0; z-index: -1; background: var(--blue); }
+.intro-name { position: absolute; width: max-content; font-family: Arial, Helvetica, sans-serif; font-size: clamp(1.5rem, 6vw, 6rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.075em; white-space: nowrap; color: white; pointer-events: none; }
+.intro-letter-mask { display: inline-block; overflow: hidden; vertical-align: top; }
+.intro-letter { display: inline-block; }
+.intro-meta { position: absolute; left: 32px; right: 32px; display: flex; justify-content: space-between; gap: 20px; color: white; font-size: 0.625rem; letter-spacing: 0.1em; }
+.intro-meta-top { top: 30px; }
+.intro-meta-bottom { bottom: 30px; }
+.intro-rule { position: absolute; left: 32px; right: 32px; bottom: 66px; height: 2px; background: var(--yellow); }
+.intro-skip { position: absolute; right: 32px; top: 50%; margin-top: 64px; border: 1px solid #ffffff70; background: transparent; color: white; padding: 10px 15px; border-radius: 30px; font-size: 0.6875rem; }
+.intro-skip:focus-visible { outline-color: var(--yellow); }
+
+@media (max-width: 1100px) and (min-width: 761px) {
+  .hero-board-body { grid-template-columns: minmax(0, 1fr) 260px minmax(0, 0.8fr); gap: 10px; padding-inline: 22px; }
+  .hero-board .lanyard-stage { width: 250px; }
+  .hero-headline h1 { font-size: clamp(2rem, 4.2vw, 3rem); }
+  .hero-note { width: 170px; }
+  .hero-note p { font-size: 0.8125rem; }
+  .hero-disciplines { font-size: 0.5625rem; }
 }
-.wordmark > .brand-logo {
-  display: block;
-  position: relative;
-  width: 160px;
-  height: 30px;
-  margin: 0;
-  border-radius: 0;
-  background: none;
-  overflow: hidden;
+@media (max-width: 760px) {
+  .minimal-hero { padding: 24px 14px; }
+  .minimal-hero-top { padding: 0 6px 16px; font-size: 0.5625rem; }
+  .hero-board { border-width: 6px; border-radius: 24px; }
+  .hero-board-body { grid-template-columns: 1fr 1fr; gap: 20px; padding: 0 20px; }
+  .hero-card-position { grid-column: 2; grid-row: 1 / 3; margin-top: -55px; }
+  .hero-board .lanyard-stage { width: 240px; height: 535px; }
+  .hero-headline { align-self: end; padding-top: 50px; padding-bottom: 0; }
+  .hero-headline h1 { font-size: clamp(2rem, 5vw, 3rem); }
+  .hero-note { grid-row: 2; grid-column: 1; padding-bottom: 30px; justify-self: start; }
+  .hero-note > .mono { display: none; }
+  .hero-note p { font-size: 0.8125rem; margin-top: 0; }
+  .hero-links { gap: 18px; }
+  .hero-board-label { font-size: 0.5625rem; padding: 16px 16px 18px 42px; }
+  .hero-board-label > span { left: 11px; font-size: 25px; }
+  .hero-disciplines { font-size: 0.5rem; padding-left: 10px; }
+  .hero-disciplines > span { padding: 7px 9px; }
 }
-.brand-logo img {
-  position: absolute;
-  width: 106.84%;
-  height: 190.53%;
-  max-width: none;
-  left: -3.74%;
-  top: -54.47%;
-}
-.site-footer .brand-logo {
-  filter: invert(1);
-}
-.scene-canvas {
-  min-height: 620px;
-}
-.lanyard-stage {
-  pointer-events: none;
-  height: 610px;
-}
-.lanyard-rig {
-  transform-origin: 50% 116px;
-}
-.lanyard-cord {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  pointer-events: none;
-}
-.lanyard-cord-path {
-  fill: none;
-  stroke: var(--blue);
-  stroke-width: 20px;
-  stroke-linecap: round;
-}
-.lanyard-cord-highlight {
-  fill: none;
-  stroke: #ffffff70;
-  stroke-width: 2px;
-  stroke-dasharray: 7 6;
-}
-.lanyard-cord-static {
-  stroke: var(--blue);
-  stroke-width: 20px;
-  opacity: 0;
-}
-.motion-paused .lanyard-cord-static {
-  opacity: 1;
-}
-.motion-paused .lanyard-cord-path,
-.motion-paused .lanyard-cord-highlight {
-  opacity: 0;
+@media (max-width: 520px) {
+  .wordmark > .brand-logo { width: 120px; height: 22.43px; }
+  .minimal-hero-top { font-size: 0.5rem; gap: 8px; }
+  .hero-board-body { grid-template-columns: 1fr; gap: 0; padding: 0 22px; }
+  .hero-board-label { font-size: 0.5rem; padding-left: 38px; }
+  .hero-board-label > span { font-size: 22px; }
+  .hero-disciplines { flex-direction: column; gap: 4px; padding-bottom: 10px; }
+  .hero-disciplines > span { padding: 5px 8px; text-align: center; }
+  .hero-card-position { grid-row: 1; grid-column: 1; margin-top: -66px; }
+  .hero-board .lanyard-stage { width: 230px; height: 505px; }
+  .hero-board .badge-photo { height: 210px; }
+  .hero-board .badge-top { font-size: 6px; }
+  .hero-board .badge-identity > strong { font-size: 23px; }
+  .hero-board .badge-identity > .mono { font-size: 6.5px; }
+  .hero-headline { grid-row: 2; padding: 12px 0 0; }
+  .hero-headline h1 { font-size: clamp(2.75rem, 12vw, 4rem); margin-top: 14px; }
+  .hero-note { grid-row: 3; width: 100%; max-width: 30ch; padding: 22px 0 25px; }
+  .hero-note a { margin-top: 12px; }
+  .hero-links { gap: 18px; margin-top: 24px; }
+  .hero-links .scene-cta { font-size: 0.75rem; padding: 15px 18px; gap: 18px; }
+  .hero-links .resume-link { font-size: 0.6875rem; }
+  .minimal-hero-bottom { font-size: 0.5rem; padding: 18px 16px; gap: 10px; }
+  .minimal-hero-bottom a, .minimal-hero-bottom button { gap: 6px; }
+  .intro-meta { left: 20px; right: 20px; font-size: 0.5625rem; }
+  .intro-meta-top { top: 24px; }
+  .intro-meta-bottom { bottom: 24px; flex-direction: column; gap: 8px; }
+  .intro-meta-top > span { display: none; }
+  .intro-rule { left: 20px; right: 20px; bottom: 80px; }
+  .intro-skip { right: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .lanyard-cord-static {
-    opacity: 1;
-  }
-  .lanyard-cord-path,
-  .lanyard-cord-highlight {
-    opacity: 0;
-  }
-}
-.id-card {
-  pointer-events: auto;
-  touch-action: none;
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
-}
-.id-card > * {
-  pointer-events: none;
-}
-.id-card img {
-  -webkit-user-drag: none;
-}
-.id-card[data-dragging] {
-  box-shadow:
-    18px 28px 45px #11121738,
-    inset 0 1px 0 #fff9;
-}
-@media (max-width: 800px) {
-  .scene-canvas {
-    min-height: 570px;
-  }
-  .lanyard-stage {
-    height: 560px;
-  }
-  .lanyard-rig {
-    transform-origin: 50% 106px;
-  }
-}
-@media (max-width: 600px) {
-  .wordmark > .brand-logo {
-    width: 120px;
-    height: 22.43px;
-  }
-  .lanyard-rig {
-    transform-origin: 50% 110px;
-  }
-  .scene-canvas {
-    min-height: 580px;
-  }
-  .lanyard-stage {
-    height: 535px;
-  }
-  .badge-hint {
-    font-size: 0.6875rem;
-  }
+  .intro-overlay { display: none !important; }
+  .minimal-hero-bottom button { display: none; }
+  .lanyard-cord-static { opacity: 1; }
+  .lanyard-cord-path, .lanyard-cord-highlight { opacity: 0; }
 }

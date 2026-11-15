@@ -1,202 +1,153 @@
 "use client";
 
-import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { HangingCard } from "./HangingCard";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(useGSAP);
+
+const INTRO_STORAGE_KEY = "danyal-curtain-intro-v2";
+const NAME = "DANYAL TANVEER";
 
 export function HeroScene({ motion }: { motion: boolean }) {
   const scene = useRef<HTMLElement>(null);
+  const content = useRef<HTMLDivElement>(null);
+  const title = useRef<HTMLHeadingElement>(null);
+  const overlay = useRef<HTMLDivElement>(null);
+  const mark = useRef<HTMLDivElement>(null);
+  const skip = useRef<HTMLButtonElement>(null);
+  const lastReplay = useRef(0);
+  const [replay, setReplay] = useState(0);
+
   useGSAP(
     () => {
-      if (!motion) return;
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap
-          .timeline({ defaults: { ease: "power3.out" } })
-          .from(
-            ".giant-word .giant-letter",
-            { yPercent: 120, rotate: 8, stagger: 0.075, duration: 1.1 },
-            0.1,
-          )
-          .from(".lanyard-stage", { opacity: 0, duration: 1.2 }, 0.35)
-          .from(
-            ".scene-object",
-            { scale: 0.5, opacity: 0, rotate: 0, stagger: 0.12, duration: 0.9 },
-            0.65,
-          )
-          .from(
-            ".scene-bottom, .scene-top",
-            { y: 15, opacity: 0, duration: 0.6 },
-            0.9,
-          );
-        gsap.utils
-          .toArray<HTMLElement>(".scene-object")
-          .forEach((item, index) => {
-            gsap.to(item, {
-              y: index % 2 ? -13 : 13,
-              rotation: `+=${index % 2 ? -3 : 3}`,
-              duration: 3 + index * 0.5,
-              repeat: -1,
-              yoyo: true,
-              ease: "sine.inOut",
-            });
-          });
-        gsap.to(".giant-word", {
-          xPercent: -9,
-          ease: "none",
-          scrollTrigger: {
-            trigger: scene.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
+      const heading = title.current;
+      const curtain = overlay.current;
+      const name = mark.current;
+      const skipButton = skip.current;
+      if (!heading || !curtain || !name || !skipButton || !content.current) return;
+      const isReplay = replay !== lastReplay.current;
+      lastReplay.current = replay;
+      if (!motion || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      // Preserve deep links and returning visitors' place in the page.
+      if (!isReplay) {
+        if (window.location.hash || window.scrollY > 80) return;
+        try {
+          if (sessionStorage.getItem(INTRO_STORAGE_KEY)) return;
+        } catch {
+          // The intro still works when browser storage is unavailable.
+        }
+      }
+
+      const previousOverflow = document.body.style.overflow;
+      const previousFocus = document.activeElement;
+      const background = [
+        content.current,
+        ...document.querySelectorAll<HTMLElement>(".site-header, main > :not(#home)"),
+      ].map((element) => ({ element, inert: element.inert }));
+      let finished = false;
+
+      const unlock = () => {
+        document.body.style.overflow = previousOverflow;
+        background.forEach(({ element, inert }) => { element.inert = inert; });
+      };
+      const finish = () => {
+        if (finished) return;
+        finished = true;
+        curtain.style.display = "none";
+        unlock();
+        try { sessionStorage.setItem(INTRO_STORAGE_KEY, "seen"); } catch { /* Storage is optional. */ }
+        if (document.activeElement === skipButton) {
+          if (previousFocus instanceof HTMLElement && previousFocus !== document.body) {
+            previousFocus.focus({ preventScroll: true });
+          } else {
+            heading.focus({ preventScroll: true });
+          }
+        }
+      };
+
+      document.body.style.overflow = "hidden";
+      background.forEach(({ element }) => { element.inert = true; });
+      gsap.set(curtain, { display: "block" });
+      gsap.set(name, {
+        left: "50%",
+        top: "50%",
+        xPercent: -50,
+        yPercent: -50,
       });
-      mm.add(
-        "(pointer: fine) and (prefers-reduced-motion: no-preference)",
-        () => {
-          const target = scene.current;
-          if (!target) return;
-          const x = gsap.quickTo(".scene-orbit", "x", {
-            duration: 1,
-            ease: "power3.out",
-          });
-          const y = gsap.quickTo(".scene-orbit", "y", {
-            duration: 1,
-            ease: "power3.out",
-          });
-          const move = (event: PointerEvent) => {
-            const rect = target.getBoundingClientRect();
-            x((event.clientX / rect.width - 0.5) * 30);
-            y(((event.clientY - rect.top) / rect.height - 0.5) * 20);
-          };
-          const leave = () => {
-            x(0);
-            y(0);
-          };
-          target.addEventListener("pointermove", move);
-          target.addEventListener("pointerleave", leave);
-          return () => {
-            target.removeEventListener("pointermove", move);
-            target.removeEventListener("pointerleave", leave);
-          };
-        },
-      );
-      return () => mm.revert();
+      skipButton.focus({ preventScroll: true });
+
+      const timeline = gsap.timeline({ onComplete: finish });
+      timeline
+        .from(".intro-letter", { yPercent: 110, duration: 0.65, stagger: 0.035, ease: "power3.out" }, 0.15)
+        .from(".intro-rule", { scaleX: 0, transformOrigin: "left", duration: 1.05, ease: "power2.inOut" }, 0.2)
+        .to(".intro-curtain", { yPercent: -100, duration: 1.2, ease: "power4.inOut" }, 1.2)
+        .to(".intro-meta, .intro-skip, .intro-rule", { autoAlpha: 0, duration: 0.25 }, 1.2)
+        .to(name, { y: -50, autoAlpha: 0, duration: 0.65, ease: "power3.in" }, 1.2)
+        .from(".minimal-hero-reveal", { y: 22, opacity: 0, duration: 0.8, stagger: 0.09, clearProps: "transform,opacity", ease: "power3.out" }, 1.85)
+        .from(".hero-card-position", { y: 35, opacity: 0, duration: 1.05, clearProps: "transform,opacity", ease: "power3.out" }, 1.65);
+
+      const end = () => { timeline.progress(1); finish(); };
+      const handleKey = (event: KeyboardEvent) => {
+        if (finished) return;
+        if (event.key === "Escape") end();
+        if (event.key === "Tab") { event.preventDefault(); skipButton.focus(); }
+      };
+      skipButton.addEventListener("click", end);
+      document.addEventListener("keydown", handleKey);
+      // End safely when the viewport changes during the transition.
+      window.addEventListener("resize", end);
+      return () => {
+        skipButton.removeEventListener("click", end);
+        document.removeEventListener("keydown", handleKey);
+        window.removeEventListener("resize", end);
+        unlock();
+      };
     },
-    { scope: scene, dependencies: [motion], revertOnUpdate: true },
+    { scope: scene, dependencies: [motion, replay], revertOnUpdate: true },
   );
 
   return (
-    <section
-      ref={scene}
-      className="scene-hero"
-      id="home"
-      aria-labelledby="hero-title"
-    >
-      <div className="scene-top shell mono">
-        <span>
-          <i className="status-dot" />
-          Open to software & AI engineering roles
-        </span>
-        <span>Lahore, Pakistan / 2026</span>
+    <section ref={scene} className="minimal-hero" id="home" aria-labelledby="hero-title">
+      <div ref={overlay} className="intro-overlay" role="dialog" aria-modal="true" aria-label="Opening Danyal Tanveer’s portfolio" style={{ display: "none" }}>
+        <div className="intro-curtain" />
+        <span className="intro-meta intro-meta-top mono">DANYAL TANVEER <span>INDEPENDENT DEVELOPER</span></span>
+        <div ref={mark} className="intro-name" aria-hidden="true">
+          {NAME.split("").map((letter, index) => <span className="intro-letter-mask" key={index}>{letter === " " ? "\u00a0" : <span className="intro-letter">{letter}</span>}</span>)}
+        </div>
+        <span className="intro-rule" />
+        <span className="intro-meta intro-meta-bottom mono">A LITTLE CURIOSITY. A LOT OF BUILDING. <span>PORTFOLIO / 2026</span></span>
+        <button ref={skip} className="intro-skip mono" type="button">Skip intro <span aria-hidden="true">↗</span></button>
       </div>
-      <div className="scene-canvas">
-        <div className="scene-grid" aria-hidden="true" />
-        <h1 id="hero-title" className="giant-word">
-          <span className="sr-only">
-            Danyal Tanveer — Full-Stack Developer and AI/ML Engineer
-          </span>
-          {"BUILDER".split("").map((letter, index) => (
-            <span className="giant-letter" aria-hidden="true" key={index}>
-              {letter}
-            </span>
-          ))}
-        </h1>
-        <span className="scene-outline" aria-hidden="true">
-          WITH INTENT.
-        </span>
-        <div className="scene-orbit">
-          <a href="#work" className="scene-object orbit-phone">
-            <div className="object-bar mono">TRAK / NEWS + AI</div>
-            <Image
-              src="/projects/trak-2.png"
-              alt="TRAK news application interface"
-              width={240}
-              height={400}
-              sizes="160px"
-            />
-          </a>
-          <a href="#work" className="scene-object orbit-browser">
-            <div className="object-bar mono">
-              <i />
-              <i />
-              <i />
-              feastly.app
+
+      <div ref={content} className="minimal-hero-inner">
+        <div className="minimal-hero-top minimal-hero-reveal mono">
+          <span><i className="hero-availability-dot" /> AVAILABLE FOR WORK</span>
+          <span>LAHORE, PAKISTAN / 2026</span>
+        </div>
+        <div className="hero-board">
+          <div className="hero-board-top minimal-hero-reveal">
+            <span className="hero-board-label mono"><span aria-hidden="true">✳</span> A LITTLE CURIOSITY.<br />A LOT OF BUILDING.</span>
+            <div className="hero-disciplines mono"><span>FULL STACK</span><span>AI / ML</span></div>
+          </div>
+          <div className="hero-board-body">
+            <div className="hero-headline minimal-hero-reveal">
+              <p className="mono hero-role">THOUGHTFUL SOFTWARE. HUMAN FIRST.</p>
+              <h1 ref={title} id="hero-title" tabIndex={-1}>A BUILDER’S<br /><span>INSTINCT.</span></h1>
+              <div className="hero-links">
+                <a className="pill-button scene-cta" href="#work">Enter the work <span aria-hidden="true">↘</span></a>
+                <a className="resume-link" href="/resumes/danyal-full-stack.pdf" target="_blank" rel="noopener noreferrer">Get my résumé ↗</a>
+              </div>
             </div>
-            <Image
-              src="/projects/feastly-ui.png"
-              alt="Feastly generated website UI mockup"
-              width={360}
-              height={240}
-              sizes="260px"
-            />
-          </a>
-          <div className="scene-object orbit-code" aria-hidden="true">
-            <span className="mono">FROM IDEA TO SHIPPED</span>
-            <strong>&lt;/&gt;</strong>
-            <span className="mono">FULL STACK × APPLIED AI</span>
+            <div className="hero-card-position"><HangingCard motion={motion} /></div>
+            <div className="hero-note minimal-hero-reveal"><span className="mono">FROM WHAT-IF TO WHAT’S NEXT.</span><p>I build web products and AI tools with care, curiosity, and a little personality.</p><a href="#about">The person behind the code <span aria-hidden="true">↗</span></a></div>
           </div>
-          <div className="scene-object orbit-spark" aria-hidden="true">
-            ✳
-          </div>
-          <a className="scene-object orbit-sticker" href="#toolkit">
-            A curious mind.
-            <br />
-            <strong>A builder’s instinct.</strong>
-            <span>↗</span>
-          </a>
+        <div className="minimal-hero-bottom minimal-hero-reveal mono">
+          <a href="#about">SCROLL TO GET TO KNOW ME <span aria-hidden="true">↓</span></a>
+          <button type="button" onClick={() => { window.scrollTo({ top: 0, behavior: "instant" }); setReplay((value) => value + 1); }} disabled={!motion} aria-label="Replay opening animation">REPLAY INTRO <span aria-hidden="true">↻</span></button>
         </div>
-        <HangingCard motion={motion} />
-        <span className="scene-name mono">
-          DANYAL TANVEER
-          <br />
-          <strong>SOFTWARE & AI ENGINEER</strong>
-        </span>
-        <span className="scene-annotation mono" aria-hidden="true">
-          ↳ A little curiosity.
-          <br />A lot of building.
-        </span>
-      </div>
-      <div className="scene-bottom shell">
-        <p>
-          I turn <strong>“what if”</strong> into
-          <br />
-          software that <strong>works.</strong>
-        </p>
-        <div>
-          <a className="pill-button scene-cta" href="#work">
-            Enter the work <span>↘</span>
-          </a>
-          <a
-            className="resume-link"
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Get my résumé ↗
-          </a>
         </div>
-        <span className="mono scene-scroll">
-          SCROLL TO UNFOLD
-          <br />
-          THE STORY ↓
-        </span>
       </div>
     </section>
   );
