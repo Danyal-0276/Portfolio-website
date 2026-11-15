@@ -79,7 +79,6 @@ function ExperimentFolder({
           aria-controls={panelId}
           onClick={onToggle}
         >
-          <span className="folder-number mono">0{index + 1}</span>
           <span className="folder-symbol" aria-hidden="true">
             {cover.mark}
           </span>

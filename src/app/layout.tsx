@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { INTRO_BOOTSTRAP_SCRIPT } from "@/lib/intro";
 import { JsonLd } from "./_components/seo/JsonLd";
 import { siteConfig } from "@/data/portfolio";
 import "./_styles/base.css";
@@ -112,6 +113,9 @@ export default function RootLayout({
     // Browser extensions can inject attributes on the root before hydration.
     // Keep this escape hatch on html only so component mismatches remain visible.
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: INTRO_BOOTSTRAP_SCRIPT }} />
+      </head>
       <body>
         <JsonLd />
         <a href="#main-content" className="skip-link">Skip to content</a>

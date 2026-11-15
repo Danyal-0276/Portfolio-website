@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "check:assets": "node scripts/check-public-assets.mjs",
+    "check:intro": "node scripts/check-intro.mjs",
     "check:seo": "node scripts/check-seo.mjs"
   },
   "dependencies": {

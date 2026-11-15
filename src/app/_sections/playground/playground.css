@@ -32,7 +32,7 @@
 }
 .folder-trigger {
   display: grid;
-  grid-template-columns: 30px 64px minmax(0, 1fr) auto;
+  grid-template-columns: 64px minmax(0, 1fr) auto;
   align-items: center;
   gap: 24px;
   width: 100%;
@@ -43,10 +43,6 @@
 }
 .folder-trigger:focus-visible {
   outline-offset: -6px;
-}
-.folder-number {
-  font-size: 0.8125rem;
-  color: #3e4250;
 }
 .folder-symbol {
   width: 64px;
@@ -60,6 +56,7 @@
   background: #ffffff40;
 }
 .folder-title {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 7px;
@@ -79,6 +76,7 @@
   display: flex;
   align-items: center;
   gap: 24px;
+  white-space: nowrap;
 }
 .folder-action > .mono {
   font-size: 0.75rem;
@@ -237,7 +235,7 @@
 }
 @media (max-width: 800px) {
   .folder-trigger {
-    grid-template-columns: 22px 48px minmax(0, 1fr) 38px;
+    grid-template-columns: 48px minmax(0, 1fr) 38px;
     gap: 14px;
     padding: 24px;
   }
@@ -271,9 +269,6 @@
     grid-template-columns: 38px minmax(0, 1fr) 32px;
     padding: 22px 16px;
     gap: 12px;
-  }
-  .folder-number {
-    display: none;
   }
   .folder-symbol {
     width: 38px;

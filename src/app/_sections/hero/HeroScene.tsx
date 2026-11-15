@@ -4,10 +4,10 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { INTRO_STORAGE_KEY } from "@/lib/intro";
 
 gsap.registerPlugin(useGSAP);
 
-const INTRO_STORAGE_KEY = "danyal-curtain-intro-v3";
 const NAME = "DANYAL TANVEER";
 
 export function HeroScene({ motion }: { motion: boolean }) {
@@ -29,12 +29,25 @@ export function HeroScene({ motion }: { motion: boolean }) {
       if (!heading || !curtain || !name || !skipButton || !content.current) return;
       const isReplay = replay !== lastReplay.current;
       lastReplay.current = replay;
-      if (!motion || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const documentRoot = document.documentElement;
+      const dismissPendingIntro = () => { documentRoot.dataset.intro = "done"; };
+      if (!motion || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        dismissPendingIntro();
+        return;
+      }
       // Preserve deep links and returning visitors' place in the page.
       if (!isReplay) {
-        if (window.location.hash || window.scrollY > 80) return;
+        // A timed-out bootstrap must never introduce a late loading screen.
+        if (!["pending", "running"].includes(documentRoot.dataset.intro ?? "")) return;
+        if (window.location.hash || window.scrollY > 80) {
+          dismissPendingIntro();
+          return;
+        }
         try {
-          if (sessionStorage.getItem(INTRO_STORAGE_KEY)) return;
+          if (sessionStorage.getItem(INTRO_STORAGE_KEY)) {
+            dismissPendingIntro();
+            return;
+          }
         } catch {
           // The intro still works when browser storage is unavailable.
         }
@@ -56,6 +69,7 @@ export function HeroScene({ motion }: { motion: boolean }) {
         if (finished) return;
         finished = true;
         curtain.style.display = "none";
+        dismissPendingIntro();
         unlock();
         try { sessionStorage.setItem(INTRO_STORAGE_KEY, "seen"); } catch { /* Storage is optional. */ }
         if (document.activeElement === skipButton) {
@@ -70,9 +84,12 @@ export function HeroScene({ motion }: { motion: boolean }) {
       document.body.style.overflow = "hidden";
       background.forEach(({ element }) => { element.inert = true; });
       gsap.set(curtain, { display: "block" });
+      documentRoot.dataset.intro = "running";
       gsap.set(name, {
         left: "50%",
         top: "50%",
+        x: 0,
+        y: 0,
         xPercent: -50,
         yPercent: -50,
       });
@@ -80,8 +97,8 @@ export function HeroScene({ motion }: { motion: boolean }) {
 
       const timeline = gsap.timeline({ onComplete: finish });
       timeline
-        .from(".intro-letter", { yPercent: 110, duration: 0.65, stagger: 0.035, ease: "power3.out" }, 0.15)
-        .from(".intro-rule", { scaleX: 0, transformOrigin: "left", duration: 1.05, ease: "power2.inOut" }, 0.2)
+        .fromTo(".intro-letter", { y: 0, yPercent: 110 }, { y: 0, yPercent: 0, duration: 0.65, stagger: 0.035, ease: "power3.out" }, 0.15)
+        .fromTo(".intro-rule", { scaleX: 0 }, { scaleX: 1, transformOrigin: "left", duration: 1.05, ease: "power2.inOut" }, 0.2)
         .to(".intro-curtain", { yPercent: -100, duration: 1.2, ease: "power4.inOut" }, 1.2)
         .to(".intro-skip, .intro-rule", { autoAlpha: 0, duration: 0.25 }, 1.2)
         .to(name, { y: -50, autoAlpha: 0, duration: 0.65, ease: "power3.in" }, 1.2)
@@ -110,7 +127,7 @@ export function HeroScene({ motion }: { motion: boolean }) {
 
   return (
     <section ref={scene} className="minimal-hero" id="home" aria-labelledby="hero-title">
-      <div ref={overlay} className="intro-overlay" role="dialog" aria-modal="true" aria-label="Opening Danyal Tanveer’s portfolio" style={{ display: "none" }}>
+      <div ref={overlay} className="intro-overlay" role="dialog" aria-modal="true" aria-label="Opening Danyal Tanveer’s portfolio">
         <div className="intro-curtain" />
         <div ref={mark} className="intro-name" aria-hidden="true">
           {NAME.split("").map((letter, index) => <span className="intro-letter-mask" key={index}>{letter === " " ? "\u00a0" : <span className="intro-letter">{letter}</span>}</span>)}

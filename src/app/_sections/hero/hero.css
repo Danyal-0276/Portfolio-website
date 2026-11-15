@@ -36,12 +36,15 @@
 
 .minimal-hero { margin: 8px var(--page-gutter) 20px; position: relative; }
 .minimal-hero-inner { width: 100%; }
-.intro-overlay { position: fixed; inset: 0; z-index: 250; isolation: isolate; }
+html[data-intro="pending"] { overflow: hidden; }
+html[data-intro="pending"]::before { content: ""; position: fixed; inset: 0; z-index: 249; background: var(--blue); }
+html[data-intro="pending"] .intro-overlay { display: block; }
+.intro-overlay { display: none; position: fixed; inset: 0; z-index: 250; isolation: isolate; }
 .intro-curtain { position: absolute; inset: 0; z-index: -1; background: var(--blue); }
-.intro-name { position: absolute; width: max-content; font-family: Arial, Helvetica, sans-serif; font-size: clamp(1.5rem, 6vw, 6rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.075em; white-space: nowrap; color: white; pointer-events: none; }
+.intro-name { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: max-content; font-family: Arial, Helvetica, sans-serif; font-size: clamp(1.5rem, 6vw, 6rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.075em; white-space: nowrap; color: white; pointer-events: none; }
 .intro-letter-mask { display: inline-block; overflow: hidden; vertical-align: top; }
-.intro-letter { display: inline-block; }
-.intro-rule { position: absolute; left: 32px; right: 32px; bottom: 46px; height: 2px; background: var(--yellow); }
+.intro-letter { display: inline-block; transform: translateY(110%); }
+.intro-rule { position: absolute; left: 32px; right: 32px; bottom: 46px; height: 2px; background: var(--yellow); transform: scaleX(0); transform-origin: left; }
 .intro-skip { position: absolute; right: 32px; top: 50%; margin-top: 64px; border: 1px solid #ffffff70; background: transparent; color: white; padding: 12px 18px; border-radius: 30px; font-size: 14px; }
 .intro-skip:focus-visible { outline-color: var(--yellow); }
 
@@ -53,7 +56,6 @@
 .portfolio .preview-index,
 .portfolio .skills-foot,
 .portfolio .pipeline-hint,
-.portfolio .folder-number,
 .portfolio .folder-stamp,
 .portfolio .playground-note,
 .portfolio .form-bottom > .mono,
@@ -95,6 +97,8 @@
   .intro-skip { right: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  html[data-intro="pending"] { overflow: auto; }
+  html[data-intro="pending"]::before { display: none; }
   .intro-overlay { display: none !important; }
   .site-header { transition: none; }
 }
