@@ -123,7 +123,7 @@ export function HeroScene({ motion }: { motion: boolean }) {
         <div className="hero-board">
           <div className="hero-board-top minimal-hero-reveal">
             <p className="hero-board-label">Software.<br /><span>With personality.</span></p>
-            <a className="hero-availability" href="#contact"><i aria-hidden="true" /> Available for work <span aria-hidden="true">↗</span></a>
+            <div className="hero-availability-panel"><a className="hero-availability" href="#contact"><i aria-hidden="true" /> Available for work <span aria-hidden="true">↗</span></a></div>
           </div>
           <div className="hero-board-body">
             <div className="hero-headline minimal-hero-reveal">
@@ -133,7 +133,7 @@ export function HeroScene({ motion }: { motion: boolean }) {
                 <a className="resume-link" href="/resumes/danyal-full-stack.pdf" target="_blank" rel="noopener noreferrer">Get my résumé ↗</a>
               </div>
             </div>
-            <div className="hero-portrait"><Image src="/images/hero-portrait.webp" alt="Danyal Tanveer in a black blazer with his arms crossed" width={960} height={1277} sizes="(max-width: 600px) 80vw, 45vw" priority /></div>
+            <div className="hero-portrait"><Image src="/images/hero-studio.webp" alt="AI-generated editorial portrait of Danyal Tanveer seated on a sculptural blue sofa in a dark studio" fill sizes="100vw" priority /></div>
             <div className="hero-note minimal-hero-reveal"><p>Full-stack development.<br />Applied AI.<br /><span>A human touch.</span></p></div>
           </div>
         <div className="minimal-hero-bottom minimal-hero-reveal">
