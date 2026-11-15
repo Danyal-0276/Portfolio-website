@@ -32,7 +32,7 @@ The visual direction combines electric blue, yellow, bold typography, and an edi
 ### An interactive first impression
 
 - Letter-by-letter name reveal on a blue curtain; the name fades out as the curtain lifts.
-- Dark framed hero aligned with the navbar, with a centered transparent portrait, bold headline, project link, and résumé download.
+- Dark framed hero aligned with the navbar, with a generated blue-sofa studio scene, bold headline, project link, and résumé download.
 - Section-aware navbar colors and simplified typography without decorative micro-labels.
 - The draggable portrait-card component and its styles are preserved separately for future use.
 - Intro plays once per tab session, with replay, skip, Escape, focus handling, and reduced-motion support.
@@ -228,7 +228,7 @@ When adding animation, preserve keyboard interaction, the global motion toggle, 
 
 Project descriptions draw on my résumés and repositories. Research is presented as a submitted preprint, with publication pending.
 
-The Feastly, Shopora, Orbit, and multiplayer-game images are generated visuals based on documented features; the Throne of Glass Archive uses screenshots from its live deployment. The transparent hero portrait is AI-generated using Danyal’s supplied photograph as an identity reference; the original portrait remains in the About section. Other project visuals use supplied screenshots and assets. Certificate previews are based on the supplied credentials.
+The Feastly, Shopora, Orbit, and multiplayer-game images are generated visuals based on documented features; the Throne of Glass Archive uses screenshots from its live deployment. The hero’s blue-sofa studio scene and the preserved transparent portrait are AI-generated using Danyal’s supplied photograph as an identity reference; the original portrait remains in the About section. Other project visuals use supplied screenshots and assets. Certificate previews are based on the supplied credentials.
 
 Future-use source material is retained and classified under [`archive/`](archive/README.md). It is deliberately kept outside `public/` so raw documents and alternate visuals are not deployed.
 
