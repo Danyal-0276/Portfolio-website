@@ -86,7 +86,7 @@ export function HeroScene({ motion }: { motion: boolean }) {
         .to(".intro-skip, .intro-rule", { autoAlpha: 0, duration: 0.25 }, 1.2)
         .to(name, { y: -50, autoAlpha: 0, duration: 0.65, ease: "power3.in" }, 1.2)
         .from(".minimal-hero-reveal", { y: 22, opacity: 0, duration: 0.8, stagger: 0.09, clearProps: "transform,opacity", ease: "power3.out" }, 1.85)
-        .from(".hero-portrait", { y: 35, opacity: 0, duration: 1.05, clearProps: "transform,opacity", ease: "power3.out" }, 1.65);
+        .from(".illustrated-portrait", { y: 35, opacity: 0, duration: 1.05, clearProps: "transform,opacity", ease: "power3.out" }, 1.65);
 
       const end = () => { timeline.progress(1); finish(); };
       const handleKey = (event: KeyboardEvent) => {
@@ -120,26 +120,21 @@ export function HeroScene({ motion }: { motion: boolean }) {
       </div>
 
       <div ref={content} className="minimal-hero-inner">
-        <div className="hero-board">
-          <div className="hero-board-top minimal-hero-reveal">
-            <p className="hero-board-label">Software.<br /><span>With personality.</span></p>
-            <div className="hero-availability-panel"><a className="hero-availability" href="#contact"><i aria-hidden="true" /> Available for work <span aria-hidden="true">↗</span></a></div>
+        <div className="illustrated-board">
+          <span className="hero-backword" aria-hidden="true">Builder</span>
+          <div className="illustrated-portrait"><Image src="/images/hero-illustration.webp" alt="Illustrated portrait of Danyal Tanveer wearing over-ear headphones, glasses, and a blue jacket" width={1019} height={1400} sizes="(max-width: 600px) 90vw, 55vw" priority /></div>
+          <div className="illustrated-headline minimal-hero-reveal">
+            <h1 ref={title} id="hero-title" tabIndex={-1}>Turning ideas<br />into things<br />that work.</h1>
           </div>
-          <div className="hero-board-body">
-            <div className="hero-headline minimal-hero-reveal">
-              <h1 ref={title} id="hero-title" tabIndex={-1}>BUILT WITH<br /><span>INTENT.</span></h1>
-              <div className="hero-links">
-                <a className="pill-button scene-cta" href="#work">Enter the work <span aria-hidden="true">↘</span></a>
-                <a className="resume-link" href="/resumes/danyal-full-stack.pdf" target="_blank" rel="noopener noreferrer">Get my résumé ↗</a>
-              </div>
+          <a className="hero-contact-orbit minimal-hero-reveal" href="#contact"><span aria-hidden="true">↗</span>Let’s<br />talk</a>
+          <div className="illustrated-copy minimal-hero-reveal">
+            <p>Thoughtful web products.<br />Applied AI. A human touch.<br />Built with curiosity and care.</p>
+            <div className="illustrated-links">
+              <a href="#work">Explore the work <span aria-hidden="true">↗</span></a>
+              <a href="/resumes/danyal-full-stack.pdf" target="_blank" rel="noopener noreferrer">Résumé <span aria-hidden="true">↗</span></a>
             </div>
-            <div className="hero-portrait"><Image src="/images/hero-studio.webp" alt="AI-generated editorial portrait of Danyal Tanveer seated on a sculptural blue sofa in a dark studio" fill sizes="100vw" priority /></div>
-            <div className="hero-note minimal-hero-reveal"><p>Full-stack development.<br />Applied AI.<br /><span>A human touch.</span></p></div>
           </div>
-        <div className="minimal-hero-bottom minimal-hero-reveal">
-          <button type="button" onClick={() => { window.scrollTo({ top: 0, behavior: "instant" }); setReplay((value) => value + 1); }} disabled={!motion} aria-label="Replay opening animation">Replay intro <span aria-hidden="true">↻</span></button>
-          <a href="#about">Meet the builder <span aria-hidden="true">↗</span></a>
-        </div>
+          <button className="hero-replay" type="button" onClick={() => { window.scrollTo({ top: 0, behavior: "instant" }); setReplay((value) => value + 1); }} disabled={!motion} aria-label="Replay opening animation">Replay intro <span aria-hidden="true">↻</span></button>
         </div>
       </div>
     </section>
