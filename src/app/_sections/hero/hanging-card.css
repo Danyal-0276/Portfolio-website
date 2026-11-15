@@ -1,0 +1,23 @@
+/* Reserved portrait-card styling for future use. */
+.lanyard-stage { position: relative; width: 280px; height: 545px; top: 0; left: auto; margin-inline: auto; transform: none; pointer-events: none; }
+.lanyard-rig { padding-top: 106px; transform-origin: 50% 106px; }
+.lanyard-clip { top: 86px; }
+.lanyard-cord { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.lanyard-cord-path { fill: none; stroke: var(--blue); stroke-width: 17px; stroke-linecap: round; }
+.lanyard-cord-highlight { fill: none; stroke: #ffffff70; stroke-width: 2px; stroke-dasharray: 7 6; }
+.lanyard-cord-static { stroke: var(--blue); stroke-width: 17px; opacity: 0; }
+.motion-paused .lanyard-cord-static { opacity: 1; }
+.motion-paused .lanyard-cord-path, .motion-paused .lanyard-cord-highlight { opacity: 0; }
+.id-card { pointer-events: auto; touch-action: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.id-card > * { pointer-events: none; }
+.id-card img { -webkit-user-drag: none; }
+.badge-photo { height: 236px; }
+.badge-photo-grid { background: none; }
+.badge-photo img { height: 100%; width: auto; max-width: none; left: 50%; top: auto; bottom: 0; transform: translateX(-50%); }
+.badge-identity { padding-block: 13px; }
+.badge-identity > strong { font-size: 25px; }
+.badge-identity strong > span { font-size: 34px; }
+.badge-identity > .mono { font-size: 7px; margin-top: 7px; }
+.badge-hint { margin-top: 22px; font-size: 0.5rem; letter-spacing: 0.015em; }
+
+@media (prefers-reduced-motion: reduce) { .lanyard-cord-static { opacity: 1; } .lanyard-cord-path, .lanyard-cord-highlight { opacity: 0; } }

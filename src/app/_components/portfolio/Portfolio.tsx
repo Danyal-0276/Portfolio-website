@@ -18,7 +18,7 @@ import { WorkSection } from "../../_sections/work/WorkSection";
 export function Portfolio() {
   const root = useRef<HTMLDivElement>(null);
   const { motion, setMotion } = useMotionPreference();
-  const activeSection = useActiveSection(root);
+  const { activeSection, sectionTheme } = useActiveSection(root);
   usePortfolioAnimations(root, motion);
 
   return (
@@ -27,7 +27,7 @@ export function Portfolio() {
       className={motion ? "portfolio" : "portfolio motion-paused"}
     >
       <div className="page-progress" aria-hidden="true" />
-      <SiteHeader activeSection={activeSection} />
+      <SiteHeader activeSection={activeSection} sectionTheme={sectionTheme} />
       <main id="main-content">
         <HeroScene motion={motion} />
         <Ticker />

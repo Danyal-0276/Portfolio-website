@@ -1,5 +1,7 @@
 "use client";
 
+import "./hanging-card.css";
+
 import Image from "next/image";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";

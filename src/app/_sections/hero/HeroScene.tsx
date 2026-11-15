@@ -1,13 +1,13 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { HangingCard } from "./HangingCard";
 
 gsap.registerPlugin(useGSAP);
 
-const INTRO_STORAGE_KEY = "danyal-curtain-intro-v2";
+const INTRO_STORAGE_KEY = "danyal-curtain-intro-v3";
 const NAME = "DANYAL TANVEER";
 
 export function HeroScene({ motion }: { motion: boolean }) {
@@ -83,10 +83,10 @@ export function HeroScene({ motion }: { motion: boolean }) {
         .from(".intro-letter", { yPercent: 110, duration: 0.65, stagger: 0.035, ease: "power3.out" }, 0.15)
         .from(".intro-rule", { scaleX: 0, transformOrigin: "left", duration: 1.05, ease: "power2.inOut" }, 0.2)
         .to(".intro-curtain", { yPercent: -100, duration: 1.2, ease: "power4.inOut" }, 1.2)
-        .to(".intro-meta, .intro-skip, .intro-rule", { autoAlpha: 0, duration: 0.25 }, 1.2)
+        .to(".intro-skip, .intro-rule", { autoAlpha: 0, duration: 0.25 }, 1.2)
         .to(name, { y: -50, autoAlpha: 0, duration: 0.65, ease: "power3.in" }, 1.2)
         .from(".minimal-hero-reveal", { y: 22, opacity: 0, duration: 0.8, stagger: 0.09, clearProps: "transform,opacity", ease: "power3.out" }, 1.85)
-        .from(".hero-card-position", { y: 35, opacity: 0, duration: 1.05, clearProps: "transform,opacity", ease: "power3.out" }, 1.65);
+        .from(".hero-portrait", { y: 35, opacity: 0, duration: 1.05, clearProps: "transform,opacity", ease: "power3.out" }, 1.65);
 
       const end = () => { timeline.progress(1); finish(); };
       const handleKey = (event: KeyboardEvent) => {
@@ -112,40 +112,33 @@ export function HeroScene({ motion }: { motion: boolean }) {
     <section ref={scene} className="minimal-hero" id="home" aria-labelledby="hero-title">
       <div ref={overlay} className="intro-overlay" role="dialog" aria-modal="true" aria-label="Opening Danyal Tanveer’s portfolio" style={{ display: "none" }}>
         <div className="intro-curtain" />
-        <span className="intro-meta intro-meta-top mono">DANYAL TANVEER <span>INDEPENDENT DEVELOPER</span></span>
         <div ref={mark} className="intro-name" aria-hidden="true">
           {NAME.split("").map((letter, index) => <span className="intro-letter-mask" key={index}>{letter === " " ? "\u00a0" : <span className="intro-letter">{letter}</span>}</span>)}
         </div>
         <span className="intro-rule" />
-        <span className="intro-meta intro-meta-bottom mono">A LITTLE CURIOSITY. A LOT OF BUILDING. <span>PORTFOLIO / 2026</span></span>
         <button ref={skip} className="intro-skip mono" type="button">Skip intro <span aria-hidden="true">↗</span></button>
       </div>
 
       <div ref={content} className="minimal-hero-inner">
-        <div className="minimal-hero-top minimal-hero-reveal mono">
-          <span><i className="hero-availability-dot" /> AVAILABLE FOR WORK</span>
-          <span>LAHORE, PAKISTAN / 2026</span>
-        </div>
         <div className="hero-board">
           <div className="hero-board-top minimal-hero-reveal">
-            <span className="hero-board-label mono"><span aria-hidden="true">✳</span> A LITTLE CURIOSITY.<br />A LOT OF BUILDING.</span>
-            <div className="hero-disciplines mono"><span>FULL STACK</span><span>AI / ML</span></div>
+            <p className="hero-board-label">Software.<br /><span>With personality.</span></p>
+            <a className="hero-availability" href="#contact"><i aria-hidden="true" /> Available for work <span aria-hidden="true">↗</span></a>
           </div>
           <div className="hero-board-body">
             <div className="hero-headline minimal-hero-reveal">
-              <p className="mono hero-role">THOUGHTFUL SOFTWARE. HUMAN FIRST.</p>
-              <h1 ref={title} id="hero-title" tabIndex={-1}>A BUILDER’S<br /><span>INSTINCT.</span></h1>
+              <h1 ref={title} id="hero-title" tabIndex={-1}>BUILT WITH<br /><span>INTENT.</span></h1>
               <div className="hero-links">
                 <a className="pill-button scene-cta" href="#work">Enter the work <span aria-hidden="true">↘</span></a>
                 <a className="resume-link" href="/resumes/danyal-full-stack.pdf" target="_blank" rel="noopener noreferrer">Get my résumé ↗</a>
               </div>
             </div>
-            <div className="hero-card-position"><HangingCard motion={motion} /></div>
-            <div className="hero-note minimal-hero-reveal"><span className="mono">FROM WHAT-IF TO WHAT’S NEXT.</span><p>I build web products and AI tools with care, curiosity, and a little personality.</p><a href="#about">The person behind the code <span aria-hidden="true">↗</span></a></div>
+            <div className="hero-portrait"><Image src="/images/hero-portrait.webp" alt="Danyal Tanveer in a black blazer with his arms crossed" width={960} height={1277} sizes="(max-width: 600px) 80vw, 45vw" priority /></div>
+            <div className="hero-note minimal-hero-reveal"><p>Full-stack development.<br />Applied AI.<br /><span>A human touch.</span></p></div>
           </div>
-        <div className="minimal-hero-bottom minimal-hero-reveal mono">
-          <a href="#about">SCROLL TO GET TO KNOW ME <span aria-hidden="true">↓</span></a>
-          <button type="button" onClick={() => { window.scrollTo({ top: 0, behavior: "instant" }); setReplay((value) => value + 1); }} disabled={!motion} aria-label="Replay opening animation">REPLAY INTRO <span aria-hidden="true">↻</span></button>
+        <div className="minimal-hero-bottom minimal-hero-reveal">
+          <button type="button" onClick={() => { window.scrollTo({ top: 0, behavior: "instant" }); setReplay((value) => value + 1); }} disabled={!motion} aria-label="Replay opening animation">Replay intro <span aria-hidden="true">↻</span></button>
+          <a href="#about">Meet the builder <span aria-hidden="true">↗</span></a>
         </div>
         </div>
       </div>

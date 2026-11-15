@@ -32,7 +32,9 @@ The visual direction combines electric blue, yellow, bold typography, and an edi
 ### An interactive first impression
 
 - Letter-by-letter name reveal on a blue curtain; the name fades out as the curtain lifts.
-- Minimal framed hero with a centered draggable portrait card, bold headline, project link, and résumé download.
+- Dark framed hero aligned with the navbar, with a centered transparent portrait, bold headline, project link, and résumé download.
+- Section-aware navbar colors and simplified typography without decorative micro-labels.
+- The draggable portrait-card component and its styles are preserved separately for future use.
 - Intro plays once per tab session, with replay, skip, Escape, focus handling, and reduced-motion support.
 - Animated ticker, scroll progress indicator, and section-aware navigation.
 - Responsive layouts for desktop, tablet, and mobile.

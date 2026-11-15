@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { siteConfig } from "@/data/portfolio";
 import { NAV_LINKS } from "../portfolio/navigation";
 
-export function SiteHeader({ activeSection }: { activeSection: string }) {
+export function SiteHeader({ activeSection, sectionTheme }: { activeSection: string; sectionTheme: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export function SiteHeader({ activeSection }: { activeSection: string }) {
   }, [menuOpen]);
 
   return (
-    <header className="site-header">
+    <header className="site-header" data-theme={sectionTheme}>
       <a
         className="wordmark"
         href="#home"
@@ -39,14 +39,13 @@ export function SiteHeader({ activeSection }: { activeSection: string }) {
         id="main-navigation"
         aria-label="Main navigation"
       >
-        {NAV_LINKS.map((link, index) => (
+        {NAV_LINKS.map((link) => (
           <a
             key={link.href}
             href={link.href}
             aria-current={activeSection === link.href ? "location" : undefined}
             onClick={() => setMenuOpen(false)}
           >
-            <span className="nav-index mono">0{index + 1}</span>
             <span className="nav-roll">
               <span>{link.name}</span>
               <span aria-hidden="true">{link.name}</span>

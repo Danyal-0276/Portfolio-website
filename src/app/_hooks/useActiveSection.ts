@@ -8,6 +8,7 @@ export function useActiveSection<T extends HTMLElement>(
   root: RefObject<T | null>,
 ) {
   const [activeSection, setActiveSection] = useState("");
+  const [sectionTheme, setSectionTheme] = useState("dark");
   const pendingNavigation = useRef<string | null>(null);
 
   useEffect(() => {
@@ -19,6 +20,15 @@ export function useActiveSection<T extends HTMLElement>(
     const update = () => {
       frame = 0;
       const marker = (header?.getBoundingClientRect().bottom ?? 90) + 40;
+      const visibleSection = sections.find((section) => {
+        const bounds = section.getBoundingClientRect();
+        return bounds.top <= marker && bounds.bottom > marker;
+      });
+      const sectionId = visibleSection?.id ?? (window.scrollY < 100 ? "home" : "");
+      setSectionTheme(
+        ["home", "toolkit", "contact"].includes(sectionId) ? "dark" :
+          sectionId === "skills" ? "blue" : sectionId === "research" ? "yellow" : "light",
+      );
       const pending = sections.find(
         (section) => `#${section.id}` === pendingNavigation.current,
       );
@@ -27,10 +37,7 @@ export function useActiveSection<T extends HTMLElement>(
         if (bounds.top > marker || bounds.bottom <= marker) return;
         pendingNavigation.current = null;
       }
-      const current = sections.find((section) => {
-        const bounds = section.getBoundingClientRect();
-        return bounds.top <= marker && bounds.bottom > marker;
-      });
+      const current = visibleSection;
       const atBottom =
         window.scrollY > 0 &&
         window.innerHeight + window.scrollY >=
@@ -100,5 +107,5 @@ export function useActiveSection<T extends HTMLElement>(
     };
   }, [root]);
 
-  return activeSection;
+  return { activeSection, sectionTheme };
 }
